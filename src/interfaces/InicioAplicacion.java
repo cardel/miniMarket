@@ -5,6 +5,9 @@
  */
 package interfaces;
 
+import controladores.ControladorLogin;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author cardel
@@ -33,11 +36,12 @@ public class InicioAplicacion extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        usuarioValue = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        passwordValue = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Gestor del minimarket");
         setResizable(false);
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
@@ -82,9 +86,9 @@ public class InicioAplicacion extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(29, 48, 0, 0);
         jPanel1.add(jLabel4, gridBagConstraints);
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        usuarioValue.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                usuarioValueActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -95,7 +99,7 @@ public class InicioAplicacion extends javax.swing.JFrame {
         gridBagConstraints.ipadx = 201;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(22, 29, 0, 0);
-        jPanel1.add(jTextField1, gridBagConstraints);
+        jPanel1.add(usuarioValue, gridBagConstraints);
 
         jButton1.setText("Ingresar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -110,10 +114,10 @@ public class InicioAplicacion extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(18, 59, 21, 0);
         jPanel1.add(jButton1, gridBagConstraints);
 
-        jPasswordField1.setToolTipText("");
-        jPasswordField1.addActionListener(new java.awt.event.ActionListener() {
+        passwordValue.setToolTipText("");
+        passwordValue.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jPasswordField1ActionPerformed(evt);
+                passwordValueActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -124,31 +128,54 @@ public class InicioAplicacion extends javax.swing.JFrame {
         gridBagConstraints.ipadx = 201;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(33, 29, 0, 0);
-        jPanel1.add(jPasswordField1, gridBagConstraints);
+        jPanel1.add(passwordValue, gridBagConstraints);
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.ipadx = 37;
-        gridBagConstraints.ipady = 10;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(11, 10, 0, 10);
-        getContentPane().add(jPanel1, gridBagConstraints);
+        getContentPane().add(jPanel1, new java.awt.GridBagConstraints());
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jPasswordField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordField1ActionPerformed
+    private void passwordValueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordValueActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jPasswordField1ActionPerformed
+    }//GEN-LAST:event_passwordValueActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        String usuario = usuarioValue.getText();
+        String password = new String(passwordValue.getPassword());
+        
+        if(usuario.equals("")||password.equals(""))
+        {
+            JOptionPane.showMessageDialog(this, "Debe especificar el usuario o la contraseña");
+        
+        }
+        else
+        {
+        
+            ControladorLogin controladorAutenticacion = new ControladorLogin();
+            boolean autenticado = controladorAutenticacion.autenticar(usuario, password);
+
+            if(autenticado)
+            {
+                JOptionPane.showMessageDialog(this, "Se ha autenticado satisfactoriamente");
+                //Abrir otra GUI
+                InterfazPrincipal interfazPrincipal = new InterfazPrincipal();
+                this.dispose();
+                interfazPrincipal.show();
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(this, "El nombre de usuario o contraseña con incorrectos, intente de nuevo");
+                passwordValue.setText("");
+            }      
+        
+        }
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void usuarioValueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usuarioValueActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_usuarioValueActionPerformed
 
     /**
      * @param args the command line arguments
@@ -192,7 +219,7 @@ public class InicioAplicacion extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JPasswordField passwordValue;
+    private javax.swing.JTextField usuarioValue;
     // End of variables declaration//GEN-END:variables
 }

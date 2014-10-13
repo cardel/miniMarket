@@ -39,7 +39,13 @@ public class Minimarket {
         
         InicioAplicacion aplicacion = new InicioAplicacion();
         aplicacion.show();
+        /*
+        Ejemplo md5 contraseña admin
+                GeneradorMD5 generador = new GeneradorMD5();
+        System.out.println(generador.getMD5("admin"));
+        */
         
+
         
     }
     
