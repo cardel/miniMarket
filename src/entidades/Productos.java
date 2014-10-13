@@ -18,12 +18,12 @@ public class Productos {
     private double precio;
     
     
-    Productos(int productoId)
+    public Productos(int productoId)
     {
         this.productoId=productoId;
     }
     
-    Productos(int productoId, String nombre, String descripcion, int unidadesDisponibles, double precio)
+    public Productos(int productoId, String nombre, String descripcion, int unidadesDisponibles, double precio)
     {
         this.productoId=productoId;
         this.nombre=nombre;
