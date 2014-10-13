@@ -7,6 +7,7 @@ package minimarket;
 
 import controladores.controladorProducto;
 import entidades.Productos;
+import interfaces.InicioAplicacion;
 
 /**
  *
@@ -35,6 +36,10 @@ public class Minimarket {
         //Delete
         //Descomentar luego de probar lo de arriba para ver resultado en la base de datos
         //cp.deleteProduct( " Where producto_id = 2");
+        
+        InicioAplicacion aplicacion = new InicioAplicacion();
+        aplicacion.show();
+        
         
     }
     
