@@ -15,6 +15,7 @@ public class Factura {
     private String fecha;
     private char estado;
     private double valor;
+    
 
     public Factura(int factura_id) {
         this.factura_id = factura_id;
@@ -26,6 +27,7 @@ public class Factura {
         this.fecha = fecha;
         this.estado = estado;
         this.valor = valor;
+       
     }
 
     public int getFactura_id() {
@@ -63,6 +65,4 @@ public class Factura {
     public void setValor(double valor) {
         this.valor = valor;
     }
-    
-    
 }
