@@ -5,7 +5,10 @@
  */
 package interfaces;
 
+import controladores.ControladorHistoricoLogin;
 import controladores.ControladorLogin;
+import controladores.ControladorUsuarios;
+import entidades.Usuarios;
 import javax.swing.JOptionPane;
 
 /**
@@ -160,6 +163,19 @@ public class InicioAplicacion extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Se ha autenticado satisfactoriamente");
                 //Abrir otra GUI
                 InterfazPrincipal interfazPrincipal = new InterfazPrincipal();
+                /*
+                Registrar inicio de sesion
+                */
+                ControladorHistoricoLogin controladorHistoricoLogin = new ControladorHistoricoLogin();
+                ControladorUsuarios controladoUsuarios = new ControladorUsuarios();
+                
+                Usuarios usuarioActual = controladoUsuarios.obtenerUsuario(usuario);
+                controladorHistoricoLogin.registrarInicioSession(usuarioActual.getUser_id());
+                /*
+                Cerrar ventana y abrir la principal
+                */
+                
+                
                 this.dispose();
                 interfazPrincipal.show();
             }

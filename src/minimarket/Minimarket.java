@@ -37,14 +37,15 @@ public class Minimarket {
         //Descomentar luego de probar lo de arriba para ver resultado en la base de datos
         //cp.deleteProduct( " Where producto_id = 2");
         
-        InicioAplicacion aplicacion = new InicioAplicacion();
-        aplicacion.show();
+        //InicioAplicacion aplicacion = new InicioAplicacion();
+        //aplicacion.show();
         /*
         Ejemplo md5 contraseña admin
                 GeneradorMD5 generador = new GeneradorMD5();
         System.out.println(generador.getMD5("admin"));
         */
-        
+        test testA = new test();
+        testA.agregarUsuario();
 
         
     }

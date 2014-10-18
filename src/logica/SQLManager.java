@@ -96,6 +96,7 @@ public class SQLManager {
 
         try {
             //System.out.println(query);
+
             ps = conn.prepareStatement(query);
             ps.executeUpdate();
             String query_get_producto_id = "select producto_id,nombre,descripcion,unidades,precio from Producto order by producto_id desc limit 1";
