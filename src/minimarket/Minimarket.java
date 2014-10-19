@@ -8,6 +8,7 @@ package minimarket;
 import controladores.controladorProducto;
 import entidades.Productos;
 import interfaces.InicioAplicacion;
+import javax.swing.UIManager;
 
 /**
  *
@@ -26,28 +27,33 @@ public class Minimarket {
         Productos producto = cp.getProducto(" Where producto_id = 1 ");
         System.out.println(producto.getNombre());
         //INSERT
-        String [] value_for_insert = {"Limon","acido","2","5000"};
+        String[] value_for_insert = {"Limon", "acido", "2", "5000"};
         cp.insertProduct(value_for_insert);
         //Update
-        String [] selection = {"nombre"};
-        String [] value = {"Fresa"};
-        String [] type = {"varchar"};
+        String[] selection = {"nombre"};
+        String[] value = {"Fresa"};
+        String[] type = {"varchar"};
         cp.updateProduct(selection, value, type, "where producto_id = 2");
         //Delete
         //Descomentar luego de probar lo de arriba para ver resultado en la base de datos
         //cp.deleteProduct( " Where producto_id = 2");
-        
-        //InicioAplicacion aplicacion = new InicioAplicacion();
-        //aplicacion.show();
-        /*
-        Ejemplo md5 contraseña admin
-                GeneradorMD5 generador = new GeneradorMD5();
-        System.out.println(generador.getMD5("admin"));
-        */
-        test testA = new test();
-        testA.agregarUsuario();
+        try {
 
-        
+            UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
+            //UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
+            
+        } catch (Exception e) {
+        }
+        InicioAplicacion aplicacion = new InicioAplicacion();
+        aplicacion.show();
+        /*
+         Ejemplo md5 contraseña admin
+         GeneradorMD5 generador = new GeneradorMD5();
+         System.out.println(generador.getMD5("admin"));
+         */
+
+        //test testA = new test();
+        //testA.agregarUsuario();
     }
-    
+
 }
