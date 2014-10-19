@@ -31,7 +31,7 @@ public class ControladorHistoricoLogin {
         String fecha = annio + "-" + mes + "-" + dia;
         String selection[] = {"user_id", "fecha"};
         String value[] = {String.valueOf(user_id), fecha};
-        String type_value[] = {"int", "varchar","varchar"};
+        String type_value[] = {"varchar","varchar"};
         String table = "HistoricoSesiones";
         String table_id[] = {"sesion_id"};
         String type_table_id[] = {"int"};
