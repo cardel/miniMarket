@@ -44,9 +44,11 @@ public class SQLManager {
         query += " FROM " + table + restriction;
 
         try {
+            System.out.println(query);
             ps = conn.prepareStatement(query);
             rs = ps.executeQuery();
-            int contador = 0;
+            
+            
             while (rs.next()) {
                 String [] tempList = new String [selection_type.length];
                 for (int i = 0; i < selection_type.length; i++) {
@@ -63,11 +65,26 @@ public class SQLManager {
                         tempList[i] = Double.toString(rs.getDouble(selection[i]));
                     }
                 }
+                /*System.out.println("array");
+                for(int i = 0 ; i < tempList.length ; i++)
+                    System.out.println(tempList[i]);
+                */
                 result.add(tempList);
             }
         } catch (Exception e) {
 
         }
+        System.out.println("array list");
+        System.out.println(result.size());
+        for(int i = 0 ; i < result.size();i++)
+        {
+            String [] abd = (result.get(0));
+            for(int j = 0 ; j < abd.length;j++)
+            {
+                System.out.println(abd[j]);
+            }
+        }
+        System.out.println("termina");
         return result;
     }
 

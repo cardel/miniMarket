@@ -48,11 +48,12 @@ public class ControladorUsuarios {
 
     public Usuarios obtenerUsuario(String login) {
 
-        String selection[] = {"user_id,","login","password","creation_date","status"};
+        String selection[] = {"user_id","login","password","creation_date","status"};
         String selection_type[] = {"int","varchar","varchar","varchar","varchar"};
         String table = "Usuarios";
         String restriction = " where login=\"" + login + "\"";
         ArrayList<String[]> resultadoSet = sqlManager.select_query(selection, selection_type, table, restriction);
+        System.out.println(resultadoSet.size());
         String [] resultado = resultadoSet.get(0);
         Usuarios usuario = new Usuarios(Integer.parseInt(resultado[0]), resultado[1], resultado[2], resultado[3], resultado[4].toCharArray()[0]);
 
