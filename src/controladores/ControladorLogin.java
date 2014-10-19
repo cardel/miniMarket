@@ -5,6 +5,7 @@
  */
 package controladores;
 
+import java.util.ArrayList;
 import logica.SQLManager;
 import seguridad.GeneradorMD5;
 
@@ -29,7 +30,8 @@ public class ControladorLogin {
         String restriccion = " where login = \"" + usuario + "\" and password = \"" + md5Prueba + "\"";
         String tabla = "Usuarios";
 
-        String[] result = sqlManager.select_query(seleccion, tipo_seleccion, tabla, restriccion);
+        ArrayList<String[]> resultSet = sqlManager.select_query(seleccion, tipo_seleccion, tabla, restriccion);
+        String [] result = resultSet.get(0);
 
         if (result[0]!=null) {
             return true;

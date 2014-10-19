@@ -7,6 +7,7 @@ package controladores;
 
 import logica.SQLManager;
 import entidades.ConfiguracionesFactura;
+import java.util.ArrayList;
 
 /**
  *
@@ -25,8 +26,9 @@ public class ControladorConfiguracionesFactura {
         String selection_type[] = {"double", "varchar", "varchar", "varchar"};
         String table = "ConfiguracionesFactura";
         String restriction = "";
-        String resultado[] = sqlManager.select_query(selection, selection_type, table, restriction);
-
+        ArrayList <String[]> resultadoSet = sqlManager.select_query(selection, selection_type, table, restriction);
+        String [] resultado = resultadoSet.get(0);
+        
         double porcentajeIVA = Double.parseDouble(resultado[0]);
         String rangoInicialFactura = resultado[1];
         String rangoFinalFactura = resultado[2];

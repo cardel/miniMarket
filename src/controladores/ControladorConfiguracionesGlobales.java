@@ -7,6 +7,7 @@ package controladores;
 
 import logica.SQLManager;
 import entidades.ConfiguracionesGlobales;
+import java.util.ArrayList;
 
 /**
  *
@@ -25,8 +26,8 @@ public class ControladorConfiguracionesGlobales {
         String selection_type[] = {"varchar", "varchar", "varchar"};
         String table = "ConfiguracionesGlobales";
         String restriction = "";
-        String resultado[] = sQLManager.select_query(selection, selection_type, table, restriction);
-
+        ArrayList <String[]> resultadoSet = sQLManager.select_query(selection, selection_type, table, restriction);
+        String [] resultado = resultadoSet.get(0);
         String razonSocial = resultado[0];
         String NIT = resultado[1];
         String NombreAdministrador = resultado[2];

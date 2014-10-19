@@ -6,6 +6,7 @@
 package controladores;
 
 import entidades.Usuarios;
+import java.util.ArrayList;
 import java.util.Calendar;
 import logica.SQLManager;
 import seguridad.GeneradorMD5;
@@ -51,7 +52,8 @@ public class ControladorUsuarios {
         String selection_type[] = {"varchar"};
         String table = "Usuarios";
         String restriction = " where login=\"" + login + "\"";
-        String resultado[] = sqlManager.select_query(selection, selection_type, table, restriction);
+        ArrayList<String[]> resultadoSet = sqlManager.select_query(selection, selection_type, table, restriction);
+        String [] resultado = resultadoSet.get(0);
         Usuarios usuario = new Usuarios(Integer.parseInt(resultado[0]), resultado[1], resultado[2], resultado[3], resultado[4].toCharArray()[0]);
 
         return usuario;

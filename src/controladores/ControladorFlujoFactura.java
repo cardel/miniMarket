@@ -6,6 +6,7 @@
 package controladores;
 
 import entidades.Flujo_Factura;
+import java.util.ArrayList;
 import logica.SQLManager;
 
 /**
@@ -28,20 +29,21 @@ public class ControladorFlujoFactura {
         String [] selection_type = {"int","int","char","date","double"};
         String table = "Flujo_Factura";
         
-        String [] result = sqlManager.select_query(selection, selection_type, table, restriction);
+        ArrayList<String[]> resultSet = sqlManager.select_query(selection, selection_type, table, restriction);
+        String [] result = resultSet.get(0);
         
         Flujo_Factura flujo_factura = new Flujo_Factura(Integer.parseInt(result[0]),Integer.parseInt(result[1]),result[2].charAt(0),result[3],Double.parseDouble(result[4]));
         
         return flujo_factura;
     }
      
-     public String [] insertFlujo_Factura(String [] value)
+     public ArrayList<String[]> insertFlujo_Factura(String [] value)
      {
         String [] selection = {"factura_id","tipo_flujo","fecha","valor"};
         String [] type_value = {"int","char","date","double"};
         String [] table_id = {"flujo_Factura_id"};
         String [] type_table_id = {"int"};
-        String [] result = sqlManager.insert_query(selection, value,type_value, "Flujo_Factura" , table_id, type_table_id);
+        ArrayList<String[]> result = sqlManager.insert_query(selection, value,type_value, "Flujo_Factura" , table_id, type_table_id);
         return result;
      }
      

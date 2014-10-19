@@ -14,6 +14,7 @@ import static logica.Connect.connectDB;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 /**
  *
@@ -29,8 +30,8 @@ public class SQLManager {
         conn = connectDB();
     }
 
-    public String[] select_query(String[] selection, String[] selection_type, String table, String restriction) {
-        String[] result = new String[selection.length];
+    public ArrayList<String[]> select_query(String[] selection, String[] selection_type, String table, String restriction) {
+        ArrayList<String[]> result = new ArrayList<String[]>();
         String query = "SELECT ";
 
         for (int i = 0; i < selection.length; i++) {
@@ -47,20 +48,22 @@ public class SQLManager {
             rs = ps.executeQuery();
             int contador = 0;
             while (rs.next()) {
+                String [] tempList = new String [selection_type.length];
                 for (int i = 0; i < selection_type.length; i++) {
                     if (selection_type[i] == "int") {
-                        result[i] = rs.getInt(selection[i]) + "";
+                        tempList[i] = rs.getInt(selection[i]) + "";
                     }
                     if (selection_type[i] == "date") {
-                        result[i] = rs.getDate(selection[i]) + "";
+                        tempList[i] = rs.getDate(selection[i]) + "";
                     }
                     if (selection_type[i] == "varchar") {
-                        result[i] = rs.getString(selection[i]);
+                        tempList[i] = rs.getString(selection[i]);
                     }
                     if (selection_type[i] == "double") {
-                        result[i] = Double.toString(rs.getDouble(selection[i]));
+                        tempList[i] = Double.toString(rs.getDouble(selection[i]));
                     }
                 }
+                result.add(tempList);
             }
         } catch (Exception e) {
 
@@ -68,10 +71,10 @@ public class SQLManager {
         return result;
     }
 
-    public String[] insert_query(String[] selection, String[] value, String[] type_value, String table, String[] table_id, String[] type_table_id) {
+    public ArrayList<String[]> insert_query(String[] selection, String[] value, String[] type_value, String table, String[] table_id, String[] type_table_id) {
         String query = "INSERT INTO " + table + "( ";
-        String return_id[] = new String[table_id.length];
-
+        ArrayList<String[]> return_id = new ArrayList<String[]>();
+        
         for (int i = 0; i < selection.length; i++) {
             query += selection[i];
             if (i != selection.length - 1) {
@@ -95,31 +98,60 @@ public class SQLManager {
         query += ");";
 
         try {
-            //System.out.println(query);
+            System.out.println(query);
 
             ps = conn.prepareStatement(query);
             ps.executeUpdate();
-            String query_get_producto_id = "select producto_id,nombre,descripcion,unidades,precio from Producto order by producto_id desc limit 1";
+            String query_get_producto_id = "select ";
+            
+            for (int i = 0; i < table_id.length; i++) {
+                query_get_producto_id += table_id[i];
+                if (i != table_id.length) {
+                    query_get_producto_id += " , ";
+                }
+            }
+            
+            for (int i = 0; i < selection.length; i++) {
+                query_get_producto_id += selection[i];
+                if (i != selection.length - 1) {
+                    query_get_producto_id += " , ";
+                }
+            }
+            
+            query_get_producto_id += " from "+table+" order by ";
+            for (int i = 0; i < table_id.length; i++) {
+                query_get_producto_id += table_id[i];
+                if (i != table_id.length - 1) {
+                    query_get_producto_id += " , ";
+                }
+            }
+            
+            query_get_producto_id += " desc limit 1";
+            
+            System.out.println(query_get_producto_id);
+            
             ps = conn.prepareStatement(query_get_producto_id);
             rs = ps.executeQuery();
 
             if (rs.next()) {
+                String [] result = new String[table_id.length];
                 for (int i = 0; i < table_id.length; i++) {
                     if (type_table_id[i] == "int") {
-                        return_id[i] = rs.getInt(table_id[i]) + "";
+                        result[i] = rs.getInt(table_id[i]) + "";
                     }
                     if (type_table_id[i] == "date") {
-                        return_id[i] = rs.getDate(table_id[i]) + "";
+                        result[i] = rs.getDate(table_id[i]) + "";
                     }
                     if (type_table_id[i] == "varchar") {
-                        return_id[i] = rs.getString(table_id[i]);
+                        result[i] = rs.getString(table_id[i]);
                     }
                     if (type_table_id[i] == "double") {
-                        return_id[i] = Double.toString(rs.getDouble(table_id[i]));
+                        result[i] = Double.toString(rs.getDouble(table_id[i]));
                     }
                 }
-
+                    return_id.add(result);
             }
+            
         } catch (Exception e) {
 
         }

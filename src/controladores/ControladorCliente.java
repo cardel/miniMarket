@@ -26,7 +26,8 @@ public class ControladorCliente {
         String selection_type[] = {"int", "varchar", "varchar", "varchar", "varchar", "varchar", "int"};
         String table = "Cliente";
         String restriction = "";
-        String resultado[] = sQLManager.select_query(selection, selection_type, table, restriction);
+        ArrayList <String []> resultadoSet = sQLManager.select_query(selection, selection_type, table, restriction);
+        String [] resultado = resultadoSet.get(0);
         ArrayList<Cliente> listaDeClientes = new ArrayList<>();
         //Pendiente
         int cliente_id = Integer.parseInt(resultado[0]);

@@ -46,8 +46,8 @@ public class ControladorHistoricoLogin {
         String selection_type[] = {"int","int","varchar"};
         String table = "HistoricoSesiones";
         String restriction = " where user_id=" + user_id;
-        String resultado[] = sqlManager.select_query(selection, selection_type, table, restriction);
-      
+        ArrayList<String[]> resultadoSet = sqlManager.select_query(selection, selection_type, table, restriction);
+        String [] resultado = resultadoSet.get(0);
         for(int i =0; i<restriction.length();i++)
         {
             HistoricoSesiones historicoConsultado = new HistoricoSesiones(Integer.parseInt(resultado[0]), Integer.parseInt(resultado[1]), resultado[2]);

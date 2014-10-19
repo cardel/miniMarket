@@ -6,6 +6,7 @@
 package controladores;
 
 import entidades.Productos;
+import java.util.ArrayList;
 import logica.SQLManager;
 
 /**
@@ -28,19 +29,19 @@ public class controladorProducto {
         String [] selection_type = {"int","varchar","varchar","int","double"};
         String table = "Producto";
         
-        String [] result = sqlManager.select_query(selection, selection_type, table, restriction);
-        
+        ArrayList<String[]> resultSet = sqlManager.select_query(selection, selection_type, table, restriction);
+        String [] result = resultSet.get(0);
         Productos producto = new Productos(Integer.parseInt(result[0]),result[1],result[2],Integer.parseInt(result[3]),Double.parseDouble(result[4]));
         
         return producto;
     }
-     public String [] insertProduct(String [] value)
+     public ArrayList<String[]> insertProduct(String [] value)
      {
         String [] selection = {"nombre","descripcion","unidades","precio"};
         String [] type_value = {"varchar","varchar","int","double"};
         String [] table_id = {"producto_id"};
         String [] type_table_id = {"int"};
-        String [] result = sqlManager.insert_query(selection, value,type_value, "Producto" , table_id, type_table_id);
+        ArrayList<String[]> result = sqlManager.insert_query(selection, value,type_value, "Producto" , table_id, type_table_id);
         return result;
      }
      
