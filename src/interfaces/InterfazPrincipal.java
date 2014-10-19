@@ -329,15 +329,22 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         String celularEnviarNuevoCliente = celularNuevoCliente.getText();
         String direccionEnviarNuevoCliente = DireccionNuevoCliente.getText();
         String montoAPrestarEnviarNuevoCliente = montoPrestamoNuevoCliente.getText();
-        String tipoIdentificacionNuevoCliente = (String)tipoIdentificacionCliente.getSelectedItem();
+        String tipoIdentificacionNuevoCliente = (String) tipoIdentificacionCliente.getSelectedItem();
 
         try {
 
             int identificacionIntNuevoCliente = Integer.parseInt(identificacionStringNuevoCliente);
             double montoAPrestarEnviarIntNuevoCliente = Double.parseDouble(montoAPrestarEnviarNuevoCliente);
-               ControladorCliente controladorCliente = new ControladorCliente();
-               controladorCliente.agregarCliente(identificacionIntNuevoCliente, tipoIdentificacionNuevoCliente, nombreEnviarNuevoCliente, telefonoEnviarNuevoCliente, celularEnviarNuevoCliente, direccionEnviarNuevoCliente, montoAPrestarEnviarIntNuevoCliente);
-          
+            ControladorCliente controladorCliente = new ControladorCliente();
+            controladorCliente.agregarCliente(identificacionIntNuevoCliente, tipoIdentificacionNuevoCliente, nombreEnviarNuevoCliente, telefonoEnviarNuevoCliente, celularEnviarNuevoCliente, direccionEnviarNuevoCliente, montoAPrestarEnviarIntNuevoCliente);
+
+            JOptionPane.showMessageDialog(null, "Cliente creado exitosamente");
+            identificacionNuevoCliente.setText("");
+            nombreNuevoCliente.setText("");
+            telefonoNuevoCliente.setText("");
+            celularNuevoCliente.setText("");
+            DireccionNuevoCliente.setText("");
+            montoPrestamoNuevoCliente.setText("");
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "La identificación y el monto deben ser numéricos, por favor ingrese correctamente los datos", "Error", JOptionPane.ERROR_MESSAGE);
