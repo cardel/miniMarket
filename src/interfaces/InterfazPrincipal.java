@@ -6,7 +6,9 @@
 package interfaces;
 
 import controladores.ControladorCliente;
+import controladores.controladorProducto;
 import entidades.Cliente;
+import java.awt.Color;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -64,13 +66,25 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         BotonBuscarCliente = new javax.swing.JButton();
-        jTabbedPane4 = new javax.swing.JTabbedPane();
+        jTabbedPane7 = new javax.swing.JTabbedPane();
         jPanel3 = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel14 = new javax.swing.JLabel();
+        jPanel5 = new javax.swing.JPanel();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+        jTextField_Producto_CP_nombre = new javax.swing.JTextField();
+        jTextField_Producto_CP_descripcion = new javax.swing.JTextField();
+        jSlider1 = new javax.swing.JSlider();
+        jTextField_Producto_CP_unidades = new javax.swing.JTextField();
+        jTextField_Producto_CP_precio = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        jLabel_Producto_CP_Mensaje = new javax.swing.JLabel();
         jTabbedPane5 = new javax.swing.JTabbedPane();
         jTabbedPane6 = new javax.swing.JTabbedPane();
+        jTabbedPane4 = new javax.swing.JTabbedPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -187,7 +201,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                     .addComponent(montoPrestamoNuevoCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(46, 46, 46)
                 .addComponent(botonAgregarNuevoCliente)
-                .addContainerGap(159, Short.MAX_VALUE))
+                .addContainerGap(153, Short.MAX_VALUE))
         );
 
         jTabbedPane3.addTab("Crear clientes", jPanel1);
@@ -295,47 +309,125 @@ public class InterfazPrincipal extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Clientes", jTabbedPane3);
 
-        jButton1.setText("jButton1");
-
-        jButton2.setText("jButton2");
-
-        jButton3.setText("jButton3");
-
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(397, Short.MAX_VALUE)
-                .addComponent(jButton2)
-                .addGap(316, 316, 316))
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(238, 238, 238)
-                        .addComponent(jButton1))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(96, 96, 96)
-                        .addComponent(jButton3)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGap(0, 786, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(54, 54, 54)
-                .addComponent(jButton1)
-                .addGap(39, 39, 39)
-                .addComponent(jButton2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton3)
-                .addContainerGap(248, Short.MAX_VALUE))
+            .addGap(0, 426, Short.MAX_VALUE)
         );
 
-        jTabbedPane4.addTab("tab1", jPanel3);
+        jTabbedPane7.addTab("Consultar Producto", jPanel3);
 
-        jTabbedPane1.addTab("Productos", jTabbedPane4);
+        jLabel14.setText("NUEVO PRODUCTO");
+
+        jPanel5.setBorder(new javax.swing.border.MatteBorder(null));
+
+        jLabel15.setText("NOMBRE");
+
+        jLabel16.setText("DESCRIPCION");
+
+        jLabel17.setText("UNIDADES");
+
+        jLabel18.setText("PRECIO");
+
+        jTextField_Producto_CP_unidades.setEditable(false);
+        jTextField_Producto_CP_unidades.setText("1");
+
+        jButton1.setText("Crear");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel15)
+                            .addComponent(jLabel16)
+                            .addComponent(jLabel17)
+                            .addComponent(jLabel18))
+                        .addGap(23, 23, 23)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextField_Producto_CP_nombre)
+                            .addComponent(jTextField_Producto_CP_descripcion)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jTextField_Producto_CP_precio, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jTextField_Producto_CP_unidades, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jLabel_Producto_CP_Mensaje, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel15)
+                    .addComponent(jTextField_Producto_CP_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel16)
+                    .addComponent(jTextField_Producto_CP_descripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jTextField_Producto_CP_unidades, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel17)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel18)
+                    .addComponent(jTextField_Producto_CP_precio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                .addComponent(jLabel_Producto_CP_Mensaje, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1)
+                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(289, Short.MAX_VALUE))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(jLabel14)
+                .addGap(18, 18, 18)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(166, Short.MAX_VALUE))
+        );
+
+        jTabbedPane7.addTab("Nuevo Producto", jPanel4);
+
+        jTabbedPane1.addTab("Productos", jTabbedPane7);
         jTabbedPane1.addTab("Reportes", jTabbedPane5);
         jTabbedPane1.addTab("Administración", jTabbedPane6);
+        jTabbedPane1.addTab("Elimnar tab", jTabbedPane4);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -363,41 +455,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void botonAgregarNuevoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAgregarNuevoClienteActionPerformed
-        // TODO add your handling code here:
-        String identificacionStringNuevoCliente = identificacionNuevoCliente.getText();
-        String nombreEnviarNuevoCliente = nombreNuevoCliente.getText();
-        String telefonoEnviarNuevoCliente = telefonoNuevoCliente.getText();
-        String celularEnviarNuevoCliente = celularNuevoCliente.getText();
-        String direccionEnviarNuevoCliente = DireccionNuevoCliente.getText();
-        String montoAPrestarEnviarNuevoCliente = montoPrestamoNuevoCliente.getText();
-        String tipoIdentificacionNuevoCliente = (String) tipoIdentificacionCliente.getSelectedItem();
-
-        try {
-
-            int identificacionIntNuevoCliente = Integer.parseInt(identificacionStringNuevoCliente);
-            double montoAPrestarEnviarIntNuevoCliente = Double.parseDouble(montoAPrestarEnviarNuevoCliente);
-            ControladorCliente controladorCliente = new ControladorCliente();
-            controladorCliente.agregarCliente(identificacionIntNuevoCliente, tipoIdentificacionNuevoCliente, nombreEnviarNuevoCliente, telefonoEnviarNuevoCliente, celularEnviarNuevoCliente, direccionEnviarNuevoCliente, montoAPrestarEnviarIntNuevoCliente);
-
-            JOptionPane.showMessageDialog(null, "Cliente creado exitosamente");
-            identificacionNuevoCliente.setText("");
-            nombreNuevoCliente.setText("");
-            telefonoNuevoCliente.setText("");
-            celularNuevoCliente.setText("");
-            DireccionNuevoCliente.setText("");
-            montoPrestamoNuevoCliente.setText("");
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "La identificación y el monto deben ser numéricos, por favor ingrese correctamente los datos", "Error", JOptionPane.ERROR_MESSAGE);
-
-        }
-    }//GEN-LAST:event_botonAgregarNuevoClienteActionPerformed
-
-    private void nombreNuevoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nombreNuevoClienteActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_nombreNuevoClienteActionPerformed
 
     private void BotonBuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonBuscarClienteActionPerformed
         // TODO add your handling code here:
@@ -431,8 +488,71 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "La identificación debe ser numérica, por favor ingrese correctamente el dato", "Error", JOptionPane.ERROR_MESSAGE);
         }
-
     }//GEN-LAST:event_BotonBuscarClienteActionPerformed
+
+    private void nombreNuevoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nombreNuevoClienteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nombreNuevoClienteActionPerformed
+
+    private void botonAgregarNuevoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAgregarNuevoClienteActionPerformed
+        // TODO add your handling code here:
+        String identificacionStringNuevoCliente = identificacionNuevoCliente.getText();
+        String nombreEnviarNuevoCliente = nombreNuevoCliente.getText();
+        String telefonoEnviarNuevoCliente = telefonoNuevoCliente.getText();
+        String celularEnviarNuevoCliente = celularNuevoCliente.getText();
+        String direccionEnviarNuevoCliente = DireccionNuevoCliente.getText();
+        String montoAPrestarEnviarNuevoCliente = montoPrestamoNuevoCliente.getText();
+        String tipoIdentificacionNuevoCliente = (String) tipoIdentificacionCliente.getSelectedItem();
+
+        try {
+
+            int identificacionIntNuevoCliente = Integer.parseInt(identificacionStringNuevoCliente);
+            double montoAPrestarEnviarIntNuevoCliente = Double.parseDouble(montoAPrestarEnviarNuevoCliente);
+            ControladorCliente controladorCliente = new ControladorCliente();
+            controladorCliente.agregarCliente(identificacionIntNuevoCliente, tipoIdentificacionNuevoCliente, nombreEnviarNuevoCliente, telefonoEnviarNuevoCliente, celularEnviarNuevoCliente, direccionEnviarNuevoCliente, montoAPrestarEnviarIntNuevoCliente);
+
+            JOptionPane.showMessageDialog(null, "Cliente creado exitosamente");
+            identificacionNuevoCliente.setText("");
+            nombreNuevoCliente.setText("");
+            telefonoNuevoCliente.setText("");
+            celularNuevoCliente.setText("");
+            DireccionNuevoCliente.setText("");
+            montoPrestamoNuevoCliente.setText("");
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "La identificación y el monto deben ser numéricos, por favor ingrese correctamente los datos", "Error", JOptionPane.ERROR_MESSAGE);
+
+        }
+    }//GEN-LAST:event_botonAgregarNuevoClienteActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String nombre = jTextField_Producto_CP_nombre.getText();
+        String descripcion = jTextField_Producto_CP_descripcion.getText();
+        String unidades = jTextField_Producto_CP_unidades.getText();
+        String precio = jTextField_Producto_CP_precio.getText();
+        if(nombre.equals("")|| descripcion.equals("") ||unidades.equals("")||precio.equals("") )
+        {
+            jLabel_Producto_CP_Mensaje.setForeground(Color.red);
+            jLabel_Producto_CP_Mensaje.setText("No dejar campos vacios");
+        }
+        else
+        {
+            try {
+                Double.parseDouble(precio);
+
+            } catch (NumberFormatException nfe){
+                jLabel_Producto_CP_Mensaje.setForeground(Color.red);
+                jLabel_Producto_CP_Mensaje.setText("Precio debe ser un Numero");
+                return;
+            }
+            jLabel_Producto_CP_Mensaje.setForeground(Color.blue);
+            jLabel_Producto_CP_Mensaje.setText("CreaciÃ³n exitosa");
+            String [] value = {nombre , descripcion , unidades , precio};
+            controladorProducto cp = new controladorProducto();
+            cp.insertProduct(value);
+        }
+
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -478,13 +598,16 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JTextField identificacionClienteBusqueda;
     private javax.swing.JTextField identificacionNuevoCliente;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -493,16 +616,25 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLabel_Producto_CP_Mensaje;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSlider jSlider1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JTabbedPane jTabbedPane3;
     private javax.swing.JTabbedPane jTabbedPane4;
     private javax.swing.JTabbedPane jTabbedPane5;
     private javax.swing.JTabbedPane jTabbedPane6;
+    private javax.swing.JTabbedPane jTabbedPane7;
+    private javax.swing.JTextField jTextField_Producto_CP_descripcion;
+    private javax.swing.JTextField jTextField_Producto_CP_nombre;
+    private javax.swing.JTextField jTextField_Producto_CP_precio;
+    private javax.swing.JTextField jTextField_Producto_CP_unidades;
     private javax.swing.JTextField montoPrestamoNuevoCliente;
     private javax.swing.JTextField nombreClienteBusqueda;
     private javax.swing.JTextField nombreNuevoCliente;
