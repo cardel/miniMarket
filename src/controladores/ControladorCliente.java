@@ -101,7 +101,25 @@ public class ControladorCliente {
         return true;
 
     }
-    
+      public boolean editarCliente(Cliente cliente) {
+        int cliente_id = cliente.getCliente_id();
+        String tipo_cliente_id = cliente.getTipo_cliente_id();
+        String nombre = cliente.getNombre();
+        String numero_telefono = cliente.getNumero_telefono();
+        String numero_celular = cliente.getNumero_celular();
+        String direccion = cliente.getDireccion();
+        double monto_prestamo = cliente.getMonto_prestamo();
+        //cliente_id Es la identificación.
+        String selection[] = {"cliente_id", "tipo_id_cliente", "nombre", "numero_de_telefono", "numero_celular", "direccion", "monto_prestamo"};
+        String value[] = {String.valueOf(cliente_id), tipo_cliente_id, nombre, numero_telefono, numero_celular, direccion, String.valueOf(monto_prestamo)};
+        String type_value[] = {"int", "varchar", "varchar", "varchar", "varchar", "varchar", "int"};
+
+        String table = "Cliente";
+        String condition = " where cliente_id=" + cliente_id;
+        sQLManager.update_query(selection, value, type_value, table, condition);
+        return true;
+
+    }  
     public boolean agregarCliente(int cliente_id, String tipo_cliente_id, String nombre, String numero_telefono, String numero_celular, String direccion, double monto_prestamo) {
         //cliente_id Es la identificación.
         String selection[] = {"cliente_id", "tipo_id_cliente", "nombre", "numero_de_telefono", "numero_celular", "direccion", "monto_prestamo"};

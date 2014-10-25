@@ -189,6 +189,7 @@ public class SQLManager {
             }
         }
         query += condition;
+        System.out.println(query);
         try {
             ps = conn.prepareStatement(query);
             ps.executeUpdate();
