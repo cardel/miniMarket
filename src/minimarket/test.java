@@ -26,8 +26,8 @@ public class test {
     {
         //SELECT
         controladorProducto cp = new controladorProducto();
-        Productos producto = cp.getProducto(" Where producto_id = 1 ");
-        System.out.println(producto.getNombre());
+        //Productos producto = cp.getProducto(" Where producto_id = 1 ");
+        //System.out.println(producto.getNombre());
         //INSERT
         String [] value_for_insert = {"Limon","acido","2","5000"};
         cp.insertProduct(value_for_insert);

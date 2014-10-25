@@ -23,17 +23,30 @@ public class controladorProducto {
         sqlManager = new SQLManager();
     }
     
-    public Productos getProducto(String restriction)
+    public ArrayList<Productos> getProducto(String restriction)
     {
         String [] selection = {"producto_id","nombre","descripcion","unidades","precio"};
         String [] selection_type = {"int","varchar","varchar","int","double"};
         String table = "Producto";
         
         ArrayList<String[]> resultSet = sqlManager.select_query(selection, selection_type, table, restriction);
-        String [] result = resultSet.get(0);
-        Productos producto = new Productos(Integer.parseInt(result[0]),result[1],result[2],Integer.parseInt(result[3]),Double.parseDouble(result[4]));
         
-        return producto;
+        ArrayList<Productos> listaDeProductos = new ArrayList<>();
+        //Pendiente
+
+        for (int i = 0; i < resultSet.size(); i++) {
+            String[] resultado = resultSet.get(i);
+            int producto_id = Integer.parseInt(resultado[0]);
+            String nombre = resultado[1];
+            String descripcion = resultado[2];
+            int unidades = Integer.parseInt(resultado[3]);
+            double precio = Double.parseDouble(resultado[4]);
+            Productos producto = new Productos(producto_id, nombre, descripcion, unidades, precio);
+            listaDeProductos.add(producto);
+
+        }
+        
+        return listaDeProductos;
     }
      public ArrayList<String[]> insertProduct(String [] value)
      {

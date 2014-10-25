@@ -8,6 +8,7 @@ package interfaces;
 import controladores.ControladorCliente;
 import controladores.controladorProducto;
 import entidades.Cliente;
+import entidades.Productos;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -78,6 +79,18 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         BotonBuscarCliente = new javax.swing.JButton();
         jTabbedPane7 = new javax.swing.JTabbedPane();
         jPanel3 = new javax.swing.JPanel();
+        jPanel6 = new javax.swing.JPanel();
+        jLabel19 = new javax.swing.JLabel();
+        jTextField_Producto_Con_Nombre = new javax.swing.JTextField();
+        jLabel20 = new javax.swing.JLabel();
+        jTextField_Producto_Con_Descripcion = new javax.swing.JTextField();
+        jLabel21 = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
+        jTextField_Producto_Con_Unidades = new javax.swing.JTextField();
+        jTextField4 = new javax.swing.JTextField();
+        jButton2 = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        TablaDeProductos = new javax.swing.JTable();
         jPanel4 = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
@@ -324,15 +337,112 @@ public class InterfazPrincipal extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Clientes", jTabbedPane3);
 
+        jPanel6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        jLabel19.setText("Nombre");
+
+        jLabel20.setText("Descripcion");
+
+        jLabel21.setText("Unidades");
+
+        jLabel22.setText("Precio");
+
+        jButton2.setText("Buscar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton2)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addComponent(jLabel19)
+                                .addGap(28, 28, 28)
+                                .addComponent(jTextField_Producto_Con_Nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addComponent(jLabel20)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jTextField_Producto_Con_Descripcion)))
+                        .addGap(34, 34, 34)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel21)
+                            .addComponent(jLabel22))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jTextField_Producto_Con_Unidades)
+                            .addComponent(jTextField4, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel19)
+                    .addComponent(jTextField_Producto_Con_Nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel21)
+                    .addComponent(jTextField_Producto_Con_Unidades, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel20)
+                    .addComponent(jTextField_Producto_Con_Descripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel22)
+                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jButton2)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        TablaDeProductos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Identificación", "Nombre", "Monto prestado", "Editar"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        TablaDeProductos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TablaDeProductosMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(TablaDeProductos);
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 786, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 766, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 426, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jTabbedPane7.addTab("Consultar Producto", jPanel3);
@@ -689,6 +799,117 @@ public class InterfazPrincipal extends javax.swing.JFrame {
          buttonColumn.setMnemonic(KeyEvent.VK_E);*/
     }//GEN-LAST:event_TablaDeClientesMouseClicked
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        String nombre = jTextField_Producto_Con_Nombre.getText();
+        String descripcion = jTextField_Producto_Con_Descripcion.getText();
+        String unidades_string = jTextField_Producto_Con_Unidades.getText();
+        String precio_string = jTextField4.getText();
+        
+        int unidades = 0;
+        double precio = 0;
+        try {
+            if (!unidades_string.equals("")) {
+                unidades = Integer.parseInt(unidades_string);
+            }
+            if (!precio_string.equals("")) {
+                precio = Double.parseDouble(precio_string);
+            }
+
+            controladorProducto controladorPro = new controladorProducto();
+            String restriccion ="";
+            
+            boolean encounter = true;
+            
+            
+            if (!nombre.equals(""))
+            {
+                if(encounter)
+                {
+                    encounter=false;
+                    restriccion = " where ";
+                }
+                else 
+                    restriccion+= " OR ";
+                
+                restriccion += " nombre like '%" + nombre + "%'";
+            }
+                
+            
+            if (!descripcion.equals(""))
+            {
+                if(encounter)
+                {
+                    encounter=false;
+                    restriccion = " where ";
+                }
+                else 
+                    restriccion+= " OR ";
+                
+                restriccion += " descripcion like '%" + descripcion + "%'";
+            }
+            
+            if (!unidades_string.equals(""))
+            {
+                if(encounter)
+                {
+                    encounter=false;
+                    restriccion = " where ";
+                }
+                else 
+                    restriccion+= " OR ";
+                
+                restriccion += " unidades =" + unidades;
+            }
+            
+            if (!precio_string.equals(""))
+            {
+                if(encounter)
+                {
+                    encounter=false;
+                    restriccion = " where ";
+                }
+                else 
+                    restriccion+= " OR ";
+                
+                restriccion += " precio =" + precio;
+            }
+            
+            ArrayList<Productos> listaDeProductos = controladorPro.getProducto(restriccion);
+
+            //Agregar filas
+            DefaultTableModel modelo = (DefaultTableModel) TablaDeProductos.getModel();
+            
+            if (modelo.getRowCount() > 0) {
+                for (int i = modelo.getRowCount() - 1; i > -1; i--) {
+                    modelo.removeRow(i);
+                }
+            }
+
+            for (int i = 0; i < listaDeProductos.size(); i++) {
+                Productos producto = listaDeProductos.get(i);
+                Object[] fila = new Object[6];
+                fila[0] = (i+1);
+                fila[1] = producto.getProductoId();
+                fila[2] = producto.getNombre();
+                fila[3] = producto.getDescripcion();
+                fila[4] = producto.getUnidadesDisponibles();
+                fila[5] = producto.getPrecio();
+                
+                modelo.addRow(fila);
+
+            }
+
+            TablaDeProductos.setModel(modelo);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "La identificación debe ser numérica, por favor ingrese correctamente el dato", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void TablaDeProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaDeProductosMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TablaDeProductosMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -728,11 +949,13 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton BotonBuscarCliente;
     private javax.swing.JTextField DireccionNuevoCliente;
     private javax.swing.JTable TablaDeClientes;
+    private javax.swing.JTable TablaDeProductos;
     private javax.swing.JButton botonAgregarNuevoCliente;
     private javax.swing.JTextField celularNuevoCliente;
     private javax.swing.JTextField identificacionClienteBusqueda;
     private javax.swing.JTextField identificacionNuevoCliente;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -743,7 +966,11 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -757,7 +984,9 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSlider jSlider1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
@@ -766,10 +995,14 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JTabbedPane jTabbedPane5;
     private javax.swing.JTabbedPane jTabbedPane6;
     private javax.swing.JTabbedPane jTabbedPane7;
+    private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField_Producto_CP_descripcion;
     private javax.swing.JTextField jTextField_Producto_CP_nombre;
     private javax.swing.JTextField jTextField_Producto_CP_precio;
     private javax.swing.JTextField jTextField_Producto_CP_unidades;
+    private javax.swing.JTextField jTextField_Producto_Con_Descripcion;
+    private javax.swing.JTextField jTextField_Producto_Con_Nombre;
+    private javax.swing.JTextField jTextField_Producto_Con_Unidades;
     private javax.swing.JTextField montoPrestamoNuevoCliente;
     private javax.swing.JTextField nombreClienteBusqueda;
     private javax.swing.JTextField nombreNuevoCliente;
