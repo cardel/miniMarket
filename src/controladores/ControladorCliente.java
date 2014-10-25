@@ -58,13 +58,13 @@ public class ControladorCliente {
 
         String restriction = "";
         if (nombreVacio && identificacionVacia) {
-            restriction = " where nombre=\"" + nombreIn + "\" and cliente_id="+identificacion;
+            restriction = " where nombre like \"%" + nombreIn + "%\" and cliente_id="+identificacion;
         }
         if (!nombreVacio && identificacionVacia) {
-            restriction = " where cliente_id="+identificacion;
+            restriction = " where cliente_id like "+identificacion;
         }
         if (nombreVacio && !identificacionVacia) {
-            restriction = " where nombre=\"" + nombreIn+ "\"";
+            restriction = " where nombre like \"%" + nombreIn+ "%\"";
         }
 
         ArrayList<String[]> resultadoSet = sQLManager.select_query(selection, selection_type, table, restriction);

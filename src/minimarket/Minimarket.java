@@ -30,7 +30,7 @@ public class Minimarket {
         } catch (Exception e) {
         }
         InicioAplicacion aplicacion = new InicioAplicacion();
-        aplicacion.show();
+        aplicacion.setVisible(true);
         
     }
 

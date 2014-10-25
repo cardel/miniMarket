@@ -9,8 +9,18 @@ import controladores.ControladorCliente;
 import controladores.controladorProducto;
 import entidades.Cliente;
 import java.awt.Color;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.util.ArrayList;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -220,6 +230,11 @@ public class InterfazPrincipal extends javax.swing.JFrame {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        TablaDeClientes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TablaDeClientesMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(TablaDeClientes);
@@ -473,12 +488,18 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             //Agregar filas
             DefaultTableModel modelo = (DefaultTableModel) TablaDeClientes.getModel();
 
+            for (int i = 0; i < modelo.getRowCount(); i++) {
+                modelo.removeRow(i);
+            }
+            modelo.setRowCount(0);
             for (int i = 0; i < listaDeClientes.size(); i++) {
                 Cliente cliente = listaDeClientes.get(i);
                 Object[] fila = new Object[4];
                 fila[0] = cliente.getCliente_id();
                 fila[1] = cliente.getNombre();
                 fila[2] = cliente.getMonto_prestamo();
+                //button.setText("<HTML>Click the <FONT color=\"#000099\"><U>link "+i+"</U></FONT>"+ " to go to the Java website.</HTML>");
+
                 fila[3] = "Editar";
                 modelo.addRow(fila);
 
@@ -530,29 +551,143 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         String descripcion = jTextField_Producto_CP_descripcion.getText();
         String unidades = jTextField_Producto_CP_unidades.getText();
         String precio = jTextField_Producto_CP_precio.getText();
-        if(nombre.equals("")|| descripcion.equals("") ||unidades.equals("")||precio.equals("") )
-        {
+        if (nombre.equals("") || descripcion.equals("") || unidades.equals("") || precio.equals("")) {
             jLabel_Producto_CP_Mensaje.setForeground(Color.red);
             jLabel_Producto_CP_Mensaje.setText("No dejar campos vacios");
-        }
-        else
-        {
+        } else {
             try {
                 Double.parseDouble(precio);
 
-            } catch (NumberFormatException nfe){
+            } catch (NumberFormatException nfe) {
                 jLabel_Producto_CP_Mensaje.setForeground(Color.red);
                 jLabel_Producto_CP_Mensaje.setText("Precio debe ser un Numero");
                 return;
             }
             jLabel_Producto_CP_Mensaje.setForeground(Color.blue);
             jLabel_Producto_CP_Mensaje.setText("CreaciÃ³n exitosa");
-            String [] value = {nombre , descripcion , unidades , precio};
+            String[] value = {nombre, descripcion, unidades, precio};
             controladorProducto cp = new controladorProducto();
             cp.insertProduct(value);
         }
 
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void TablaDeClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaDeClientesMouseClicked
+        // TODO add your handling code here:
+        JDialog dialogoEditar = new JDialog(this);
+        Container contenedor = new Container();
+
+        dialogoEditar.setTitle("Editar clientes");
+        dialogoEditar.setSize(500, 300);
+        dialogoEditar.setResizable(false);
+
+        JPanel panelDialogo = new JPanel();
+
+        panelDialogo.setLayout(new GridBagLayout());
+
+        GridBagConstraints c = new GridBagConstraints();
+        c.anchor = GridBagConstraints.CENTER;
+
+        JLabel editarTextoPrincipalDialogo = new JLabel("Editar clientes");
+        c.gridx = 0;
+        c.gridy = 0;
+        c.weightx = 6;
+
+        Font textoGrande = new Font("Arial", 1, 18);
+        editarTextoPrincipalDialogo.setFont(textoGrande);
+        panelDialogo.add(editarTextoPrincipalDialogo, c);
+
+        c.gridx = 0;
+        c.gridy = 1;
+        c.weightx = 1;
+        JLabel editarNombreClienteDialogo = new JLabel("Nombre:");
+        panelDialogo.add(editarNombreClienteDialogo, c);
+
+        c.gridx = 1;
+        c.gridy = 1;
+        c.weightx = 2;
+        JTextField valorEditarNombreClienteDialogo = new JTextField(16);
+        panelDialogo.add(valorEditarNombreClienteDialogo, c);
+        c.gridx = 0;
+        c.gridy = 2;
+        c.weightx = 1;
+        JLabel editarAddressClienteDialogo = new JLabel("Dirección:");
+        panelDialogo.add(editarAddressClienteDialogo, c);
+
+        c.gridx = 1;
+        c.gridy = 2;
+        c.weightx = 2;
+        JTextField valorEditarAddressClienteDialogo = new JTextField();
+        valorEditarAddressClienteDialogo.setSize(259, valorEditarAddressClienteDialogo.getHeight());
+        panelDialogo.add(valorEditarAddressClienteDialogo, c);
+
+        c.gridx = 0;
+        c.gridy = 3;
+        c.weightx = 1;
+        JLabel editarMontoClienteDialogo = new JLabel("Monto a prestar:");
+        panelDialogo.add(editarMontoClienteDialogo, c);
+
+        c.gridx = 1;
+        c.gridy = 3;
+        c.weightx = 2;
+        JTextField valorEditarMontoClienteDialogo = new JTextField();
+        valorEditarMontoClienteDialogo.setSize(259, valorEditarMontoClienteDialogo.getHeight());
+        panelDialogo.add(valorEditarMontoClienteDialogo, c);
+
+        c.gridx = 3;
+        c.gridy = 1;
+        c.weightx = 1;
+        JLabel editarTelefonoClienteDialogo = new JLabel("Telefono:");
+        panelDialogo.add(editarTelefonoClienteDialogo, c);
+
+        c.gridx = 4;
+        c.gridy = 1;
+        c.weightx = 2;
+        JTextField valorEditarTelefonoClienteDialogo = new JTextField();
+        valorEditarTelefonoClienteDialogo.setSize(259, valorEditarTelefonoClienteDialogo.getHeight());
+        panelDialogo.add(valorEditarTelefonoClienteDialogo, c);
+
+        c.gridx = 3;
+        c.gridy = 2;
+        c.weightx = 1;
+        JLabel editarCelularClienteDialogo = new JLabel("Celular:");
+        panelDialogo.add(editarCelularClienteDialogo, c);
+
+        c.gridx = 4;
+        c.gridy = 2;
+        c.weightx = 2;
+        JTextField valorEditarCelularClienteDialogo = new JTextField(0);
+        valorEditarCelularClienteDialogo.setSize(259, valorEditarCelularClienteDialogo.getHeight());
+
+        panelDialogo.add(valorEditarCelularClienteDialogo, c);
+
+        c.gridx = 0;
+        c.gridy = 4;
+        c.weightx = 3;
+        JButton botonGuardarClienteDialogo = new JButton("Guardar");
+        panelDialogo.add(botonGuardarClienteDialogo, c);
+
+        c.gridx = 2;
+        c.gridy = 4;
+        c.weightx = 3;
+        JButton botonCerrarClienteDialogo = new JButton("Cancelar");
+        panelDialogo.add(botonCerrarClienteDialogo, c);
+
+        dialogoEditar.add(panelDialogo);
+
+        dialogoEditar.setVisible(true);
+        /*Action mostrarMensaje;
+         mostrarMensaje = new AbstractAction() {
+         @Override
+         public void actionPerformed(ActionEvent e) {
+         JTable table = (JTable) e.getSource();
+         int modelRow = Integer.valueOf(e.getActionCommand());
+         ((DefaultTableModel) table.getModel()).removeRow(modelRow);
+         }
+         };
+         ButtonColumn buttonColumn = new ButtonColumn(TablaDeClientes, mostrarMensaje, 3);
+         buttonColumn.setMnemonic(KeyEvent.VK_E);*/
+    }//GEN-LAST:event_TablaDeClientesMouseClicked
 
     /**
      * @param args the command line arguments
