@@ -177,8 +177,9 @@ public class SQLManager {
 
     public void update_query(String[] selection, String[] value, String[] type_value, String table, String condition) {
         String query = "UPDATE " + table + " ";
+        query += " SET ";
         for (int i = 0; i < selection.length; i++) {
-            query += " SET " + selection[i] + " = ";
+            query +=selection[i] + " = ";
             if (type_value[i] == "int" || type_value[i] == "double") {
                 query += value[i] + " ";
             } else {

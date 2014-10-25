@@ -591,14 +591,14 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             if (!identificacionCliente.equals("")) {
                 identificacionClienteInt = Integer.parseInt(identificacionCliente);
             }
-            
+
             ControladorCliente controladorCliente = new ControladorCliente();
-            
+
             ArrayList<Cliente> listaDeClientes = controladorCliente.obtenerClientes(nombreCliente, identificacionClienteInt);
 
             //Agregar filas
             DefaultTableModel modelo = (DefaultTableModel) TablaDeClientes.getModel();
-            
+
             for (int i = 0; i < modelo.getRowCount(); i++) {
                 modelo.removeRow(i);
             }
@@ -613,9 +613,9 @@ public class InterfazPrincipal extends javax.swing.JFrame {
 
                 fila[3] = "Editar";
                 modelo.addRow(fila);
-                
+
             }
-            
+
             TablaDeClientes.setModel(modelo);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "La identificación debe ser numérica, por favor ingrese correctamente el dato", "Error", JOptionPane.ERROR_MESSAGE);
@@ -635,14 +635,14 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         String direccionEnviarNuevoCliente = DireccionNuevoCliente.getText();
         String montoAPrestarEnviarNuevoCliente = montoPrestamoNuevoCliente.getText();
         String tipoIdentificacionNuevoCliente = (String) tipoIdentificacionCliente.getSelectedItem();
-        
+
         try {
-            
+
             int identificacionIntNuevoCliente = Integer.parseInt(identificacionStringNuevoCliente);
             double montoAPrestarEnviarIntNuevoCliente = Double.parseDouble(montoAPrestarEnviarNuevoCliente);
             ControladorCliente controladorCliente = new ControladorCliente();
             controladorCliente.agregarCliente(identificacionIntNuevoCliente, tipoIdentificacionNuevoCliente, nombreEnviarNuevoCliente, telefonoEnviarNuevoCliente, celularEnviarNuevoCliente, direccionEnviarNuevoCliente, montoAPrestarEnviarIntNuevoCliente);
-            
+
             JOptionPane.showMessageDialog(null, "Cliente creado exitosamente");
             identificacionNuevoCliente.setText("");
             nombreNuevoCliente.setText("");
@@ -650,10 +650,10 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             celularNuevoCliente.setText("");
             DireccionNuevoCliente.setText("");
             montoPrestamoNuevoCliente.setText("");
-            
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "La identificación y el monto deben ser numéricos, por favor ingrese correctamente los datos", "Error", JOptionPane.ERROR_MESSAGE);
-            
+
         }
     }//GEN-LAST:event_botonAgregarNuevoClienteActionPerformed
 
@@ -668,7 +668,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         } else {
             try {
                 Double.parseDouble(precio);
-                
+
             } catch (NumberFormatException nfe) {
                 jLabel_Producto_CP_Mensaje.setForeground(Color.red);
                 jLabel_Producto_CP_Mensaje.setText("Precio debe ser un Numero");
@@ -687,24 +687,24 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         int fila = TablaDeClientes.getSelectedRow();
         int identificacion = (int) TablaDeClientes.getValueAt(fila, 0);
-        
+
         final ControladorCliente controladorCliente = new ControladorCliente();
         ArrayList<Cliente> listaClientes = controladorCliente.obtenerClientes("", identificacion);
         final Cliente clienteActual = listaClientes.get(0);
-        
+
         final JDialog dialogoEditar = new JDialog(this);
-        
+
         dialogoEditar.setTitle("Editar clientes");
         dialogoEditar.setSize(600, 310);
         dialogoEditar.setResizable(false);
-        
+
         JPanel panelDialogo = new JPanel();
-        
+
         panelDialogo.setLayout(new GridBagLayout());
-        
+
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.HORIZONTAL;
-        
+
         JLabel editarTextoPrincipalDialogo = new JLabel("Editar clientes");
         c.gridx = 0;
         c.gridy = 0;
@@ -714,7 +714,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         Font textoGrande = new Font("Arial", 1, 18);
         editarTextoPrincipalDialogo.setFont(textoGrande);
         panelDialogo.add(editarTextoPrincipalDialogo, c);
-        
+
         c.insets = new Insets(0, 5, 10, 0);
         c.gridx = 0;
         c.gridy = 1;
@@ -722,7 +722,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         c.ipadx = 40;
         JLabel editarNombreClienteDialogo = new JLabel("Nombre:");
         panelDialogo.add(editarNombreClienteDialogo, c);
-        
+
         c.gridx = 1;
         c.gridy = 1;
         c.gridwidth = 1;
@@ -731,7 +731,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         final JTextField valorEditarNombreClienteDialogo = new JTextField();
         valorEditarNombreClienteDialogo.setText(clienteActual.getNombre());
         panelDialogo.add(valorEditarNombreClienteDialogo, c);
-        
+
         c.gridx = 0;
         c.gridy = 2;
         c.gridwidth = 1;
@@ -739,13 +739,13 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         c.insets = new Insets(0, 5, 10, 0);
         JLabel editarCelularClienteDialogo = new JLabel("Celular:");
         panelDialogo.add(editarCelularClienteDialogo, c);
-        
+
         c.gridx = 1;
         c.gridy = 2;
         c.gridwidth = 1;
         c.ipadx = 100;
         c.insets = new Insets(0, 15, 10, 15);
-        
+
         final JTextField valorEditarCelularClienteDialogo = new JTextField();
         valorEditarCelularClienteDialogo.setText(clienteActual.getNumero_celular());
         panelDialogo.add(valorEditarCelularClienteDialogo, c);
@@ -756,7 +756,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         c.insets = new Insets(0, 5, 10, 0);
         JLabel editarMontoClienteDialogo = new JLabel("Monto a prestar:");
         panelDialogo.add(editarMontoClienteDialogo, c);
-        
+
         c.gridx = 3;
         c.gridy = 2;
         c.gridwidth = 1;
@@ -765,7 +765,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         final JTextField valorEditarMontoClienteDialogo = new JTextField();
         valorEditarMontoClienteDialogo.setText(String.valueOf(clienteActual.getMonto_prestamo()));
         panelDialogo.add(valorEditarMontoClienteDialogo, c);
-        
+
         c.gridx = 2;
         c.gridy = 1;
         c.gridwidth = 1;
@@ -773,7 +773,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         c.insets = new Insets(0, 15, 10, 0);
         JLabel editarTelefonoClienteDialogo = new JLabel("Telefono:");
         panelDialogo.add(editarTelefonoClienteDialogo, c);
-        
+
         c.gridx = 3;
         c.gridy = 1;
         c.gridwidth = 1;
@@ -782,16 +782,16 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         final JTextField valorEditarTelefonoClienteDialogo = new JTextField();
         valorEditarTelefonoClienteDialogo.setText(clienteActual.getNumero_telefono());
         panelDialogo.add(valorEditarTelefonoClienteDialogo, c);
-        
+
         c.gridx = 0;
         c.gridy = 3;
         c.gridwidth = 1;
         c.ipadx = 40;
         c.insets = new Insets(0, 0, 10, 0);
-        
+
         JLabel editarAddressClienteDialogo = new JLabel("Dirección:");
         panelDialogo.add(editarAddressClienteDialogo, c);
-        
+
         c.gridx = 1;
         c.gridy = 3;
         c.gridwidth = 3;
@@ -800,7 +800,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         final JTextField valorEditarAddressClienteDialogo = new JTextField();
         valorEditarAddressClienteDialogo.setText(clienteActual.getDireccion());
         panelDialogo.add(valorEditarAddressClienteDialogo, c);
-        
+
         c.gridx = 0;
         c.gridy = 4;
         c.gridwidth = 2;
@@ -808,50 +808,82 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         c.insets = new Insets(15, 40, 0, 0);
         JButton botonGuardarClienteDialogo = new JButton("Guardar");
         panelDialogo.add(botonGuardarClienteDialogo, c);
-        
+
         c.gridx = 2;
         c.gridy = 4;
         c.gridwidth = 2;
         c.insets = new Insets(15, 40, 0, 0);
         c.ipadx = 100;
-        
+
         JButton botonCerrarClienteDialogo = new JButton("Cancelar");
         panelDialogo.add(botonCerrarClienteDialogo, c);
-        
+
         dialogoEditar.add(panelDialogo);
-        
+
         botonCerrarClienteDialogo.addActionListener(new ActionListener() {
-            
+
             @Override
             public void actionPerformed(ActionEvent e) {
                 dialogoEditar.dispose();
             }
         });
-        
+
         botonGuardarClienteDialogo.addActionListener(new ActionListener() {
-            
+
             @Override
             public void actionPerformed(ActionEvent e) {
-                
+
                 try {
                     clienteActual.setDireccion(valorEditarAddressClienteDialogo.getText());
                     clienteActual.setMonto_prestamo(Double.parseDouble(valorEditarMontoClienteDialogo.getText()));
                     clienteActual.setNombre(valorEditarNombreClienteDialogo.getText());
                     clienteActual.setNumero_celular(valorEditarCelularClienteDialogo.getText());
                     clienteActual.setNumero_telefono(valorEditarTelefonoClienteDialogo.getText());
-                    
+
                     controladorCliente.editarCliente(clienteActual);
                     JOptionPane.showMessageDialog(dialogoEditar, "Se ha editado el cliente éxitosamente");
                     dialogoEditar.dispose();
+
+                    //Refrescar busqueda actual
+                    String nombreCliente = nombreClienteBusqueda.getText();
+
+                    int identificacionClienteInt = 0;
+
+                    ControladorCliente controladorCliente = new ControladorCliente();
+
+                    ArrayList<Cliente> listaDeClientes = controladorCliente.obtenerClientes(nombreCliente, identificacionClienteInt);
+
+                    //Agregar filas
+                    DefaultTableModel modelo = (DefaultTableModel) TablaDeClientes.getModel();
+
+                    for (int i = 0; i < modelo.getRowCount(); i++) {
+                        modelo.removeRow(i);
+                    }
+                    modelo.setRowCount(0);
+                    for (int i = 0; i < listaDeClientes.size(); i++) {
+                        Cliente cliente = listaDeClientes.get(i);
+                        Object[] fila = new Object[4];
+                        fila[0] = cliente.getCliente_id();
+                        fila[1] = cliente.getNombre();
+                        fila[2] = cliente.getMonto_prestamo();
+                        //button.setText("<HTML>Click the <FONT color=\"#000099\"><U>link "+i+"</U></FONT>"+ " to go to the Java website.</HTML>");
+
+                        fila[3] = "Editar";
+                        modelo.addRow(fila);
+
+                    }
+
+                    TablaDeClientes.setModel(modelo);
+
                 } catch (Exception event) {
-                    
+
                     JOptionPane.showMessageDialog(dialogoEditar, "El valor del monto debe ser numérico");
-                    
+
                 }
-                
+
             }
         });
-        
+
         dialogoEditar.setVisible(true);
         /*Action mostrarMensaje;
          mostrarMensaje = new AbstractAction() {
@@ -871,7 +903,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         String descripcion = jTextField_Producto_Con_Descripcion.getText();
         String unidades_string = jTextField_Producto_Con_Unidades.getText();
         String precio_string = jTextField4.getText();
-        
+
         int unidades = 0;
         double precio = 0;
         try {
@@ -883,69 +915,59 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             }
 
             controladorProducto controladorPro = new controladorProducto();
-            String restriccion ="";
-            
+            String restriccion = "";
+
             boolean encounter = true;
-            
-            
-            if (!nombre.equals(""))
-            {
-                if(encounter)
-                {
-                    encounter=false;
+
+            if (!nombre.equals("")) {
+                if (encounter) {
+                    encounter = false;
                     restriccion = " where ";
+                } else {
+                    restriccion += " OR ";
                 }
-                else 
-                    restriccion+= " OR ";
-                
+
                 restriccion += " nombre like '%" + nombre + "%'";
             }
-                
-            
-            if (!descripcion.equals(""))
-            {
-                if(encounter)
-                {
-                    encounter=false;
+
+            if (!descripcion.equals("")) {
+                if (encounter) {
+                    encounter = false;
                     restriccion = " where ";
+                } else {
+                    restriccion += " OR ";
                 }
-                else 
-                    restriccion+= " OR ";
-                
+
                 restriccion += " descripcion like '%" + descripcion + "%'";
             }
-            
-            if (!unidades_string.equals(""))
-            {
-                if(encounter)
-                {
-                    encounter=false;
+
+            if (!unidades_string.equals("")) {
+                if (encounter) {
+                    encounter = false;
                     restriccion = " where ";
+                } else {
+                    restriccion += " OR ";
                 }
-                else 
-                    restriccion+= " OR ";
-                
+
                 restriccion += " unidades =" + unidades;
             }
-            
-            if (!precio_string.equals(""))
-            {
-                if(encounter)
-                {
-                    encounter=false;
+
+            if (!precio_string.equals("")) {
+                if (encounter) {
+                    encounter = false;
                     restriccion = " where ";
+                } else {
+                    restriccion += " OR ";
                 }
-                else 
-                    restriccion+= " OR ";
-                
+
                 restriccion += " precio =" + precio;
             }
-            
+
             ArrayList<Productos> listaDeProductos = controladorPro.getProducto(restriccion);
 
             //Agregar filas
             DefaultTableModel modelo = (DefaultTableModel) TablaDeProductos.getModel();
-            
+
             if (modelo.getRowCount() > 0) {
                 for (int i = modelo.getRowCount() - 1; i > -1; i--) {
                     modelo.removeRow(i);
@@ -955,13 +977,13 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             for (int i = 0; i < listaDeProductos.size(); i++) {
                 Productos producto = listaDeProductos.get(i);
                 Object[] fila = new Object[6];
-                fila[0] = (i+1);
+                fila[0] = (i + 1);
                 fila[1] = producto.getProductoId();
                 fila[2] = producto.getNombre();
                 fila[3] = producto.getDescripcion();
                 fila[4] = producto.getUnidadesDisponibles();
                 fila[5] = producto.getPrecio();
-                
+
                 modelo.addRow(fila);
 
             }
@@ -970,7 +992,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "La identificación debe ser numérica, por favor ingrese correctamente el dato", "Error", JOptionPane.ERROR_MESSAGE);
         }
-        
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void TablaDeProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaDeProductosMouseClicked
