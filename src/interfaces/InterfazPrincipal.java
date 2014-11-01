@@ -408,11 +408,11 @@ public class InterfazPrincipal extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Identificación", "Nombre", "Monto prestado", "Editar"
+                "Numero", "Identificación", "Nombre", "Descripcion", "Unidades", "Precio"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                true, false, false, false, true, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -488,11 +488,10 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                             .addComponent(jTextField_Producto_CP_nombre)
                             .addComponent(jTextField_Producto_CP_descripcion)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jTextField_Producto_CP_precio, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField_Producto_CP_unidades, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(jTextField_Producto_CP_unidades)
+                                .addGap(18, 18, 18)
+                                .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jTextField_Producto_CP_precio)))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addComponent(jButton1)
                         .addGap(0, 0, Short.MAX_VALUE))
@@ -520,7 +519,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel18)
                     .addComponent(jTextField_Producto_CP_precio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel_Producto_CP_Mensaje, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
@@ -536,7 +535,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(289, Short.MAX_VALUE))
+                .addContainerGap(433, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -545,7 +544,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                 .addComponent(jLabel14)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(166, Short.MAX_VALUE))
+                .addContainerGap(165, Short.MAX_VALUE))
         );
 
         jTabbedPane7.addTab("Nuevo Producto", jPanel4);
@@ -983,7 +982,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                 fila[3] = producto.getDescripcion();
                 fila[4] = producto.getUnidadesDisponibles();
                 fila[5] = producto.getPrecio();
-
                 modelo.addRow(fila);
 
             }
@@ -997,6 +995,160 @@ public class InterfazPrincipal extends javax.swing.JFrame {
 
     private void TablaDeProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaDeProductosMouseClicked
         // TODO add your handling code here:
+        int fila = TablaDeProductos.getSelectedRow();
+        final int identificacion = (int) TablaDeProductos.getValueAt(fila, 0);
+
+        final controladorProducto controladorP = new controladorProducto();
+        ArrayList<Productos> listaProductos = controladorP.getProducto(" where producto_id = "+identificacion);
+        final Productos productoActual = listaProductos.get(0);
+
+        final JDialog dialogoEditar = new JDialog(this);
+
+        dialogoEditar.setTitle("Editar clientes");
+        dialogoEditar.setSize(600, 310);
+        dialogoEditar.setResizable(false);
+
+        JPanel panelDialogo = new JPanel();
+
+        panelDialogo.setLayout(new GridBagLayout());
+
+        GridBagConstraints c = new GridBagConstraints();
+        c.fill = GridBagConstraints.HORIZONTAL;
+
+        JLabel editarTextoPrincipalDialogo = new JLabel("Editar producto");
+        c.gridx = 0;
+        c.gridy = 0;
+        c.gridwidth = 4;
+        c.insets = new Insets(15, 200, 40, 0);
+        c.ipadx = 100;
+        Font textoGrande = new Font("Arial", 1, 18);
+        editarTextoPrincipalDialogo.setFont(textoGrande);
+        panelDialogo.add(editarTextoPrincipalDialogo, c);
+
+        c.insets = new Insets(0, 5, 10, 0);
+        c.gridx = 0;
+        c.gridy = 1;
+        c.gridwidth = 1;
+        c.ipadx = 40;
+        JLabel editarNombreClienteDialogo = new JLabel("Nombre:");
+        panelDialogo.add(editarNombreClienteDialogo, c);
+
+        c.gridx = 1;
+        c.gridy = 1;
+        c.gridwidth = 1;
+        c.ipadx = 100;
+        c.insets = new Insets(0, 15, 10, 15);
+        final JTextField valorEditarNombreClienteDialogo = new JTextField();
+        valorEditarNombreClienteDialogo.setText(productoActual.getNombre());
+        panelDialogo.add(valorEditarNombreClienteDialogo, c);
+
+        c.gridx = 0;
+        c.gridy = 2;
+        c.gridwidth = 1;
+        c.ipadx = 40;
+        c.insets = new Insets(0, 5, 10, 0);
+        JLabel editarCelularClienteDialogo = new JLabel("Descripcion:");
+        panelDialogo.add(editarCelularClienteDialogo, c);
+
+        c.gridx = 1;
+        c.gridy = 2;
+        c.gridwidth = 1;
+        c.ipadx = 100;
+        c.insets = new Insets(0, 15, 10, 15);
+
+        final JTextField valorEditarDescripcionProductoDialogo = new JTextField();
+        valorEditarDescripcionProductoDialogo.setText(productoActual.getDescripcion());
+        panelDialogo.add(valorEditarDescripcionProductoDialogo, c);
+        c.gridx = 2;
+        c.gridy = 2;
+        c.gridwidth = 1;
+        c.ipadx = 40;
+        c.insets = new Insets(0, 5, 10, 0);
+        JLabel editarMontoClienteDialogo = new JLabel("Unidades");
+        panelDialogo.add(editarMontoClienteDialogo, c);
+
+        c.gridx = 3;
+        c.gridy = 2;
+        c.gridwidth = 1;
+        c.ipadx = 100;
+        c.insets = new Insets(0, 15, 10, 15);
+        final JTextField valorEditarUnidadesProductoDialogo = new JTextField();
+        valorEditarUnidadesProductoDialogo.setText(String.valueOf(productoActual.getUnidadesDisponibles()));
+        panelDialogo.add(valorEditarUnidadesProductoDialogo, c);
+
+        c.gridx = 2;
+        c.gridy = 1;
+        c.gridwidth = 1;
+        c.ipadx = 40;
+        c.insets = new Insets(0, 15, 10, 0);
+        JLabel editarTelefonoClienteDialogo = new JLabel("Precio");
+        panelDialogo.add(editarTelefonoClienteDialogo, c);
+
+        c.gridx = 3;
+        c.gridy = 1;
+        c.gridwidth = 1;
+        c.ipadx = 100;
+        c.insets = new Insets(0, 0, 10, 0);
+        final JTextField valorEditarPrecioProductoDialogo = new JTextField();
+        valorEditarPrecioProductoDialogo.setText(productoActual.getPrecio()+"");
+        panelDialogo.add(valorEditarPrecioProductoDialogo, c);
+
+        c.gridx = 0;
+        c.gridy = 4;
+        c.gridwidth = 2;
+        c.ipadx = 100;
+        c.insets = new Insets(15, 40, 0, 0);
+        JButton botonGuardarProductoDialogo = new JButton("Guardar");
+        panelDialogo.add(botonGuardarProductoDialogo, c);
+
+        c.gridx = 2;
+        c.gridy = 4;
+        c.gridwidth = 2;
+        c.insets = new Insets(15, 40, 0, 0);
+        c.ipadx = 100;
+
+        JButton botonCerrarProductoDialogo = new JButton("Cancelar");
+        panelDialogo.add(botonCerrarProductoDialogo, c);
+
+        dialogoEditar.add(panelDialogo);
+
+        botonCerrarProductoDialogo.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dialogoEditar.dispose();
+            }
+        });
+
+        botonGuardarProductoDialogo.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                try {
+                   
+                    String [] selection = {"nombre","descripcion","unidades","precio"};
+                    String [] value = {valorEditarNombreClienteDialogo.getText(),valorEditarDescripcionProductoDialogo.getText()
+                    ,valorEditarUnidadesProductoDialogo.getText(),valorEditarPrecioProductoDialogo.getText()};
+                    String [] type_value = {"varchar","varchar","int","double"};
+                    String restriction = " where producto_id = "+identificacion;
+                    controladorP.updateProduct(selection,value,type_value,restriction);
+                    JOptionPane.showMessageDialog(dialogoEditar, "Se ha editado el producto éxitosamente");
+                    dialogoEditar.dispose();
+
+                    //Refrescar busqueda actual
+                    jButton2ActionPerformed(null);
+
+                } catch (Exception event) {
+
+                    JOptionPane.showMessageDialog(dialogoEditar, "El valor del monto debe ser numérico");
+
+                }
+
+            }
+        });
+
+        dialogoEditar.setVisible(true);
     }//GEN-LAST:event_TablaDeProductosMouseClicked
 
     /**

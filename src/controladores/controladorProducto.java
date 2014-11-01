@@ -48,14 +48,14 @@ public class controladorProducto {
         
         return listaDeProductos;
     }
-     public ArrayList<String[]> insertProduct(String [] value)
+     public boolean insertProduct(String [] value)
      {
         String [] selection = {"nombre","descripcion","unidades","precio"};
         String [] type_value = {"varchar","varchar","int","double"};
         String [] table_id = {"producto_id"};
         String [] type_table_id = {"int"};
-        ArrayList<String[]> result = sqlManager.insert_query(selection, value,type_value, "Producto" , table_id, type_table_id);
-        return result;
+        sqlManager.insert_query(selection, value,type_value, "Producto" , table_id, type_table_id);
+        return true;
      }
      
      public void updateProduct(String [] selection,String [] value,String [] type_value, String condition)

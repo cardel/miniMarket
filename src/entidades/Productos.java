@@ -27,6 +27,7 @@ public class Productos {
     {
         this.productoId=productoId;
         this.nombre=nombre;
+        this.descripcion = descripcion;
         this.unidadesDisponibles=unidadesDisponibles;
         this.precio=precio;
     }

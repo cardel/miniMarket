@@ -174,7 +174,7 @@ public class SQLManager {
         }
         return return_id;
     }
-
+    
     public void update_query(String[] selection, String[] value, String[] type_value, String table, String condition) {
         String query = "UPDATE " + table + " ";
         query += " SET ";

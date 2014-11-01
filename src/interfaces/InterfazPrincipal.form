@@ -626,11 +626,13 @@
                     <Component class="javax.swing.JTable" name="TablaDeProductos">
                       <Properties>
                         <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                          <Table columnCount="4" rowCount="0">
+                          <Table columnCount="6" rowCount="0">
+                            <Column editable="true" title="Numero" type="java.lang.Object"/>
                             <Column editable="false" title="Identificaci&#xf3;n" type="java.lang.Object"/>
                             <Column editable="false" title="Nombre" type="java.lang.Object"/>
-                            <Column editable="false" title="Monto prestado" type="java.lang.Object"/>
-                            <Column editable="false" title="Editar" type="java.lang.Object"/>
+                            <Column editable="false" title="Descripcion" type="java.lang.Object"/>
+                            <Column editable="true" title="Unidades" type="java.lang.Object"/>
+                            <Column editable="true" title="Precio" type="java.lang.Object"/>
                           </Table>
                         </Property>
                         <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -687,7 +689,7 @@
                               <Component id="jLabel14" alignment="0" min="-2" pref="211" max="-2" attributes="0"/>
                               <Component id="jPanel5" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace pref="289" max="32767" attributes="0"/>
+                          <EmptySpace pref="433" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -698,7 +700,7 @@
                           <Component id="jLabel14" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="jPanel5" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="166" max="32767" attributes="0"/>
+                          <EmptySpace pref="165" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -736,13 +738,11 @@
                                           <Component id="jTextField_Producto_CP_nombre" alignment="0" max="32767" attributes="0"/>
                                           <Component id="jTextField_Producto_CP_descripcion" alignment="0" max="32767" attributes="0"/>
                                           <Group type="102" alignment="1" attributes="0">
-                                              <Group type="103" groupAlignment="1" attributes="0">
-                                                  <Component id="jTextField_Producto_CP_precio" alignment="0" max="32767" attributes="0"/>
-                                                  <Component id="jTextField_Producto_CP_unidades" alignment="1" pref="156" max="32767" attributes="0"/>
-                                              </Group>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="jSlider1" min="-2" max="-2" attributes="0"/>
+                                              <Component id="jTextField_Producto_CP_unidades" max="32767" attributes="0"/>
+                                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                                              <Component id="jSlider1" min="-2" pref="188" max="-2" attributes="0"/>
                                           </Group>
+                                          <Component id="jTextField_Producto_CP_precio" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
@@ -781,7 +781,7 @@
                                   <Component id="jLabel18" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="jTextField_Producto_CP_precio" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace pref="15" max="32767" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
                               <Component id="jLabel_Producto_CP_Mensaje" min="-2" pref="21" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jButton1" min="-2" max="-2" attributes="0"/>
