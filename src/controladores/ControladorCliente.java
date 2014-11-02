@@ -80,7 +80,7 @@ public class ControladorCliente {
             String numero_celular = resultado[4];
             String direccion = resultado[5];
             double monto_prestamo = Double.parseDouble(resultado[6]);
-            Cliente cliente = new Cliente(cliente_id, direccion, nombre, numero_telefono, numero_celular, direccion, monto_prestamo);
+            Cliente cliente = new Cliente(cliente_id, tipo_cliente_id, nombre, numero_telefono, numero_celular, direccion, monto_prestamo);
             listaDeClientes.add(cliente);
 
         }
