@@ -13,20 +13,17 @@ import java.sql.*;
 import javax.swing.JOptionPane;
 
 public class Connect {
-    
-    Connection conn = null;
-    
-    public static Connection connectDB()
-    {
-        try{
+
+    static Connection conn = null;
+
+    public static Connection connectDB() {
+        try {
             String sDriverName = "org.sqlite.JDBC";
             Class.forName(sDriverName);
             Connection conn = DriverManager.getConnection("jdbc:sqlite:database1.sqlite");
             JOptionPane.showMessageDialog(null, "Connect");
             return conn;
-        }
-        catch(Exception e)
-        {
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
         }
         return null;

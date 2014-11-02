@@ -6,8 +6,8 @@
 package minimarket;
 
 import controladores.ControladorUsuarios;
-import controladores.controladorFactura;
-import controladores.controladorProducto;
+import controladores.ControladorFactura;
+import controladores.ControladorProducto;
 import entidades.Productos;
 import javax.swing.JOptionPane;
 
@@ -25,7 +25,7 @@ public class test {
     public void test4Producto()
     {
         //SELECT
-        controladorProducto cp = new controladorProducto();
+        ControladorProducto cp = new ControladorProducto();
         //Productos producto = cp.getProducto(" Where producto_id = 1 ");
         //System.out.println(producto.getNombre());
         //INSERT
@@ -46,7 +46,7 @@ public class test {
     public void test4Factura()
     {
         //SELECT
-        controladorFactura cf = new controladorFactura();
+        ControladorFactura cf = new ControladorFactura();
         /*Productos producto = cf.getProducto(" Where producto_id = 1 ");
         System.out.println(producto.getNombre());*/
         //INSERT

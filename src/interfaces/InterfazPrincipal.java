@@ -6,7 +6,10 @@
 package interfaces;
 
 import controladores.ControladorCliente;
-import controladores.controladorProducto;
+import controladores.ControladorFactura;
+import controladores.ControladorFactura_Productos;
+import controladores.ControladorFlujoFactura;
+import controladores.ControladorProducto;
 import entidades.Cliente;
 import entidades.Productos;
 import java.awt.Color;
@@ -18,7 +21,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Vector;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -27,8 +34,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -56,7 +61,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jTabbedPane2 = new javax.swing.JTabbedPane();
-        jPanel8 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
         jPanel10 = new javax.swing.JPanel();
@@ -75,8 +79,14 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         jTextField_Factura_Producto_Nombre = new javax.swing.JTextField();
         jTextField_Factura_Producto_Descripcion = new javax.swing.JTextField();
         jButton4 = new javax.swing.JButton();
+        botonGuardarFactura = new javax.swing.JButton();
+        valorActualFactura = new javax.swing.JLabel();
+        jLabel30 = new javax.swing.JLabel();
+        jLabel31 = new javax.swing.JLabel();
+        jLabel32 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         TablaDeFacturaProducto = new javax.swing.JTable();
+        jPanel8 = new javax.swing.JPanel();
         jTabbedPane3 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -128,7 +138,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         jLabel18 = new javax.swing.JLabel();
         jTextField_Producto_CP_nombre = new javax.swing.JTextField();
         jTextField_Producto_CP_descripcion = new javax.swing.JTextField();
-        jSlider1 = new javax.swing.JSlider();
+        sliderNumeroUnidades = new javax.swing.JSlider();
         jTextField_Producto_CP_unidades = new javax.swing.JTextField();
         jTextField_Producto_CP_precio = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
@@ -143,19 +153,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         jLabel1.setText("Bienvenido al aplicativo del Mini-market <Nombre>");
 
         jTabbedPane1.setTabPlacement(javax.swing.JTabbedPane.LEFT);
-
-        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
-        jPanel8.setLayout(jPanel8Layout);
-        jPanel8Layout.setHorizontalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 786, Short.MAX_VALUE)
-        );
-        jPanel8Layout.setVerticalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 416, Short.MAX_VALUE)
-        );
-
-        jTabbedPane2.addTab("Buscar Factura", jPanel8);
 
         jPanel9.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -281,6 +278,25 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                         .addGap(31, 31, 31))))
         );
 
+        botonGuardarFactura.setText("Guardar factura");
+        botonGuardarFactura.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonGuardarFacturaActionPerformed(evt);
+            }
+        });
+
+        valorActualFactura.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        valorActualFactura.setText("0.0");
+
+        jLabel30.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel30.setText("Valor actual:");
+
+        jLabel31.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel31.setText("Si desea editar o borrar un producto");
+
+        jLabel32.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel32.setText("clic en el");
+
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
         jPanel9Layout.setHorizontalGroup(
@@ -288,17 +304,45 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(botonGuardarFactura)
+                        .addGap(81, 81, 81))
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(62, 62, 62)
+                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel30)
+                            .addGroup(jPanel9Layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(valorActualFactura, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel31)
+                            .addComponent(jLabel32))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addGap(62, 62, 62)
+                        .addComponent(botonGuardarFactura)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addComponent(jLabel30)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(valorActualFactura, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel31)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel32)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -307,11 +351,11 @@ public class InterfazPrincipal extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Numero", "Identificación", "Nombre", "Descripcion", "Unidades", "Valor"
+                "Numero", "Identificación", "Nombre", "Descripcion", "Unidades", "Valor Unitario", "Valor Total"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                true, false, false, false, false, true
+                false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -333,7 +377,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 766, Short.MAX_VALUE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 768, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel7Layout.setVerticalGroup(
@@ -347,6 +391,19 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         );
 
         jTabbedPane2.addTab("Crear Factura", jPanel7);
+
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 786, Short.MAX_VALUE)
+        );
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 416, Short.MAX_VALUE)
+        );
+
+        jTabbedPane2.addTab("Buscar Factura", jPanel8);
 
         jTabbedPane1.addTab("Facturas", jTabbedPane2);
 
@@ -692,6 +749,15 @@ public class InterfazPrincipal extends javax.swing.JFrame {
 
         jLabel18.setText("PRECIO");
 
+        sliderNumeroUnidades.setMaximum(99);
+        sliderNumeroUnidades.setMinimum(1);
+        sliderNumeroUnidades.setValue(1);
+        sliderNumeroUnidades.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                sliderNumeroUnidadesStateChanged(evt);
+            }
+        });
+
         jTextField_Producto_CP_unidades.setEditable(false);
         jTextField_Producto_CP_unidades.setText("1");
 
@@ -719,10 +785,10 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jTextField_Producto_CP_nombre)
                             .addComponent(jTextField_Producto_CP_descripcion)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                                .addComponent(jTextField_Producto_CP_unidades)
-                                .addGap(18, 18, 18)
-                                .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addComponent(jTextField_Producto_CP_unidades, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(sliderNumeroUnidades, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jTextField_Producto_CP_precio)))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addComponent(jButton1)
@@ -743,7 +809,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                     .addComponent(jTextField_Producto_CP_descripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(sliderNumeroUnidades, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jTextField_Producto_CP_unidades, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel17)))
@@ -908,7 +974,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             jLabel_Producto_CP_Mensaje.setForeground(Color.blue);
             jLabel_Producto_CP_Mensaje.setText("CreaciÃ³n exitosa");
             String[] value = {nombre, descripcion, unidades, precio};
-            controladorProducto cp = new controladorProducto();
+            ControladorProducto cp = new ControladorProducto();
             cp.insertProduct(value);
         }
 
@@ -1145,7 +1211,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                 precio = Double.parseDouble(precio_string);
             }
 
-            controladorProducto controladorPro = new controladorProducto();
+            ControladorProducto controladorPro = new ControladorProducto();
             String restriccion = "";
 
             boolean encounter = true;
@@ -1230,8 +1296,8 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         int fila = TablaDeProductos.getSelectedRow();
         final int identificacion = (int) TablaDeProductos.getValueAt(fila, 1);
 
-        final controladorProducto controladorP = new controladorProducto();
-        ArrayList<Productos> listaProductos = controladorP.getProducto(" where producto_id = "+identificacion);
+        final ControladorProducto controladorP = new ControladorProducto();
+        ArrayList<Productos> listaProductos = controladorP.getProducto(" where producto_id = " + identificacion);
         final Productos productoActual = listaProductos.get(0);
 
         final JDialog dialogoEditar = new JDialog(this);
@@ -1322,7 +1388,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         c.ipadx = 100;
         c.insets = new Insets(0, 0, 10, 0);
         final JTextField valorEditarPrecioProductoDialogo = new JTextField();
-        valorEditarPrecioProductoDialogo.setText(productoActual.getPrecio()+"");
+        valorEditarPrecioProductoDialogo.setText(productoActual.getPrecio() + "");
         panelDialogo.add(valorEditarPrecioProductoDialogo, c);
 
         c.gridx = 0;
@@ -1358,13 +1424,12 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             public void actionPerformed(ActionEvent e) {
 
                 try {
-                   
-                    String [] selection = {"nombre","descripcion","unidades","precio"};
-                    String [] value = {valorEditarNombreClienteDialogo.getText(),valorEditarDescripcionProductoDialogo.getText()
-                    ,valorEditarUnidadesProductoDialogo.getText(),valorEditarPrecioProductoDialogo.getText()};
-                    String [] type_value = {"varchar","varchar","int","double"};
-                    String restriction = " where producto_id = "+identificacion;
-                    controladorP.updateProduct(selection,value,type_value,restriction);
+
+                    String[] selection = {"nombre", "descripcion", "unidades", "precio"};
+                    String[] value = {valorEditarNombreClienteDialogo.getText(), valorEditarDescripcionProductoDialogo.getText(), valorEditarUnidadesProductoDialogo.getText(), valorEditarPrecioProductoDialogo.getText()};
+                    String[] type_value = {"varchar", "varchar", "int", "double"};
+                    String restriction = " where producto_id = " + identificacion;
+                    controladorP.updateProduct(selection, value, type_value, restriction);
                     JOptionPane.showMessageDialog(dialogoEditar, "Se ha editado el producto éxitosamente");
                     dialogoEditar.dispose();
 
@@ -1384,28 +1449,26 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_TablaDeProductosMouseClicked
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        
+
         String nombre = jTextField1.getText();
         String identificacion = jTextField2.getText();
-        
+
         System.out.println(nombre + " - " + identificacion);
-        
+
         ControladorCliente controladorCliente = new ControladorCliente();
         int id = 0;
-        if(!identificacion.equals(""))
-        {         
+        if (!identificacion.equals("")) {
             mensajesBusquedaClientesFactura.setText("La identificacion debe ser un numero");
-            return; 
+            return;
         }
-        
+
         ArrayList<Cliente> listaClientes = controladorCliente.obtenerClientes(nombre, id);
-        
-        if(listaClientes.isEmpty())
-        {
+
+        if (listaClientes.isEmpty()) {
             mensajesBusquedaClientesFactura.setText("La busqueda no arrojo resultados");
             return;
         }
-        
+
         final JDialog dialogoEditar = new JDialog(this);
         dialogoEditar.setTitle("Buscar clientes");
         dialogoEditar.setSize(600, 310);
@@ -1427,59 +1490,165 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         Font textoGrande = new Font("Arial", 1, 18);
         editarTextoPrincipalDialogo.setFont(textoGrande);
         panelDialogo.add(editarTextoPrincipalDialogo, c);
-        
+
         Vector col = new Vector();
         col.add("1");
         col.add("2");
         col.add("3");
         col.add("4");
         col.add("5");
-        Vector row = new Vector(); 
-            
-        for(int i = 0 ; i < listaClientes.size();i++)
-        {
+        Vector row = new Vector();
+
+        for (int i = 0; i < listaClientes.size(); i++) {
             Cliente cliente = listaClientes.get(i);
             Vector temp = new Vector();
-            temp.add( (i+1)+"" );  
-            temp.add( cliente.getNombre());
-            temp.add(cliente.getTipo_cliente_id()+"");
-            temp.add(cliente.getCliente_id()+"");
-            temp.add(cliente.getMonto_prestamo()+"");
-            System.out.println("info"+cliente.getNombre()+","+cliente.getMonto_prestamo());
+            temp.add((i + 1) + "");
+            temp.add(cliente.getNombre());
+            temp.add(cliente.getTipo_cliente_id() + "");
+            temp.add(cliente.getCliente_id() + "");
+            temp.add(cliente.getMonto_prestamo() + "");
+            System.out.println("info" + cliente.getNombre() + "," + cliente.getMonto_prestamo());
             row.add(temp);
         }
-        
-        final JTable table = new JTable( row, col );
-        
+
+        final JTable table = new JTable(row, col);
+
         table.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 jTextField_Factura_Cliente_Id.setText(table.getValueAt(table.getSelectedRow(), 3).toString());
                 //System.out.println(table.getValueAt(table.getSelectedRow(), 3).toString());
                 dialogoEditar.dispose();
-             }
+            }
         });
-        
-        
+
         c.insets = new Insets(0, 5, 10, 0);
         c.gridx = 0;
         c.gridy = 1;
         c.gridwidth = 1;
         c.ipadx = 200;
-        
+
         panelDialogo.add(table, c);
         dialogoEditar.add(panelDialogo);
         dialogoEditar.setVisible(true);
-        
+
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void TablaDeFacturaProductoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaDeFacturaProductoMouseClicked
-        // TODO add your handling code here:
+        final int fila = TablaDeFacturaProducto.getSelectedRow();
+        final DefaultTableModel modeloTabla = (DefaultTableModel) TablaDeFacturaProducto.getModel();
+
+        //int identificacion = (int) TablaDeFacturaProducto.getValueAt(fila, 0);        // TODO add your handling code here:
+        final JDialog dialogoEdicionProducto = new JDialog(this);
+        dialogoEdicionProducto.setTitle("Editar producto");
+        dialogoEdicionProducto.setSize(250, 150);
+        dialogoEdicionProducto.setResizable(false);
+
+        JPanel panelDialogo = new JPanel();
+
+        panelDialogo.setLayout(new GridBagLayout());
+
+        GridBagConstraints c = new GridBagConstraints();
+        c.fill = GridBagConstraints.HORIZONTAL;
+
+        JLabel editarTextoPrincipalDialogo = new JLabel("Editar producto");
+        c.gridx = 0;
+        c.gridy = 0;
+        c.gridwidth = 3;
+        c.insets = new Insets(15, 40, 10, 0);
+        Font textoGrande = new Font("Arial", 1, 18);
+        editarTextoPrincipalDialogo.setFont(textoGrande);
+        panelDialogo.add(editarTextoPrincipalDialogo, c);
+
+        c.insets = new Insets(0, 0, 0, 0);
+        c.gridwidth = 0;
+
+        c.gridy = 1;
+        c.gridx = 0;
+        JLabel textoUnidades = new JLabel("Unidades");
+        panelDialogo.add(textoUnidades, c);
+
+        c.gridy = 1;
+        c.gridx = 1;
+        c.gridwidth = 2;
+        final JTextField valorUnidades = new JTextField();
+        valorUnidades.setText(String.valueOf(modeloTabla.getValueAt(fila, 4)));
+
+        panelDialogo.add(valorUnidades, c);
+
+        c.gridwidth = 1;
+        c.gridy = 2;
+        c.gridx = 0;
+        JButton guardarCambios = new JButton("Guardar");
+        panelDialogo.add(guardarCambios, c);
+
+        c.gridy = 2;
+        c.gridx = 1;
+        JButton eliminarProducto = new JButton("Eliminar");
+        panelDialogo.add(eliminarProducto, c);
+
+        c.gridy = 2;
+        c.gridx = 2;
+        JButton botonCancelar = new JButton("Cerrar");
+        panelDialogo.add(botonCancelar, c);
+        botonCancelar.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dialogoEdicionProducto.dispose();
+            }
+        });
+
+        eliminarProducto.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                double precio = (double) modeloTabla.getValueAt(fila, 6);
+                double precioActual = Double.parseDouble(valorActualFactura.getText());
+
+                precioActual -= precio;
+                valorActualFactura.setText(String.valueOf(precioActual));
+                modeloTabla.removeRow(fila);
+
+                dialogoEdicionProducto.dispose();
+
+            }
+        });
+        guardarCambios.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    int numeroUnidades = Integer.parseInt(valorUnidades.getText());
+                    modeloTabla.setValueAt(numeroUnidades, fila, 4);
+
+                    double precioARestar = (double) modeloTabla.getValueAt(fila, 6);
+
+                    double valorUnitario = Double.parseDouble((String) modeloTabla.getValueAt(fila, 5));
+
+                    double precioNuevo = valorUnitario * numeroUnidades;
+
+                    modeloTabla.setValueAt(precioNuevo, fila, 6);
+                    double precioActual = Double.parseDouble(valorActualFactura.getText());
+                    precioActual -= precioARestar;
+                    precioActual += precioNuevo;
+                    valorActualFactura.setText(String.valueOf(precioActual));
+
+                    dialogoEdicionProducto.dispose();
+
+                } catch (Exception eve) {
+                    JOptionPane.showMessageDialog(dialogoEdicionProducto, "Por favor ingrese un valor numérico");
+                }
+            }
+        });
+
+        dialogoEdicionProducto.add(panelDialogo);
+        dialogoEdicionProducto.setVisible(true);
     }//GEN-LAST:event_TablaDeFacturaProductoMouseClicked
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         String nombre = jTextField_Factura_Producto_Nombre.getText();
         String descripcion = jTextField_Factura_Producto_Descripcion.getText();
-        controladorProducto controladorPro = new controladorProducto();
+        ControladorProducto controladorPro = new ControladorProducto();
         String restriccion = "";
 
         boolean encounter = true;
@@ -1529,7 +1698,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         Font textoGrande = new Font("Arial", 1, 18);
         editarTextoPrincipalDialogo.setFont(textoGrande);
         panelDialogo.add(editarTextoPrincipalDialogo, c);
-        
+
         Vector col = new Vector();
         col.add("1");
         col.add("2");
@@ -1537,61 +1706,150 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         col.add("4");
         col.add("5");
         col.add("6");
-        Vector row = new Vector(); 
-            
-        for(int i = 0 ; i < listaDeProductos.size();i++)
-        {
+        Vector row = new Vector();
+
+        for (int i = 0; i < listaDeProductos.size(); i++) {
             Productos producto = listaDeProductos.get(i);
             Vector temp = new Vector();
-            temp.add( (i+1)+"" );
-            temp.add( producto.getProductoId());
-            temp.add( producto.getNombre());
-            temp.add( producto.getDescripcion());
-            temp.add( producto.getUnidadesDisponibles() );
-            temp.add( producto.getPrecio());
+            temp.add((i + 1) + "");
+            temp.add(producto.getProductoId());
+            temp.add(producto.getNombre());
+            temp.add(producto.getDescripcion());
+            temp.add(producto.getUnidadesDisponibles());
+            temp.add(producto.getPrecio());
             row.add(temp);
         }
-        
-        final JTable table = new JTable( row, col );
-        
+
+        final JTable table = new JTable(row, col);
+
         table.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 //jTextField_Factura_Cliente_Id.setText(table.getValueAt(table.getSelectedRow(), 1).toString());
                 //System.out.println(table.getValueAt(table.getSelectedRow(), 3).toString());
                 DefaultTableModel modelo = (DefaultTableModel) TablaDeFacturaProducto.getModel();
 
-                
-                    Object[] fila = new Object[6];
-                    
-                    fila[0] = table.getValueAt(table.getSelectedRow(), 0).toString();
-                    fila[1] = table.getValueAt(table.getSelectedRow(), 1).toString();
-                    fila[2] = table.getValueAt(table.getSelectedRow(), 2).toString();
-                    fila[3] = table.getValueAt(table.getSelectedRow(), 3).toString();
-                    fila[4] = table.getValueAt(table.getSelectedRow(), 4).toString();
-                    fila[5] = table.getValueAt(table.getSelectedRow(), 5).toString();
-                    
-                    modelo.addRow(fila);
+                Object[] fila = new Object[7];
+
+                fila[0] = table.getValueAt(table.getSelectedRow(), 0).toString();
+                fila[1] = table.getValueAt(table.getSelectedRow(), 1).toString();
+                fila[2] = table.getValueAt(table.getSelectedRow(), 2).toString();
+                fila[3] = table.getValueAt(table.getSelectedRow(), 3).toString();
+                //fila[4] = table.getValueAt(table.getSelectedRow(), 4).toString();
+                fila[4] = (String) JOptionPane.showInputDialog("Ingrese el número de unidades que va a vender");
+                fila[5] = table.getValueAt(table.getSelectedRow(), 5).toString();
+
+                Double valorProducto = Double.parseDouble((String) fila[5]);
+                String valorActualProducto = String.valueOf(Double.parseDouble(valorActualFactura.getText()) + Double.parseDouble((String) fila[4]) * valorProducto);
+                valorActualFactura.setText(valorActualProducto);
+                fila[6] = Double.parseDouble((String) fila[4]) * valorProducto;
+                modelo.addRow(fila);
                 //modelo.getColumnName(4).
                 /*TablaDeFacturaProducto.setModel(modelo);
-                TablaDeFacturaProducto.getColumnClass(4). ;*/
+                 TablaDeFacturaProducto.getColumnClass(4). ;*/
                 dialogoEditar.dispose();
-             }
+            }
         });
-        
-        
+
         c.insets = new Insets(0, 5, 10, 0);
         c.gridx = 0;
         c.gridy = 1;
         c.gridwidth = 1;
         c.ipadx = 200;
-        
+
         panelDialogo.add(table, c);
         dialogoEditar.add(panelDialogo);
         dialogoEditar.setVisible(true);
-        
-        
-        
+
+
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void sliderNumeroUnidadesStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sliderNumeroUnidadesStateChanged
+        // TODO add your handling code here:
+        int valorActual = sliderNumeroUnidades.getValue();
+        jTextField_Producto_CP_unidades.setText(String.valueOf(valorActual));
+    }//GEN-LAST:event_sliderNumeroUnidadesStateChanged
+
+    private void botonGuardarFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonGuardarFacturaActionPerformed
+        // TODO add your handling code here:
+
+        String id_cliente = jTextField_Factura_Cliente_Id.getText();
+
+        if (id_cliente.equals("") || TablaDeFacturaProducto.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(this, "Por favor ingrese un cliente o al menos un producto");
+
+        } else {
+            System.err.println("Numero de filas"+TablaDeFacturaProducto.getRowCount());
+            ArrayList<String> lineaCodigoProductos = new ArrayList<String>();
+            ArrayList<String> lineaUnidadesProductos = new ArrayList<String>();
+            ArrayList<String> lineaMontoProductos = new ArrayList<String>();
+            double monto = 0d;
+            double pago = Double.parseDouble((String) JOptionPane.showInputDialog("Ingrese por favor el monto pagado por el cliente"));
+
+            for (int i = 0; i < TablaDeFacturaProducto.getRowCount(); i++) {
+                /*
+                 * Fila 0: ID producto
+                 * Fila 4: Cantidad
+                 */
+                String ProductoId = String.valueOf( TablaDeFacturaProducto.getValueAt(i, 0));
+                lineaCodigoProductos.add(ProductoId);
+
+
+                int numeroUnidades = Integer.parseInt(String.valueOf( TablaDeFacturaProducto.getValueAt(i, 4)));
+
+                String unidades = String.valueOf(numeroUnidades);
+                lineaUnidadesProductos.add(unidades);
+
+                double valorUnitario = Double.parseDouble(String.valueOf( TablaDeFacturaProducto.getValueAt(i, 4)));
+                double valorProductoTotal = numeroUnidades * valorUnitario;
+                lineaMontoProductos.add(String.valueOf(valorProductoTotal));
+
+                monto += valorProductoTotal;
+            }
+            String estado = "";
+            if (monto == pago) {
+                estado = "pagado";
+            } else {
+                estado = "fiado";
+            }
+
+            ControladorFactura controladorFactura = new ControladorFactura();
+            //String[] selection = {"cliente_id", "fecha", "estado", "valor"};
+            Calendar calendario = Calendar.getInstance();
+            String dia = Integer.toString(calendario.get(Calendar.DATE));
+            String mes = Integer.toString(calendario.get(Calendar.MONTH));
+            String annio = Integer.toString(calendario.get(Calendar.YEAR));
+            Date date = new Date();
+            DateFormat hourFormat = new SimpleDateFormat("HH:mm:ss");
+            String hora = hourFormat.format(date);
+
+            String fecha = annio + "-" + mes + "-" + dia + " " + hora;
+            String[] selection = {id_cliente, fecha, estado, String.valueOf(monto)};
+            ArrayList<String[]> facturaActual = controladorFactura.insertFactura(selection);
+
+            //Ingresar productos
+            ControladorFactura_Productos controladorFactura_Productos = new ControladorFactura_Productos();
+            for (int i = 0; i < lineaCodigoProductos.size(); i++) {
+                //        String [] selection = {"factura_id","producto_id","unidades","precio"};
+                String[] insertarLineaProducto = {facturaActual.get(0)[0],lineaCodigoProductos.get(i),lineaUnidadesProductos.get(i),lineaMontoProductos.get(i)};
+                controladorFactura_Productos.insertFactura_Productos(insertarLineaProducto);
+            }
+
+            //Ingresar flujo factura
+            ControladorFlujoFactura controladorFlujoFactura = new ControladorFlujoFactura();
+            // String [] selection = {"factura_id","tipo_flujo","fecha","valor"};
+
+            String value[] = {facturaActual.get(0)[0], "abono", fecha, String.valueOf(pago)};
+            controladorFlujoFactura.insertFlujo_Factura(value);
+
+            if (monto != pago) {
+                String value2[] = {facturaActual.get(0)[0], "deuda", fecha, String.valueOf(monto - pago)};
+                controladorFlujoFactura.insertFlujo_Factura(value2);
+            }
+            JOptionPane.showMessageDialog(this, "Factura guardada con éxito.");
+
+        }
+
+    }//GEN-LAST:event_botonGuardarFacturaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1607,16 +1865,21 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(InterfazPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(InterfazPrincipal.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(InterfazPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(InterfazPrincipal.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(InterfazPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(InterfazPrincipal.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(InterfazPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(InterfazPrincipal.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -1635,6 +1898,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JTable TablaDeFacturaProducto;
     private javax.swing.JTable TablaDeProductos;
     private javax.swing.JButton botonAgregarNuevoCliente;
+    private javax.swing.JButton botonGuardarFactura;
     private javax.swing.JTextField celularNuevoCliente;
     private javax.swing.JTextField identificacionClienteBusqueda;
     private javax.swing.JTextField identificacionNuevoCliente;
@@ -1664,6 +1928,9 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -1685,7 +1952,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JSlider jSlider1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JTabbedPane jTabbedPane3;
@@ -1710,7 +1976,9 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JTextField montoPrestamoNuevoCliente;
     private javax.swing.JTextField nombreClienteBusqueda;
     private javax.swing.JTextField nombreNuevoCliente;
+    private javax.swing.JSlider sliderNumeroUnidades;
     private javax.swing.JTextField telefonoNuevoCliente;
     private javax.swing.JComboBox tipoIdentificacionCliente;
+    private javax.swing.JLabel valorActualFactura;
     // End of variables declaration//GEN-END:variables
 }

@@ -33,7 +33,7 @@ public class ControladorFactura_Productos {
     {
         String [] selection = {"factura_id","producto_id","unidades","precio"};
         String [] selection_type = {"int","int","int","double"};
-        String table = "Factura_Productos";
+        String table = "Factura_Producto";
         
         ArrayList<String[]> resultSet = sqlManager.select_query(selection, selection_type, table, restriction);
         String [] result = resultSet.get(0);
@@ -48,19 +48,19 @@ public class ControladorFactura_Productos {
         String [] type_value = {"int","int","int","double"};
         String [] table_id = {"factura_id","producto_id"};
         String [] type_table_id = {"int","int"};
-        ArrayList<String[]> result = sqlManager.insert_query(selection, value,type_value, "Factura_Productos" , table_id, type_table_id);
+        ArrayList<String[]> result = sqlManager.insert_query(selection, value,type_value, "Factura_Producto" , table_id, type_table_id);
         return result;
      }
      
      public void updateFactura_Productos(String [] selection,String [] value,String [] type_value, String condition)
      {
-        String table = "Factura_Productos";
+        String table = "Factura_Producto";
         sqlManager.update_query(selection , value , type_value , table , condition);
      }
      
      public void deleteFactura_Productos( String condition)
      {
-         sqlManager.delete_query("Factura_Productos" , condition);
+         sqlManager.delete_query("Factura_Producto" , condition);
      }
     
 }

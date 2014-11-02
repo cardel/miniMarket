@@ -5,7 +5,7 @@
  */
 package minimarket;
 
-import controladores.controladorProducto;
+import controladores.ControladorProducto;
 import entidades.Productos;
 import interfaces.InicioAplicacion;
 import javax.swing.UIManager;
