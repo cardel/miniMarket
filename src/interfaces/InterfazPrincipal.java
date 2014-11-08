@@ -13,6 +13,7 @@ import controladores.ControladorProducto;
 import entidades.Cliente;
 import entidades.Productos;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -24,6 +25,7 @@ import java.awt.event.MouseEvent;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Vector;
@@ -32,8 +34,11 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -115,6 +120,21 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         BotonBuscarCliente = new javax.swing.JButton();
+        jPanel12 = new javax.swing.JPanel();
+        jLabel29 = new javax.swing.JLabel();
+        jLabel33 = new javax.swing.JLabel();
+        nombreClienteBusquedaSaldo = new javax.swing.JTextField();
+        BotonBuscarClienteSaldo = new javax.swing.JButton();
+        mostrarIdentificacionCliente = new javax.swing.JTextField();
+        jLabel37 = new javax.swing.JLabel();
+        abonoClente = new javax.swing.JTextField();
+        botonRegistrarAbono = new javax.swing.JButton();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        TablaDeSaldoClientes = new javax.swing.JTable();
+        jLabel34 = new javax.swing.JLabel();
+        textoTotalDebe = new javax.swing.JLabel();
+        jLabel35 = new javax.swing.JLabel();
+        textoPersonaSaldo = new javax.swing.JLabel();
         jTabbedPane7 = new javax.swing.JTabbedPane();
         jPanel3 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
@@ -623,7 +643,147 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jTabbedPane3.addTab("Consultar clientes", jPanel2);
+        jTabbedPane3.addTab("Edición de clientes", jPanel2);
+
+        jLabel29.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel29.setText("Saldo clientes");
+
+        jLabel33.setText("Nombre");
+
+        BotonBuscarClienteSaldo.setText("Buscar");
+        BotonBuscarClienteSaldo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotonBuscarClienteSaldoActionPerformed(evt);
+            }
+        });
+
+        mostrarIdentificacionCliente.setEnabled(false);
+
+        jLabel37.setText("Abono");
+
+        botonRegistrarAbono.setText("Registrar abono");
+        botonRegistrarAbono.setEnabled(false);
+        botonRegistrarAbono.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonRegistrarAbonoActionPerformed(evt);
+            }
+        });
+
+        TablaDeSaldoClientes.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Factura ID", "Tipo flujo", "Fecha", "Valor"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        TablaDeSaldoClientes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TablaDeSaldoClientesMouseClicked(evt);
+            }
+        });
+        jScrollPane4.setViewportView(TablaDeSaldoClientes);
+
+        jLabel34.setText("El cliente debe la suma de:");
+
+        textoTotalDebe.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        textoTotalDebe.setText("0.0");
+
+        jLabel35.setText("Pagos  de:");
+
+        textoPersonaSaldo.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        textoPersonaSaldo.setText("Nombre");
+
+        javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
+        jPanel12.setLayout(jPanel12Layout);
+        jPanel12Layout.setHorizontalGroup(
+            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel12Layout.createSequentialGroup()
+                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel12Layout.createSequentialGroup()
+                        .addGap(316, 316, 316)
+                        .addComponent(jLabel29))
+                    .addGroup(jPanel12Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel12Layout.createSequentialGroup()
+                                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(jPanel12Layout.createSequentialGroup()
+                                            .addGap(0, 0, Short.MAX_VALUE)
+                                            .addComponent(nombreClienteBusquedaSaldo, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(jPanel12Layout.createSequentialGroup()
+                                            .addComponent(jLabel37)
+                                            .addGap(0, 0, Short.MAX_VALUE)))
+                                    .addComponent(abonoClente, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(437, 437, 437))
+                            .addGroup(jPanel12Layout.createSequentialGroup()
+                                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel33)
+                                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 748, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel12Layout.createSequentialGroup()
+                                        .addGap(97, 97, 97)
+                                        .addComponent(mostrarIdentificacionCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(BotonBuscarClienteSaldo)
+                                        .addGap(81, 81, 81)
+                                        .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(botonRegistrarAbono)
+                                            .addGroup(jPanel12Layout.createSequentialGroup()
+                                                .addComponent(jLabel35)
+                                                .addGap(41, 41, 41)
+                                                .addComponent(textoPersonaSaldo, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(jPanel12Layout.createSequentialGroup()
+                                                .addComponent(jLabel34)
+                                                .addGap(26, 26, 26)
+                                                .addComponent(textoTotalDebe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
+                .addContainerGap(22, Short.MAX_VALUE))
+        );
+        jPanel12Layout.setVerticalGroup(
+            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel12Layout.createSequentialGroup()
+                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel12Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel29)
+                        .addGap(23, 23, 23)
+                        .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel33)
+                            .addComponent(nombreClienteBusquedaSaldo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel34)))
+                    .addGroup(jPanel12Layout.createSequentialGroup()
+                        .addGap(61, 61, 61)
+                        .addComponent(textoTotalDebe)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanel12Layout.createSequentialGroup()
+                            .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(mostrarIdentificacionCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(BotonBuscarClienteSaldo))
+                            .addGap(6, 6, 6))
+                        .addComponent(jLabel35))
+                    .addComponent(textoPersonaSaldo))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel37)
+                    .addComponent(abonoClente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(botonRegistrarAbono))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(29, 29, 29))
+        );
+
+        jTabbedPane3.addTab("Saldo cliente", jPanel12);
 
         jTabbedPane1.addTab("Clientes", jTabbedPane3);
 
@@ -879,81 +1039,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void BotonBuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonBuscarClienteActionPerformed
-        // TODO add your handling code here:
-        String nombreCliente = nombreClienteBusqueda.getText();
-        String identificacionCliente = identificacionClienteBusqueda.getText();
-        int identificacionClienteInt = 0;
-        try {
-            if (!identificacionCliente.equals("")) {
-                identificacionClienteInt = Integer.parseInt(identificacionCliente);
-            }
-
-            ControladorCliente controladorCliente = new ControladorCliente();
-
-            ArrayList<Cliente> listaDeClientes = controladorCliente.obtenerClientes(nombreCliente, identificacionClienteInt);
-
-            //Agregar filas
-            DefaultTableModel modelo = (DefaultTableModel) TablaDeClientes.getModel();
-
-            for (int i = 0; i < modelo.getRowCount(); i++) {
-                modelo.removeRow(i);
-            }
-            modelo.setRowCount(0);
-            for (int i = 0; i < listaDeClientes.size(); i++) {
-                Cliente cliente = listaDeClientes.get(i);
-                Object[] fila = new Object[4];
-                fila[0] = cliente.getCliente_id();
-                fila[1] = cliente.getNombre();
-                fila[2] = cliente.getMonto_prestamo();
-                //button.setText("<HTML>Click the <FONT color=\"#000099\"><U>link "+i+"</U></FONT>"+ " to go to the Java website.</HTML>");
-
-                fila[3] = "Editar";
-                modelo.addRow(fila);
-
-            }
-
-            TablaDeClientes.setModel(modelo);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "La identificación debe ser numérica, por favor ingrese correctamente el dato", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }//GEN-LAST:event_BotonBuscarClienteActionPerformed
-
-    private void nombreNuevoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nombreNuevoClienteActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_nombreNuevoClienteActionPerformed
-
-    private void botonAgregarNuevoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAgregarNuevoClienteActionPerformed
-        // TODO add your handling code here:
-        String identificacionStringNuevoCliente = identificacionNuevoCliente.getText();
-        String nombreEnviarNuevoCliente = nombreNuevoCliente.getText();
-        String telefonoEnviarNuevoCliente = telefonoNuevoCliente.getText();
-        String celularEnviarNuevoCliente = celularNuevoCliente.getText();
-        String direccionEnviarNuevoCliente = DireccionNuevoCliente.getText();
-        String montoAPrestarEnviarNuevoCliente = montoPrestamoNuevoCliente.getText();
-        String tipoIdentificacionNuevoCliente = (String) tipoIdentificacionCliente.getSelectedItem();
-
-        try {
-
-            int identificacionIntNuevoCliente = Integer.parseInt(identificacionStringNuevoCliente);
-            double montoAPrestarEnviarIntNuevoCliente = Double.parseDouble(montoAPrestarEnviarNuevoCliente);
-            ControladorCliente controladorCliente = new ControladorCliente();
-            controladorCliente.agregarCliente(identificacionIntNuevoCliente, tipoIdentificacionNuevoCliente, nombreEnviarNuevoCliente, telefonoEnviarNuevoCliente, celularEnviarNuevoCliente, direccionEnviarNuevoCliente, montoAPrestarEnviarIntNuevoCliente);
-
-            JOptionPane.showMessageDialog(null, "Cliente creado exitosamente");
-            identificacionNuevoCliente.setText("");
-            nombreNuevoCliente.setText("");
-            telefonoNuevoCliente.setText("");
-            celularNuevoCliente.setText("");
-            DireccionNuevoCliente.setText("");
-            montoPrestamoNuevoCliente.setText("");
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "La identificación y el monto deben ser numéricos, por favor ingrese correctamente los datos", "Error", JOptionPane.ERROR_MESSAGE);
-
-        }
-    }//GEN-LAST:event_botonAgregarNuevoClienteActionPerformed
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String nombre = jTextField_Producto_CP_nombre.getText();
         String descripcion = jTextField_Producto_CP_descripcion.getText();
@@ -979,221 +1064,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void TablaDeClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaDeClientesMouseClicked
-        // TODO add your handling code here:
-        int fila = TablaDeClientes.getSelectedRow();
-        int identificacion = (int) TablaDeClientes.getValueAt(fila, 0);
-
-        final ControladorCliente controladorCliente = new ControladorCliente();
-        ArrayList<Cliente> listaClientes = controladorCliente.obtenerClientes("", identificacion);
-        final Cliente clienteActual = listaClientes.get(0);
-
-        final JDialog dialogoEditar = new JDialog(this);
-
-        dialogoEditar.setTitle("Editar clientes");
-        dialogoEditar.setSize(600, 310);
-        dialogoEditar.setResizable(false);
-
-        JPanel panelDialogo = new JPanel();
-
-        panelDialogo.setLayout(new GridBagLayout());
-
-        GridBagConstraints c = new GridBagConstraints();
-        c.fill = GridBagConstraints.HORIZONTAL;
-
-        JLabel editarTextoPrincipalDialogo = new JLabel("Editar clientes");
-        c.gridx = 0;
-        c.gridy = 0;
-        c.gridwidth = 4;
-        c.insets = new Insets(15, 200, 40, 0);
-        c.ipadx = 100;
-        Font textoGrande = new Font("Arial", 1, 18);
-        editarTextoPrincipalDialogo.setFont(textoGrande);
-        panelDialogo.add(editarTextoPrincipalDialogo, c);
-
-        c.insets = new Insets(0, 5, 10, 0);
-        c.gridx = 0;
-        c.gridy = 1;
-        c.gridwidth = 1;
-        c.ipadx = 40;
-        JLabel editarNombreClienteDialogo = new JLabel("Nombre:");
-        panelDialogo.add(editarNombreClienteDialogo, c);
-
-        c.gridx = 1;
-        c.gridy = 1;
-        c.gridwidth = 1;
-        c.ipadx = 100;
-        c.insets = new Insets(0, 15, 10, 15);
-        final JTextField valorEditarNombreClienteDialogo = new JTextField();
-        valorEditarNombreClienteDialogo.setText(clienteActual.getNombre());
-        panelDialogo.add(valorEditarNombreClienteDialogo, c);
-
-        c.gridx = 0;
-        c.gridy = 2;
-        c.gridwidth = 1;
-        c.ipadx = 40;
-        c.insets = new Insets(0, 5, 10, 0);
-        JLabel editarCelularClienteDialogo = new JLabel("Celular:");
-        panelDialogo.add(editarCelularClienteDialogo, c);
-
-        c.gridx = 1;
-        c.gridy = 2;
-        c.gridwidth = 1;
-        c.ipadx = 100;
-        c.insets = new Insets(0, 15, 10, 15);
-
-        final JTextField valorEditarCelularClienteDialogo = new JTextField();
-        valorEditarCelularClienteDialogo.setText(clienteActual.getNumero_celular());
-        panelDialogo.add(valorEditarCelularClienteDialogo, c);
-        c.gridx = 2;
-        c.gridy = 2;
-        c.gridwidth = 1;
-        c.ipadx = 40;
-        c.insets = new Insets(0, 5, 10, 0);
-        JLabel editarMontoClienteDialogo = new JLabel("Monto a prestar:");
-        panelDialogo.add(editarMontoClienteDialogo, c);
-
-        c.gridx = 3;
-        c.gridy = 2;
-        c.gridwidth = 1;
-        c.ipadx = 100;
-        c.insets = new Insets(0, 15, 10, 15);
-        final JTextField valorEditarMontoClienteDialogo = new JTextField();
-        valorEditarMontoClienteDialogo.setText(String.valueOf(clienteActual.getMonto_prestamo()));
-        panelDialogo.add(valorEditarMontoClienteDialogo, c);
-
-        c.gridx = 2;
-        c.gridy = 1;
-        c.gridwidth = 1;
-        c.ipadx = 40;
-        c.insets = new Insets(0, 15, 10, 0);
-        JLabel editarTelefonoClienteDialogo = new JLabel("Telefono:");
-        panelDialogo.add(editarTelefonoClienteDialogo, c);
-
-        c.gridx = 3;
-        c.gridy = 1;
-        c.gridwidth = 1;
-        c.ipadx = 100;
-        c.insets = new Insets(0, 0, 10, 0);
-        final JTextField valorEditarTelefonoClienteDialogo = new JTextField();
-        valorEditarTelefonoClienteDialogo.setText(clienteActual.getNumero_telefono());
-        panelDialogo.add(valorEditarTelefonoClienteDialogo, c);
-
-        c.gridx = 0;
-        c.gridy = 3;
-        c.gridwidth = 1;
-        c.ipadx = 40;
-        c.insets = new Insets(0, 0, 10, 0);
-
-        JLabel editarAddressClienteDialogo = new JLabel("Dirección:");
-        panelDialogo.add(editarAddressClienteDialogo, c);
-
-        c.gridx = 1;
-        c.gridy = 3;
-        c.gridwidth = 3;
-        c.ipadx = 400;
-        c.insets = new Insets(0, 15, 10, 0);
-        final JTextField valorEditarAddressClienteDialogo = new JTextField();
-        valorEditarAddressClienteDialogo.setText(clienteActual.getDireccion());
-        panelDialogo.add(valorEditarAddressClienteDialogo, c);
-
-        c.gridx = 0;
-        c.gridy = 4;
-        c.gridwidth = 2;
-        c.ipadx = 100;
-        c.insets = new Insets(15, 40, 0, 0);
-        JButton botonGuardarClienteDialogo = new JButton("Guardar");
-        panelDialogo.add(botonGuardarClienteDialogo, c);
-
-        c.gridx = 2;
-        c.gridy = 4;
-        c.gridwidth = 2;
-        c.insets = new Insets(15, 40, 0, 0);
-        c.ipadx = 100;
-
-        JButton botonCerrarClienteDialogo = new JButton("Cancelar");
-        panelDialogo.add(botonCerrarClienteDialogo, c);
-
-        dialogoEditar.add(panelDialogo);
-
-        botonCerrarClienteDialogo.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dialogoEditar.dispose();
-            }
-        });
-
-        botonGuardarClienteDialogo.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                try {
-                    clienteActual.setDireccion(valorEditarAddressClienteDialogo.getText());
-                    clienteActual.setMonto_prestamo(Double.parseDouble(valorEditarMontoClienteDialogo.getText()));
-                    clienteActual.setNombre(valorEditarNombreClienteDialogo.getText());
-                    clienteActual.setNumero_celular(valorEditarCelularClienteDialogo.getText());
-                    clienteActual.setNumero_telefono(valorEditarTelefonoClienteDialogo.getText());
-
-                    controladorCliente.editarCliente(clienteActual);
-                    JOptionPane.showMessageDialog(dialogoEditar, "Se ha editado el cliente éxitosamente");
-                    dialogoEditar.dispose();
-
-                    //Refrescar busqueda actual
-                    String nombreCliente = nombreClienteBusqueda.getText();
-
-                    int identificacionClienteInt = 0;
-
-                    ControladorCliente controladorCliente = new ControladorCliente();
-
-                    ArrayList<Cliente> listaDeClientes = controladorCliente.obtenerClientes(nombreCliente, identificacionClienteInt);
-
-                    //Agregar filas
-                    DefaultTableModel modelo = (DefaultTableModel) TablaDeClientes.getModel();
-
-                    for (int i = 0; i < modelo.getRowCount(); i++) {
-                        modelo.removeRow(i);
-                    }
-                    modelo.setRowCount(0);
-                    for (int i = 0; i < listaDeClientes.size(); i++) {
-                        Cliente cliente = listaDeClientes.get(i);
-                        Object[] fila = new Object[4];
-                        fila[0] = cliente.getCliente_id();
-                        fila[1] = cliente.getNombre();
-                        fila[2] = cliente.getMonto_prestamo();
-                        //button.setText("<HTML>Click the <FONT color=\"#000099\"><U>link "+i+"</U></FONT>"+ " to go to the Java website.</HTML>");
-
-                        fila[3] = "Editar";
-                        modelo.addRow(fila);
-
-                    }
-
-                    TablaDeClientes.setModel(modelo);
-
-                } catch (Exception event) {
-
-                    JOptionPane.showMessageDialog(dialogoEditar, "El valor del monto debe ser numérico");
-
-                }
-
-            }
-        });
-
-        dialogoEditar.setVisible(true);
-        /*Action mostrarMensaje;
-         mostrarMensaje = new AbstractAction() {
-         @Override
-         public void actionPerformed(ActionEvent e) {
-         JTable table = (JTable) e.getSource();
-         int modelRow = Integer.valueOf(e.getActionCommand());
-         ((DefaultTableModel) table.getModel()).removeRow(modelRow);
-         }
-         };
-         ButtonColumn buttonColumn = new ButtonColumn(TablaDeClientes, mostrarMensaje, 3);
-         buttonColumn.setMnemonic(KeyEvent.VK_E);*/
-    }//GEN-LAST:event_TablaDeClientesMouseClicked
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         String nombre = jTextField_Producto_Con_Nombre.getText();
@@ -1452,8 +1322,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
 
         String nombre = jTextField1.getText();
         String identificacion = jTextField2.getText();
-
-        System.out.println(nombre + " - " + identificacion);
 
         ControladorCliente controladorCliente = new ControladorCliente();
         int id = 0;
@@ -1778,7 +1646,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Por favor ingrese un cliente o al menos un producto");
 
         } else {
-            System.err.println("Numero de filas"+TablaDeFacturaProducto.getRowCount());
+            System.err.println("Numero de filas" + TablaDeFacturaProducto.getRowCount());
             ArrayList<String> lineaCodigoProductos = new ArrayList<String>();
             ArrayList<String> lineaUnidadesProductos = new ArrayList<String>();
             ArrayList<String> lineaMontoProductos = new ArrayList<String>();
@@ -1790,16 +1658,15 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                  * Fila 0: ID producto
                  * Fila 4: Cantidad
                  */
-                String ProductoId = String.valueOf( TablaDeFacturaProducto.getValueAt(i, 0));
+                String ProductoId = String.valueOf(TablaDeFacturaProducto.getValueAt(i, 0));
                 lineaCodigoProductos.add(ProductoId);
 
-
-                int numeroUnidades = Integer.parseInt(String.valueOf( TablaDeFacturaProducto.getValueAt(i, 4)));
+                int numeroUnidades = Integer.parseInt(String.valueOf(TablaDeFacturaProducto.getValueAt(i, 4)));
 
                 String unidades = String.valueOf(numeroUnidades);
                 lineaUnidadesProductos.add(unidades);
 
-                double valorUnitario = Double.parseDouble(String.valueOf( TablaDeFacturaProducto.getValueAt(i, 5)));
+                double valorUnitario = Double.parseDouble(String.valueOf(TablaDeFacturaProducto.getValueAt(i, 5)));
                 double valorProductoTotal = numeroUnidades * valorUnitario;
                 lineaMontoProductos.add(String.valueOf(valorProductoTotal));
 
@@ -1813,7 +1680,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             }
 
             ControladorFactura controladorFactura = new ControladorFactura();
-            //String[] selection = {"cliente_id", "fecha", "estado", "valor"};
+            //String[] selection = {"cliente_id", "fecha", "estado", "identificacionCliente"};
             Calendar calendario = Calendar.getInstance();
             String dia = Integer.toString(calendario.get(Calendar.DATE));
             String mes = Integer.toString(calendario.get(Calendar.MONTH));
@@ -1830,26 +1697,620 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             ControladorFactura_Productos controladorFactura_Productos = new ControladorFactura_Productos();
             for (int i = 0; i < lineaCodigoProductos.size(); i++) {
                 //        String [] selection = {"factura_id","producto_id","unidades","precio"};
-                String[] insertarLineaProducto = {facturaActual.get(0)[0],lineaCodigoProductos.get(i),lineaUnidadesProductos.get(i),lineaMontoProductos.get(i)};
+                String[] insertarLineaProducto = {facturaActual.get(0)[0], lineaCodigoProductos.get(i), lineaUnidadesProductos.get(i), lineaMontoProductos.get(i)};
                 controladorFactura_Productos.insertFactura_Productos(insertarLineaProducto);
             }
 
             //Ingresar flujo factura
             ControladorFlujoFactura controladorFlujoFactura = new ControladorFlujoFactura();
-            // String [] selection = {"factura_id","tipo_flujo","fecha","valor"};
+            // String [] selection = {"factura_id","tipo_flujo","fecha","identificacionCliente"};
 
             String value[] = {facturaActual.get(0)[0], "abono", fecha, String.valueOf(pago)};
             controladorFlujoFactura.insertFlujo_Factura(value);
 
-            if (monto != pago) {
-                String value2[] = {facturaActual.get(0)[0], "deuda", fecha, String.valueOf(monto - pago)};
-                controladorFlujoFactura.insertFlujo_Factura(value2);
-            }
+            String value2[] = {facturaActual.get(0)[0], "deuda", fecha, String.valueOf(monto - pago)};
+            controladorFlujoFactura.insertFlujo_Factura(value2);
+
             JOptionPane.showMessageDialog(this, "Factura guardada con éxito.");
 
         }
 
     }//GEN-LAST:event_botonGuardarFacturaActionPerformed
+
+    private void BotonBuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonBuscarClienteActionPerformed
+        // TODO add your handling code here:
+        String nombreCliente = nombreClienteBusqueda.getText();
+        String identificacionCliente = identificacionClienteBusqueda.getText();
+        int identificacionClienteInt = 0;
+        try {
+            if (!identificacionCliente.equals("")) {
+                identificacionClienteInt = Integer.parseInt(identificacionCliente);
+            }
+
+            ControladorCliente controladorCliente = new ControladorCliente();
+
+            ArrayList<Cliente> listaDeClientes = controladorCliente.obtenerClientes(nombreCliente, identificacionClienteInt);
+
+            //Agregar filas
+            DefaultTableModel modelo = (DefaultTableModel) TablaDeClientes.getModel();
+
+            for (int i = 0; i < modelo.getRowCount(); i++) {
+                modelo.removeRow(i);
+            }
+            modelo.setRowCount(0);
+            for (int i = 0; i < listaDeClientes.size(); i++) {
+                Cliente cliente = listaDeClientes.get(i);
+                Object[] fila = new Object[4];
+                fila[0] = cliente.getCliente_id();
+                fila[1] = cliente.getNombre();
+                fila[2] = cliente.getMonto_prestamo();
+                //button.setText("<HTML>Click the <FONT color=\"#000099\"><U>link "+i+"</U></FONT>"+ " to go to the Java website.</HTML>");
+
+                fila[3] = "Editar";
+                modelo.addRow(fila);
+
+            }
+
+            TablaDeClientes.setModel(modelo);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "La identificación debe ser numérica, por favor ingrese correctamente el dato", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_BotonBuscarClienteActionPerformed
+
+    private void TablaDeClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaDeClientesMouseClicked
+        // TODO add your handling code here:
+        int fila = TablaDeClientes.getSelectedRow();
+        int identificacion = (int) TablaDeClientes.getValueAt(fila, 0);
+
+        final ControladorCliente controladorCliente = new ControladorCliente();
+        ArrayList<Cliente> listaClientes = controladorCliente.obtenerClientes("", identificacion);
+        final Cliente clienteActual = listaClientes.get(0);
+
+        final JDialog dialogoEditar = new JDialog(this);
+
+        dialogoEditar.setTitle("Editar clientes");
+        dialogoEditar.setSize(600, 310);
+        dialogoEditar.setResizable(false);
+
+        JPanel panelDialogo = new JPanel();
+
+        panelDialogo.setLayout(new GridBagLayout());
+
+        GridBagConstraints c = new GridBagConstraints();
+        c.fill = GridBagConstraints.HORIZONTAL;
+
+        JLabel editarTextoPrincipalDialogo = new JLabel("Editar clientes");
+        c.gridx = 0;
+        c.gridy = 0;
+        c.gridwidth = 4;
+        c.insets = new Insets(15, 200, 40, 0);
+        c.ipadx = 100;
+        Font textoGrande = new Font("Arial", 1, 18);
+        editarTextoPrincipalDialogo.setFont(textoGrande);
+        panelDialogo.add(editarTextoPrincipalDialogo, c);
+
+        c.insets = new Insets(0, 5, 10, 0);
+        c.gridx = 0;
+        c.gridy = 1;
+        c.gridwidth = 1;
+        c.ipadx = 40;
+        JLabel editarNombreClienteDialogo = new JLabel("Nombre:");
+        panelDialogo.add(editarNombreClienteDialogo, c);
+
+        c.gridx = 1;
+        c.gridy = 1;
+        c.gridwidth = 1;
+        c.ipadx = 100;
+        c.insets = new Insets(0, 15, 10, 15);
+        final JTextField valorEditarNombreClienteDialogo = new JTextField();
+        valorEditarNombreClienteDialogo.setText(clienteActual.getNombre());
+        panelDialogo.add(valorEditarNombreClienteDialogo, c);
+
+        c.gridx = 0;
+        c.gridy = 2;
+        c.gridwidth = 1;
+        c.ipadx = 40;
+        c.insets = new Insets(0, 5, 10, 0);
+        JLabel editarCelularClienteDialogo = new JLabel("Celular:");
+        panelDialogo.add(editarCelularClienteDialogo, c);
+
+        c.gridx = 1;
+        c.gridy = 2;
+        c.gridwidth = 1;
+        c.ipadx = 100;
+        c.insets = new Insets(0, 15, 10, 15);
+
+        final JTextField valorEditarCelularClienteDialogo = new JTextField();
+        valorEditarCelularClienteDialogo.setText(clienteActual.getNumero_celular());
+        panelDialogo.add(valorEditarCelularClienteDialogo, c);
+        c.gridx = 2;
+        c.gridy = 2;
+        c.gridwidth = 1;
+        c.ipadx = 40;
+        c.insets = new Insets(0, 5, 10, 0);
+        JLabel editarMontoClienteDialogo = new JLabel("Monto a prestar:");
+        panelDialogo.add(editarMontoClienteDialogo, c);
+
+        c.gridx = 3;
+        c.gridy = 2;
+        c.gridwidth = 1;
+        c.ipadx = 100;
+        c.insets = new Insets(0, 15, 10, 15);
+        final JTextField valorEditarMontoClienteDialogo = new JTextField();
+        valorEditarMontoClienteDialogo.setText(String.valueOf(clienteActual.getMonto_prestamo()));
+        panelDialogo.add(valorEditarMontoClienteDialogo, c);
+
+        c.gridx = 2;
+        c.gridy = 1;
+        c.gridwidth = 1;
+        c.ipadx = 40;
+        c.insets = new Insets(0, 15, 10, 0);
+        JLabel editarTelefonoClienteDialogo = new JLabel("Telefono:");
+        panelDialogo.add(editarTelefonoClienteDialogo, c);
+
+        c.gridx = 3;
+        c.gridy = 1;
+        c.gridwidth = 1;
+        c.ipadx = 100;
+        c.insets = new Insets(0, 0, 10, 0);
+        final JTextField valorEditarTelefonoClienteDialogo = new JTextField();
+        valorEditarTelefonoClienteDialogo.setText(clienteActual.getNumero_telefono());
+        panelDialogo.add(valorEditarTelefonoClienteDialogo, c);
+
+        c.gridx = 0;
+        c.gridy = 3;
+        c.gridwidth = 1;
+        c.ipadx = 40;
+        c.insets = new Insets(0, 0, 10, 0);
+
+        JLabel editarAddressClienteDialogo = new JLabel("Dirección:");
+        panelDialogo.add(editarAddressClienteDialogo, c);
+
+        c.gridx = 1;
+        c.gridy = 3;
+        c.gridwidth = 3;
+        c.ipadx = 400;
+        c.insets = new Insets(0, 15, 10, 0);
+        final JTextField valorEditarAddressClienteDialogo = new JTextField();
+        valorEditarAddressClienteDialogo.setText(clienteActual.getDireccion());
+        panelDialogo.add(valorEditarAddressClienteDialogo, c);
+
+        c.gridx = 0;
+        c.gridy = 4;
+        c.gridwidth = 2;
+        c.ipadx = 100;
+        c.insets = new Insets(15, 40, 0, 0);
+        JButton botonGuardarClienteDialogo = new JButton("Guardar");
+        panelDialogo.add(botonGuardarClienteDialogo, c);
+
+        c.gridx = 2;
+        c.gridy = 4;
+        c.gridwidth = 2;
+        c.insets = new Insets(15, 40, 0, 0);
+        c.ipadx = 100;
+
+        JButton botonCerrarClienteDialogo = new JButton("Cancelar");
+        panelDialogo.add(botonCerrarClienteDialogo, c);
+
+        dialogoEditar.add(panelDialogo);
+
+        botonCerrarClienteDialogo.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dialogoEditar.dispose();
+            }
+        });
+
+        botonGuardarClienteDialogo.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                try {
+                    clienteActual.setDireccion(valorEditarAddressClienteDialogo.getText());
+                    clienteActual.setMonto_prestamo(Double.parseDouble(valorEditarMontoClienteDialogo.getText()));
+                    clienteActual.setNombre(valorEditarNombreClienteDialogo.getText());
+                    clienteActual.setNumero_celular(valorEditarCelularClienteDialogo.getText());
+                    clienteActual.setNumero_telefono(valorEditarTelefonoClienteDialogo.getText());
+
+                    controladorCliente.editarCliente(clienteActual);
+                    JOptionPane.showMessageDialog(dialogoEditar, "Se ha editado el cliente éxitosamente");
+                    dialogoEditar.dispose();
+
+                    //Refrescar busqueda actual
+                    String nombreCliente = nombreClienteBusqueda.getText();
+
+                    int identificacionClienteInt = 0;
+
+                    ControladorCliente controladorCliente = new ControladorCliente();
+
+                    ArrayList<Cliente> listaDeClientes = controladorCliente.obtenerClientes(nombreCliente, identificacionClienteInt);
+
+                    //Agregar filas
+                    DefaultTableModel modelo = (DefaultTableModel) TablaDeClientes.getModel();
+
+                    for (int i = 0; i < modelo.getRowCount(); i++) {
+                        modelo.removeRow(i);
+                    }
+                    modelo.setRowCount(0);
+                    for (int i = 0; i < listaDeClientes.size(); i++) {
+                        Cliente cliente = listaDeClientes.get(i);
+                        Object[] fila = new Object[4];
+                        fila[0] = cliente.getCliente_id();
+                        fila[1] = cliente.getNombre();
+                        fila[2] = cliente.getMonto_prestamo();
+                        //button.setText("<HTML>Click the <FONT color=\"#000099\"><U>link "+i+"</U></FONT>"+ " to go to the Java website.</HTML>");
+
+                        fila[3] = "Editar";
+                        modelo.addRow(fila);
+
+                    }
+
+                    TablaDeClientes.setModel(modelo);
+
+                } catch (Exception event) {
+
+                    JOptionPane.showMessageDialog(dialogoEditar, "El valor del monto debe ser numérico");
+
+                }
+
+            }
+        });
+
+        dialogoEditar.setVisible(true);
+        /*Action mostrarMensaje;
+         mostrarMensaje = new AbstractAction() {
+         @Override
+         public void actionPerformed(ActionEvent e) {
+         JTable table = (JTable) e.getSource();
+         int modelRow = Integer.valueOf(e.getActionCommand());
+         ((DefaultTableModel) table.getModel()).removeRow(modelRow);
+         }
+         };
+         ButtonColumn buttonColumn = new ButtonColumn(TablaDeClientes, mostrarMensaje, 3);
+         buttonColumn.setMnemonic(KeyEvent.VK_E);*/
+    }//GEN-LAST:event_TablaDeClientesMouseClicked
+
+    private void nombreNuevoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nombreNuevoClienteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nombreNuevoClienteActionPerformed
+
+    private void botonAgregarNuevoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAgregarNuevoClienteActionPerformed
+        // TODO add your handling code here:
+        String identificacionStringNuevoCliente = identificacionNuevoCliente.getText();
+        String nombreEnviarNuevoCliente = nombreNuevoCliente.getText();
+        String telefonoEnviarNuevoCliente = telefonoNuevoCliente.getText();
+        String celularEnviarNuevoCliente = celularNuevoCliente.getText();
+        String direccionEnviarNuevoCliente = DireccionNuevoCliente.getText();
+        String montoAPrestarEnviarNuevoCliente = montoPrestamoNuevoCliente.getText();
+        String tipoIdentificacionNuevoCliente = (String) tipoIdentificacionCliente.getSelectedItem();
+
+        try {
+
+            int identificacionIntNuevoCliente = Integer.parseInt(identificacionStringNuevoCliente);
+            double montoAPrestarEnviarIntNuevoCliente = Double.parseDouble(montoAPrestarEnviarNuevoCliente);
+            ControladorCliente controladorCliente = new ControladorCliente();
+            controladorCliente.agregarCliente(identificacionIntNuevoCliente, tipoIdentificacionNuevoCliente, nombreEnviarNuevoCliente, telefonoEnviarNuevoCliente, celularEnviarNuevoCliente, direccionEnviarNuevoCliente, montoAPrestarEnviarIntNuevoCliente);
+
+            JOptionPane.showMessageDialog(null, "Cliente creado exitosamente");
+            identificacionNuevoCliente.setText("");
+            nombreNuevoCliente.setText("");
+            telefonoNuevoCliente.setText("");
+            celularNuevoCliente.setText("");
+            DireccionNuevoCliente.setText("");
+            montoPrestamoNuevoCliente.setText("");
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "La identificación y el monto deben ser numéricos, por favor ingrese correctamente los datos", "Error", JOptionPane.ERROR_MESSAGE);
+
+        }
+    }//GEN-LAST:event_botonAgregarNuevoClienteActionPerformed
+
+    private void BotonBuscarClienteSaldoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonBuscarClienteSaldoActionPerformed
+        String nombreCliente = nombreClienteBusquedaSaldo.getText();
+        //08-11-2014 listar clientes por nombre
+        ControladorCliente controladorCliente = new ControladorCliente();
+        ArrayList<Cliente> listaClientes = new ArrayList<>();
+
+        if (nombreCliente.equals("")) {
+            listaClientes = controladorCliente.obtenerClientes();
+        } else {
+            listaClientes = controladorCliente.obtenerClientes(nombreCliente, 0);
+        }
+
+        //08-11-2014 Crear dialogo de búsqueda
+        final JDialog dialogoEditar = new JDialog(this);
+
+        dialogoEditar.setTitle("Buscar clientes");
+        dialogoEditar.setSize(300, 300);
+        dialogoEditar.setResizable(false);
+
+        JPanel panelDialogo = new JPanel();
+
+        panelDialogo.setLayout(new GridBagLayout());
+
+        GridBagConstraints c = new GridBagConstraints();
+        c.fill = GridBagConstraints.HORIZONTAL;
+
+        JLabel ediitarTextoPrincipalDialogo = new JLabel("Buscar cliente");
+        c.gridx = 0;
+        c.gridy = 0;
+        c.gridwidth = 2;
+        c.insets = new Insets(10, 60, 10, 10);
+        Font textoGrande = new Font("Arial", 1, 16);
+        ediitarTextoPrincipalDialogo.setFont(textoGrande);
+        panelDialogo.add(ediitarTextoPrincipalDialogo, c);
+
+        c.gridx = 0;
+        c.gridy = 1;
+        c.gridwidth = 2;
+        c.insets = new Insets(10, 10, 10, 10);
+        final JTable tablaDialogo = new JTable();
+        DefaultTableModel modeloTabla = new DefaultTableModel() {
+
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                //all cells false
+                return false;
+            }
+        };;
+
+        modeloTabla.addColumn("Identificación");
+        modeloTabla.addColumn("Nombre");
+
+        //LLenar tabla
+        for (int i = 0; i < listaClientes.size(); i++) {
+            Object[] data = {"1", "2"};
+            data[0] = listaClientes.get(i).getCliente_id();
+            data[1] = listaClientes.get(i).getNombre();
+            modeloTabla.addRow(data);
+        }
+
+        tablaDialogo.setModel(modeloTabla);
+        tablaDialogo.getColumn("Identificación").setMinWidth(110);
+        tablaDialogo.getColumn("Nombre").setMinWidth(110);
+        tablaDialogo.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        JScrollPane scroll = new JScrollPane(tablaDialogo);
+        scroll.setPreferredSize(new Dimension(220, 150));
+
+        panelDialogo.add(scroll, c);
+
+        c.insets = new Insets(0, 0, 0, 10);
+        c.gridx = 0;
+        c.gridy = 2;
+        c.gridwidth = 1;
+        JButton botonGuardarClienteDialogo = new JButton("Elegir");
+        panelDialogo.add(botonGuardarClienteDialogo, c);
+
+        c.gridx = 1;
+        c.gridy = 2;
+        c.gridwidth = 1;
+        JButton botonCerrarClienteDialogo = new JButton("Cancelar");
+        panelDialogo.add(botonCerrarClienteDialogo, c);
+
+        dialogoEditar.add(panelDialogo);
+        dialogoEditar.setVisible(true);
+
+        botonCerrarClienteDialogo.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dialogoEditar.dispose();
+            }
+        });
+
+        botonGuardarClienteDialogo.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int row = tablaDialogo.getSelectedRow();
+                if (row == -1) {
+                    JOptionPane.showMessageDialog(dialogoEditar, "Por favor seleccione una fila");
+
+                } else {
+                    Object identificacionCliente = tablaDialogo.getValueAt(row, 0);
+                    mostrarIdentificacionCliente.setText(String.valueOf(identificacionCliente));
+                    String nombreClientePago = String.valueOf(tablaDialogo.getValueAt(row, 1));
+
+                    //Limitar a 15 caracteres
+                    if (nombreClientePago.length() >= 15) {
+                        nombreClientePago = nombreClientePago.substring(0, 12);
+
+                    }
+                    textoPersonaSaldo.setText(nombreClientePago);
+
+                    DefaultTableModel modeloClientes = (DefaultTableModel) TablaDeSaldoClientes.getModel();
+                    for (int i = 0; i < modeloClientes.getRowCount(); i++) {
+                        modeloClientes.removeRow(i);
+                    }
+
+                    modeloClientes.setRowCount(0);
+                    ControladorFlujoFactura controladorFlujoFactura = new ControladorFlujoFactura();
+
+                    //SELECT * FROM Flujo_Factura where factura_id in (select factura_id from Factura where cliente_id = 1130614506);
+                    ArrayList<String[]> flujosCliente = controladorFlujoFactura.getTodosFlujo_Factura(" where factura_id in (select factura_id from Factura where cliente_id = " + String.valueOf(identificacionCliente) + " and estado=\"fiado\") order by factura_id");
+                    double pago = 0.0;
+
+                    for (int i = 0; i < flujosCliente.size(); i++) {
+                        String[] datos = flujosCliente.get(i);
+                        Object[] rowData = {datos[1], datos[2], datos[3], datos[4]};
+
+                        if (datos[2].equals("deuda")) {
+                            pago += Double.parseDouble(datos[4]);
+                        } else {
+                            pago -= Double.parseDouble(datos[4]);
+                        }
+
+                        modeloClientes.addRow(rowData);
+                    }
+
+                    TablaDeSaldoClientes.setModel(modeloClientes);
+                    textoTotalDebe.setText(String.valueOf(pago));
+                    dialogoEditar.dispose();
+
+                    //Mostrar en table de clientes los datos
+                    botonRegistrarAbono.setEnabled(true);
+                }
+
+            }
+        });
+    }//GEN-LAST:event_BotonBuscarClienteSaldoActionPerformed
+
+    private void TablaDeSaldoClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaDeSaldoClientesMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TablaDeSaldoClientesMouseClicked
+
+    private void botonRegistrarAbonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRegistrarAbonoActionPerformed
+        // TODO add your handling code here:
+        // try {
+
+        String identificacionCliente = mostrarIdentificacionCliente.getText();
+        Double abono = Double.parseDouble(abonoClente.getText());
+        ControladorFlujoFactura controladorFlujoFactura = new ControladorFlujoFactura();
+        ControladorFactura controladorFactura = new ControladorFactura();
+
+        Calendar calendario = Calendar.getInstance();
+        String dia = Integer.toString(calendario.get(Calendar.DATE));
+        String mes = Integer.toString(calendario.get(Calendar.MONTH));
+        String annio = Integer.toString(calendario.get(Calendar.YEAR));
+        Date date = new Date();
+        DateFormat hourFormat = new SimpleDateFormat("HH:mm:ss");
+        String hora = hourFormat.format(date);
+
+        String fecha = annio + "-" + mes + "-" + dia + " " + hora;
+        /*
+         * -----------------Tomar el abono y los pagos-----------------
+         * Procedimiento
+         * 1 Tomar flujos de deuda de cada factura con estado fiado
+         * 2 Tomar abonos de abono de cada factura con estado fiado
+         * 3 Calcular la resta de estos dos para deteminar lo que se debe por factura
+         * 4 Cancelar con el flujo la factura y si lo debido es 0 colocar estado pagado
+         * 5 Mostrar una información en un JOptionPane y recalcular la deuda
+         * 
+         */
+        DefaultTableModel modeloClientes = (DefaultTableModel) TablaDeSaldoClientes.getModel();
+        ArrayList<String> codigoFactura = new ArrayList<>();
+        ArrayList<Double> totalDebe = new ArrayList<>();
+
+        JTextArea area = new JTextArea(10, 30);
+        String informe = "\t Registro flujo pago del abono \n\n";
+        informe += "Factura \t Pago \t ¿Queda pagada? \n\n";
+
+        int numeroRegistros = -1;
+        for (int i = 0; i < modeloClientes.getRowCount(); i++) {
+            //System.out.println("Entro al for " + i);
+            //Se necesita 0: Factura ID, 1 Tipo, 3 Valor
+            // Codigofactura contiene los cogidos de las facturas
+            // totalDebe contiene lo que debe de las facturas, la posicion coincide con la lista CodigoFactura
+            String factura_id = String.valueOf(modeloClientes.getValueAt(i, 0));
+            String tipo_flujo = String.valueOf(modeloClientes.getValueAt(i, 1));
+            Double valor = Double.parseDouble(String.valueOf(modeloClientes.getValueAt(i, 3)));
+            if (codigoFactura.contains(factura_id)) {
+
+                if (tipo_flujo.equals("abono")) {
+                    totalDebe.set(numeroRegistros, totalDebe.get(numeroRegistros) - valor);
+                } else {
+                    totalDebe.set(numeroRegistros, totalDebe.get(numeroRegistros) + valor);
+                }
+            } else {
+                numeroRegistros++;
+                codigoFactura.add(factura_id);
+                if (tipo_flujo.equals("abono")) {
+                    totalDebe.add(-valor);
+                } else {
+                    totalDebe.add(valor);
+                }
+            }
+
+        }
+        //System.out.println(Arrays.toString(codigoFactura.toArray()));
+        //System.out.println(Arrays.toString(totalDebe.toArray()));
+
+        for (int i = 0; i < totalDebe.size(); i++) {
+            //Tomar flujos
+            if (abono > 0.0) {
+                Double pago = totalDebe.get(i) - abono;
+
+                //Pago igual a 0 significa que se pagó la factura
+                if (pago == 0) {
+                    //Registrar flujo
+                    String[] value = {codigoFactura.get(i), "abono", fecha, String.valueOf(abono)};
+                    //String [] selection = {"factura_id","tipo_flujo","fecha","valor"};
+                    controladorFlujoFactura.insertFlujo_Factura(value);
+
+                    controladorFactura.cambiarEstadoFactura(codigoFactura.get(i), "pagada");
+                    informe += codigoFactura.get(i) + "\t" + String.valueOf(abono) + "\tSI\n";
+                    //Romper el for
+                    break;
+                } else {
+
+                    //Pago mayor que 0, es decir se queda debiendo
+                    if (pago > 0) {
+
+                        //Registrar flujo
+                        String[] value = {codigoFactura.get(i), "abono", fecha, String.valueOf(abono)};
+                        //String [] selection = {"factura_id","tipo_flujo","fecha","valor"};
+                        controladorFlujoFactura.insertFlujo_Factura(value);
+                        //Como el abono ahora es menor que 0 debe romperse el for
+                        informe += codigoFactura.get(i) + "\t" + String.valueOf(abono) + "\tNO\n";
+
+                        break;
+
+                    } else {
+                        //Caso final pago menor 0, es decir el abono paga la factura pero queda disponible para otras facturas
+                        //Registrar flujo
+                        String[] value = {codigoFactura.get(i), "abono", fecha, String.valueOf(totalDebe.get(i))};
+                        //String [] selection = {"factura_id","tipo_flujo","fecha","valor"};
+                        controladorFlujoFactura.insertFlujo_Factura(value);
+
+                        controladorFactura.cambiarEstadoFactura(codigoFactura.get(i), "pagada");
+
+                        //Ajustamos ahora el abono restando lo que debe la factura
+                        informe += codigoFactura.get(i) + "\t" + String.valueOf(abono) + "\tSI\n";
+                        abono -= totalDebe.get(i);
+                    }
+
+                }
+            } else {
+                //Romper el for
+                break;
+            }
+
+        }
+
+        //Reordenar y volver a consultar
+        for (int i = 0; i < modeloClientes.getRowCount(); i++) {
+            modeloClientes.removeRow(i);
+        }
+
+        modeloClientes.setRowCount(0);
+
+        //SELECT * FROM Flujo_Factura where factura_id in (select factura_id from Factura where cliente_id = 1130614506);
+        ArrayList<String[]> flujosCliente = controladorFlujoFactura.getTodosFlujo_Factura(" where factura_id in (select factura_id from Factura where cliente_id = " + String.valueOf(identificacionCliente) + " and estado=\"fiado\") order by factura_id");
+        double pago = 0.0;
+
+        for (int i = 0; i < flujosCliente.size(); i++) {
+            String[] datos = flujosCliente.get(i);
+            Object[] rowData = {datos[1], datos[2], datos[3], datos[4]};
+            modeloClientes.addRow(rowData);
+            if (datos[2].equals("deuda")) {
+                pago += Double.parseDouble(datos[4]);
+            } else {
+                pago -= Double.parseDouble(datos[4]);
+            }
+        }
+
+        textoTotalDebe.setText(String.valueOf(pago));
+        TablaDeSaldoClientes.setModel(modeloClientes);
+        area.setText(informe);
+        JScrollPane panelInformePago = new JScrollPane(area);
+        JOptionPane.showMessageDialog(this, panelInformePago);
+
+        // } catch (Exception e) {
+        //     JOptionPane.showMessageDialog(this, "Debe ingresar un valor numérico en el abono " + e.getMessage());
+        // }
+    }//GEN-LAST:event_botonRegistrarAbonoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1893,12 +2354,16 @@ public class InterfazPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BotonBuscarCliente;
+    private javax.swing.JButton BotonBuscarClienteSaldo;
     private javax.swing.JTextField DireccionNuevoCliente;
     private javax.swing.JTable TablaDeClientes;
     private javax.swing.JTable TablaDeFacturaProducto;
     private javax.swing.JTable TablaDeProductos;
+    private javax.swing.JTable TablaDeSaldoClientes;
+    private javax.swing.JTextField abonoClente;
     private javax.swing.JButton botonAgregarNuevoCliente;
     private javax.swing.JButton botonGuardarFactura;
+    private javax.swing.JButton botonRegistrarAbono;
     private javax.swing.JTextField celularNuevoCliente;
     private javax.swing.JTextField identificacionClienteBusqueda;
     private javax.swing.JTextField identificacionNuevoCliente;
@@ -1927,10 +2392,15 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel33;
+    private javax.swing.JLabel jLabel34;
+    private javax.swing.JLabel jLabel35;
+    private javax.swing.JLabel jLabel37;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -1941,6 +2411,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
+    private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -1952,6 +2423,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JTabbedPane jTabbedPane3;
@@ -1974,10 +2446,14 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField_Producto_Con_Unidades;
     private javax.swing.JLabel mensajesBusquedaClientesFactura;
     private javax.swing.JTextField montoPrestamoNuevoCliente;
+    private javax.swing.JTextField mostrarIdentificacionCliente;
     private javax.swing.JTextField nombreClienteBusqueda;
+    private javax.swing.JTextField nombreClienteBusquedaSaldo;
     private javax.swing.JTextField nombreNuevoCliente;
     private javax.swing.JSlider sliderNumeroUnidades;
     private javax.swing.JTextField telefonoNuevoCliente;
+    private javax.swing.JLabel textoPersonaSaldo;
+    private javax.swing.JLabel textoTotalDebe;
     private javax.swing.JComboBox tipoIdentificacionCliente;
     private javax.swing.JLabel valorActualFactura;
     // End of variables declaration//GEN-END:variables

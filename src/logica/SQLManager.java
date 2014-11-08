@@ -48,7 +48,6 @@ public class SQLManager {
             System.out.println(query);
             ps = conn.prepareStatement(query);
             rs = ps.executeQuery();
-
             while (rs.next()) {
                 String[] tempList = new String[selection_type.length];
                 for (int i = 0; i < selection_type.length; i++) {

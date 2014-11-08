@@ -25,8 +25,8 @@ public class ControladorFlujoFactura {
     
     public Flujo_Factura getFlujo_Factura(String restriction)
     {
-        String [] selection = {"flujo_Factura_id","factura_id","tipo_flujo","fecha","valor"};
-        String [] selection_type = {"int","int","char","date","double"};
+        String [] selection = {"flujo_id","factura_id","tipo_flujo","fecha","valor"};
+        String [] selection_type = {"int","int","varchar","varchar","double"};
         String table = "Flujo_Factura";
         
         ArrayList<String[]> resultSet = sqlManager.select_query(selection, selection_type, table, restriction);
@@ -36,12 +36,22 @@ public class ControladorFlujoFactura {
         
         return flujo_factura;
     }
+     public ArrayList<String[]> getTodosFlujo_Factura(String restriction)
+    {
+        String [] selection = {"flujo_id","factura_id","tipo_flujo","fecha","valor"};
+        String [] selection_type = {"int","int","varchar","varchar","double"};
+        String table = "Flujo_Factura";
+        
+        ArrayList<String[]> resultSet = sqlManager.select_query(selection, selection_type, table, restriction);
+       
+        return resultSet;
+    }
      
      public ArrayList<String[]> insertFlujo_Factura(String [] value)
      {
         String [] selection = {"factura_id","tipo_flujo","fecha","valor"};
-        String [] type_value = {"int","char","date","double"};
-        String [] table_id = {"flujo_Factura_id"};
+        String [] type_value = {"int","varchar","varchar","double"};
+        String [] table_id = {"flujo_id"};
         String [] type_table_id = {"int"};
         ArrayList<String[]> result = sqlManager.insert_query(selection, value,type_value, "Flujo_Factura" , table_id, type_table_id);
         return result;
