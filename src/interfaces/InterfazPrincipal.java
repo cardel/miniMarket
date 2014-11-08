@@ -1799,7 +1799,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                 String unidades = String.valueOf(numeroUnidades);
                 lineaUnidadesProductos.add(unidades);
 
-                double valorUnitario = Double.parseDouble(String.valueOf( TablaDeFacturaProducto.getValueAt(i, 4)));
+                double valorUnitario = Double.parseDouble(String.valueOf( TablaDeFacturaProducto.getValueAt(i, 5)));
                 double valorProductoTotal = numeroUnidades * valorUnitario;
                 lineaMontoProductos.add(String.valueOf(valorProductoTotal));
 
