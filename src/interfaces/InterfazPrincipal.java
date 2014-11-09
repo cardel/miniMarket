@@ -11,6 +11,7 @@ import controladores.ControladorFactura_Productos;
 import controladores.ControladorFlujoFactura;
 import controladores.ControladorProducto;
 import entidades.Cliente;
+import entidades.Factura;
 import entidades.Productos;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -92,6 +93,15 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         TablaDeFacturaProducto = new javax.swing.JTable();
         jPanel8 = new javax.swing.JPanel();
+        jPanel13 = new javax.swing.JPanel();
+        jLabel36 = new javax.swing.JLabel();
+        jLabel38 = new javax.swing.JLabel();
+        jLabel39 = new javax.swing.JLabel();
+        jTextField_BuscarFactura_ID = new javax.swing.JTextField();
+        jTextField_BuscarFactura_Cliente = new javax.swing.JTextField();
+        jButton5 = new javax.swing.JButton();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        TablaDeBuscarFactura = new javax.swing.JTable();
         jTabbedPane3 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -412,15 +422,104 @@ public class InterfazPrincipal extends javax.swing.JFrame {
 
         jTabbedPane2.addTab("Crear Factura", jPanel7);
 
+        jPanel13.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        jLabel36.setText("Buscar Factura");
+
+        jLabel38.setText("ID Factura");
+
+        jLabel39.setText("ID Cliente");
+
+        jButton5.setText("Buscar");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
+        jPanel13.setLayout(jPanel13Layout);
+        jPanel13Layout.setHorizontalGroup(
+            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel13Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel36)
+                    .addGroup(jPanel13Layout.createSequentialGroup()
+                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel38)
+                            .addComponent(jLabel39))
+                        .addGap(36, 36, 36)
+                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jTextField_BuscarFactura_Cliente, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
+                            .addComponent(jTextField_BuscarFactura_ID))
+                        .addGap(73, 73, 73)
+                        .addComponent(jButton5)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel13Layout.setVerticalGroup(
+            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel13Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel36)
+                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel13Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel38)
+                            .addComponent(jTextField_BuscarFactura_ID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel39)
+                            .addComponent(jTextField_BuscarFactura_Cliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel13Layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(jButton5)))
+                .addContainerGap(25, Short.MAX_VALUE))
+        );
+
+        TablaDeBuscarFactura.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Numero", "Factura", "Cliente", "Fecha", "Estado", "Valor"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        TablaDeBuscarFactura.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TablaDeBuscarFacturaMouseClicked(evt);
+            }
+        });
+        jScrollPane5.setViewportView(TablaDeBuscarFactura);
+
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 786, Short.MAX_VALUE)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 766, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 416, Short.MAX_VALUE)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jTabbedPane2.addTab("Buscar Factura", jPanel8);
@@ -2312,6 +2411,67 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         // }
     }//GEN-LAST:event_botonRegistrarAbonoActionPerformed
 
+    private void TablaDeBuscarFacturaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaDeBuscarFacturaMouseClicked
+        int fila = TablaDeBuscarFactura.getSelectedRow();
+        int identificacion = (int) TablaDeBuscarFactura.getValueAt(fila, 1);
+        int confirmacion = JOptionPane.showConfirmDialog(this, "Quieres eliminar la factura "+identificacion+" factura?");
+        if(confirmacion == JOptionPane.YES_OPTION)
+        {
+            ControladorFactura controladorFactura = new ControladorFactura();
+            controladorFactura.deleteFactura(" where factura_id = "+identificacion);
+            jButton5ActionPerformed(null);
+        }
+        System.out.println(identificacion);
+    }//GEN-LAST:event_TablaDeBuscarFacturaMouseClicked
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        String factura_id = jTextField_BuscarFactura_ID.getText();
+        String cliente_id = jTextField_BuscarFactura_Cliente.getText();
+        ControladorFactura controladorFactura = new ControladorFactura();
+        String restriccion = "";
+        if(!factura_id.equals(""))
+        {
+            restriccion += " where factura_id like '%"+factura_id+"%'";
+            if(!cliente_id.equals(""))
+            {
+                restriccion += " or cliente_id like '%"+cliente_id+"%'";
+            }
+        }
+        else
+        {
+            if(!cliente_id.equals(""))
+            {
+                restriccion += " where cliente_id like '%"+cliente_id+"%'";
+            }
+        }
+        
+        //String restriccion2 = " where factura_id like '%"+factura_id+"%' or cliente_id like '%"+cliente_id+"%'";
+        ArrayList <Factura> listaFactura = controladorFactura.getFactura(restriccion);
+        
+        DefaultTableModel modelo = (DefaultTableModel) TablaDeBuscarFactura.getModel();
+
+        for (int i = 0; i < modelo.getRowCount(); i++) {
+            modelo.removeRow(i);
+        }
+        modelo.setRowCount(0);
+        for (int i = 0; i < listaFactura.size(); i++) {
+            Factura factura = listaFactura.get(i);
+            Object[] fila = new Object[6];
+            fila[0] = (i+1);
+            fila[1] = factura.getFactura_id();
+            fila[2] = factura.getFecha();
+            fila[3] = factura.getCliente_id();
+            fila[4] = factura.getEstado();
+            fila[5] = factura.getValor();
+            //button.setText("<HTML>Click the <FONT color=\"#000099\"><U>link "+i+"</U></FONT>"+ " to go to the Java website.</HTML>");
+            modelo.addRow(fila);
+
+        }
+
+        TablaDeBuscarFactura.setModel(modelo);
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    
     /**
      * @param args the command line arguments
      */
@@ -2356,6 +2516,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton BotonBuscarCliente;
     private javax.swing.JButton BotonBuscarClienteSaldo;
     private javax.swing.JTextField DireccionNuevoCliente;
+    private javax.swing.JTable TablaDeBuscarFactura;
     private javax.swing.JTable TablaDeClientes;
     private javax.swing.JTable TablaDeFacturaProducto;
     private javax.swing.JTable TablaDeProductos;
@@ -2371,6 +2532,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -2400,7 +2562,10 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
+    private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel37;
+    private javax.swing.JLabel jLabel38;
+    private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -2412,6 +2577,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
+    private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -2424,6 +2590,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JTabbedPane jTabbedPane3;
@@ -2434,6 +2601,8 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField jTextField_BuscarFactura_Cliente;
+    private javax.swing.JTextField jTextField_BuscarFactura_ID;
     private javax.swing.JTextField jTextField_Factura_Cliente_Id;
     private javax.swing.JTextField jTextField_Factura_Producto_Descripcion;
     private javax.swing.JTextField jTextField_Factura_Producto_Nombre;

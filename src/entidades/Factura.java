@@ -13,7 +13,7 @@ public class Factura {
     private int factura_id;
     private int cliente_id;
     private String fecha;
-    private char estado;
+    private String estado;
     private double valor;
     
 
@@ -21,7 +21,7 @@ public class Factura {
         this.factura_id = factura_id;
     }
 
-    public Factura(int factura_id, int cliente_id, String fecha, char estado, double valor) {
+    public Factura(int factura_id, int cliente_id, String fecha, String estado, double valor) {
         this.factura_id = factura_id;
         this.cliente_id = cliente_id;
         this.fecha = fecha;
@@ -50,11 +50,11 @@ public class Factura {
         this.fecha = fecha;
     }
 
-    public char getEstado() {
+    public String getEstado() {
         return estado;
     }
 
-    public void setEstado(char estado) {
+    public void setEstado(String estado) {
         this.estado = estado;
     }
 

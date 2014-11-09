@@ -22,17 +22,29 @@ public class ControladorFactura {
         sqlManager = new SQLManager();
     }
 
-    public Factura getFactura(String restriction) {
+    public ArrayList<Factura> getFactura(String restriction) {
         String[] selection = {"factura_id", "cliente_id", "fecha", "estado", "valor"};
-        String[] selection_type = {"int", "int", "varchar", "char", "double"};
+        String[] selection_type = {"int", "int", "varchar", "varchar", "double"};
         String table = "Factura";
 
         ArrayList<String[]> resultSet = sqlManager.select_query(selection, selection_type, table, restriction);
-        String[] result = resultSet.get(0);
+        
+        ArrayList<Factura> listaDeFactura = new ArrayList<>();
+        //Pendiente
 
-        Factura factura = new Factura(Integer.parseInt(result[0]), Integer.parseInt(result[1]), result[2], result[3].charAt(0), Double.parseDouble(result[4]));
+        for (int i = 0; i < resultSet.size(); i++) {
+            String[] resultado = resultSet.get(i);
+            int factura_id = Integer.parseInt(resultado[0]);
+            int cliente_id = Integer.parseInt(resultado[1]);
+            String fecha = resultado[2];
+            String estado = resultado[3];
+            Double valor = Double.parseDouble(resultado[4]);
+           
+            Factura factura = new Factura(factura_id, cliente_id, fecha, estado, valor);
+            listaDeFactura.add(factura);
 
-        return factura;
+        }
+        return listaDeFactura;
     }
 
     //Comentario importante!!!! No olvidar lo del flujo, queda pendiente
