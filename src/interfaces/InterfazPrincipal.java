@@ -29,6 +29,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Vector;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -191,12 +192,13 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         nombreClienteReporteCliente = new javax.swing.JTextField();
         identificacionClienteCliente = new javax.swing.JTextField();
         jButton7 = new javax.swing.JButton();
+        jTextFieldIdentificacionClienteReporte = new javax.swing.JTextField();
         jPanel18 = new javax.swing.JPanel();
         jLabel43 = new javax.swing.JLabel();
         jLabel44 = new javax.swing.JLabel();
-        jButton8 = new javax.swing.JButton();
-        dateChooserCombo3 = new datechooser.beans.DateChooserCombo();
-        dateChooserCombo4 = new datechooser.beans.DateChooserCombo();
+        botonGenerarReporteCliente = new javax.swing.JButton();
+        clienteReporteClienteFechaInicial = new datechooser.beans.DateChooserCombo();
+        clienteReporteClienteFechaFinal = new datechooser.beans.DateChooserCombo();
         label1 = new java.awt.Label();
         jTabbedPane6 = new javax.swing.JTabbedPane();
         jTabbedPane4 = new javax.swing.JTabbedPane();
@@ -1197,6 +1199,9 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             }
         });
 
+        jTextFieldIdentificacionClienteReporte.setEditable(false);
+        jTextFieldIdentificacionClienteReporte.setEnabled(false);
+
         javax.swing.GroupLayout jPanel17Layout = new javax.swing.GroupLayout(jPanel17);
         jPanel17.setLayout(jPanel17Layout);
         jPanel17Layout.setHorizontalGroup(
@@ -1205,16 +1210,19 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton7)
-                    .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel17Layout.createSequentialGroup()
-                            .addComponent(jLabel42)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(identificacionClienteCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel17Layout.createSequentialGroup()
-                            .addComponent(jLabel41)
-                            .addGap(47, 47, 47)
-                            .addComponent(nombreClienteReporteCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(163, Short.MAX_VALUE))
+                    .addGroup(jPanel17Layout.createSequentialGroup()
+                        .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel17Layout.createSequentialGroup()
+                                .addComponent(jLabel42)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(identificacionClienteCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel17Layout.createSequentialGroup()
+                                .addComponent(jLabel41)
+                                .addGap(47, 47, 47)
+                                .addComponent(nombreClienteReporteCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(30, 30, 30)
+                        .addComponent(jTextFieldIdentificacionClienteReporte, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
         jPanel17Layout.setVerticalGroup(
             jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1222,7 +1230,8 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                 .addGap(17, 17, 17)
                 .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel41)
-                    .addComponent(nombreClienteReporteCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(nombreClienteReporteCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldIdentificacionClienteReporte, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel42)
@@ -1238,146 +1247,194 @@ public class InterfazPrincipal extends javax.swing.JFrame {
 
         jLabel44.setText("Hasta");
 
-        jButton8.setText("Generar");
+        botonGenerarReporteCliente.setText("Generar");
+        botonGenerarReporteCliente.setEnabled(false);
+        botonGenerarReporteCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonGenerarReporteClienteActionPerformed(evt);
+            }
+        });
 
-        javax.swing.GroupLayout jPanel18Layout = new javax.swing.GroupLayout(jPanel18);
-        jPanel18.setLayout(jPanel18Layout);
-        jPanel18Layout.setHorizontalGroup(
-            jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel18Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel18Layout.createSequentialGroup()
-                        .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel43)
-                            .addComponent(jLabel44))
-                        .addGap(52, 52, 52)
-                        .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(dateChooserCombo3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(dateChooserCombo4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jButton8))
-                .addContainerGap(192, Short.MAX_VALUE))
-        );
-        jPanel18Layout.setVerticalGroup(
-            jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel18Layout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel43)
-                    .addComponent(dateChooserCombo3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(14, 14, 14)
-                .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel44)
-                    .addComponent(dateChooserCombo4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton8)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        clienteReporteClienteFechaInicial.setCurrentView(new datechooser.view.appearance.AppearancesList("Swing",
+            new datechooser.view.appearance.ViewAppearance("custom",
+                new datechooser.view.appearance.swing.SwingCellAppearance(new java.awt.Font("Tahoma", java.awt.Font.PLAIN, 11),
+                    new java.awt.Color(0, 0, 0),
+                    new java.awt.Color(0, 0, 255),
+                    false,
+                    true,
+                    new datechooser.view.appearance.swing.ButtonPainter()),
+                new datechooser.view.appearance.swing.SwingCellAppearance(new java.awt.Font("Tahoma", java.awt.Font.PLAIN, 11),
+                    new java.awt.Color(0, 0, 0),
+                    new java.awt.Color(0, 0, 255),
+                    true,
+                    true,
+                    new datechooser.view.appearance.swing.ButtonPainter()),
+                new datechooser.view.appearance.swing.SwingCellAppearance(new java.awt.Font("Tahoma", java.awt.Font.PLAIN, 11),
+                    new java.awt.Color(0, 0, 255),
+                    new java.awt.Color(0, 0, 255),
+                    false,
+                    true,
+                    new datechooser.view.appearance.swing.ButtonPainter()),
+                new datechooser.view.appearance.swing.SwingCellAppearance(new java.awt.Font("Tahoma", java.awt.Font.PLAIN, 11),
+                    new java.awt.Color(128, 128, 128),
+                    new java.awt.Color(0, 0, 255),
+                    false,
+                    true,
+                    new datechooser.view.appearance.swing.LabelPainter()),
+                new datechooser.view.appearance.swing.SwingCellAppearance(new java.awt.Font("Tahoma", java.awt.Font.PLAIN, 11),
+                    new java.awt.Color(0, 0, 0),
+                    new java.awt.Color(0, 0, 255),
+                    false,
+                    true,
+                    new datechooser.view.appearance.swing.LabelPainter()),
+                new datechooser.view.appearance.swing.SwingCellAppearance(new java.awt.Font("Tahoma", java.awt.Font.PLAIN, 11),
+                    new java.awt.Color(0, 0, 0),
+                    new java.awt.Color(255, 0, 0),
+                    false,
+                    false,
+                    new datechooser.view.appearance.swing.ButtonPainter()),
+                (datechooser.view.BackRenderer)null,
+                false,
+                true)));
 
-        label1.setText("Seleccione un rango de fechas.");
+    javax.swing.GroupLayout jPanel18Layout = new javax.swing.GroupLayout(jPanel18);
+    jPanel18.setLayout(jPanel18Layout);
+    jPanel18Layout.setHorizontalGroup(
+        jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(jPanel18Layout.createSequentialGroup()
+            .addContainerGap()
+            .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel18Layout.createSequentialGroup()
+                    .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel43)
+                        .addComponent(jLabel44))
+                    .addGap(52, 52, 52)
+                    .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(clienteReporteClienteFechaInicial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(clienteReporteClienteFechaFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addComponent(botonGenerarReporteCliente))
+            .addContainerGap(192, Short.MAX_VALUE))
+    );
+    jPanel18Layout.setVerticalGroup(
+        jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(jPanel18Layout.createSequentialGroup()
+            .addGap(17, 17, 17)
+            .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jLabel43)
+                .addComponent(clienteReporteClienteFechaInicial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGap(14, 14, 14)
+            .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jLabel44)
+                .addComponent(clienteReporteClienteFechaFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(botonGenerarReporteCliente)
+            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+    );
 
-        javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
-        jPanel15.setLayout(jPanel15Layout);
-        jPanel15Layout.setHorizontalGroup(
-            jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel15Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(337, Short.MAX_VALUE))
-        );
-        jPanel15Layout.setVerticalGroup(
-            jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel15Layout.createSequentialGroup()
-                .addContainerGap()
+    label1.setText("Seleccione un rango de fechas.");
+
+    javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
+    jPanel15.setLayout(jPanel15Layout);
+    jPanel15Layout.setHorizontalGroup(
+        jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(jPanel15Layout.createSequentialGroup()
+            .addContainerGap()
+            .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(jPanel17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(23, 23, 23)
-                .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(113, Short.MAX_VALUE))
-        );
+                .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addContainerGap(337, Short.MAX_VALUE))
+    );
+    jPanel15Layout.setVerticalGroup(
+        jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(jPanel15Layout.createSequentialGroup()
+            .addContainerGap()
+            .addComponent(jPanel17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGap(23, 23, 23)
+            .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(jPanel18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addContainerGap(113, Short.MAX_VALUE))
+    );
 
-        jTabbedPane5.addTab("Cliente", jPanel15);
+    jTabbedPane5.addTab("Cliente", jPanel15);
 
-        jTabbedPane1.addTab("Reportes", jTabbedPane5);
-        jTabbedPane1.addTab("Administración", jTabbedPane6);
+    jTabbedPane1.addTab("Reportes", jTabbedPane5);
+    jTabbedPane1.addTab("Administración", jTabbedPane6);
 
-        jPanel19.setLayout(new java.awt.BorderLayout());
+    jPanel19.setLayout(new java.awt.BorderLayout());
 
-        // create the chart...
-        XYSeries series = new XYSeries("X vs Y");
-        series.add(1, 1);
-        series.add(1, 2);
-        series.add(2, 1);
-        series.add(3, 9);
-        series.add(4, 10);
+    // create the chart...
+    XYSeries series = new XYSeries("X vs Y");
+    series.add(1, 1);
+    series.add(1, 2);
+    series.add(2, 1);
+    series.add(3, 9);
+    series.add(4, 10);
 
-        // Add the series to your data set
-        XYSeriesCollection dataset = new XYSeriesCollection();
-        dataset.addSeries(series);
+    // Add the series to your data set
+    XYSeriesCollection dataset = new XYSeriesCollection();
+    dataset.addSeries(series);
 
-        // Generate the graph
-        JFreeChart chart = ChartFactory.createXYLineChart(
-            "X-Y comparación", // Title
-            "Eje x", // x-axis Label
-            "Eje y", // y-axis Label
-            dataset, // Dataset
-            PlotOrientation.VERTICAL, // Plot Orientation
-            true, // Show Legend
-            true, // Use tooltips
-            false // Configure chart to generate URLs?
-        );
+    // Generate the graph
+    JFreeChart chart = ChartFactory.createXYLineChart(
+        "X-Y comparación", // Title
+        "Eje x", // x-axis Label
+        "Eje y", // y-axis Label
+        dataset, // Dataset
+        PlotOrientation.VERTICAL, // Plot Orientation
+        true, // Show Legend
+        true, // Use tooltips
+        false // Configure chart to generate URLs?
+    );
 
-        ChartPanel CP = new ChartPanel(chart);
-        CP.setSize(400, 400);
-        CP.setVisible(true);
+    ChartPanel CP = new ChartPanel(chart);
+    CP.setSize(400, 400);
+    CP.setVisible(true);
 
-        jPanel19.add(CP,BorderLayout.CENTER);
-        jPanel19.validate();
+    jPanel19.add(CP,BorderLayout.CENTER);
+    jPanel19.validate();
 
-        javax.swing.GroupLayout jPanel19Layout = new javax.swing.GroupLayout(jPanel19);
-        jPanel19.setLayout(jPanel19Layout);
-        jPanel19Layout.setHorizontalGroup(
-            jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 788, Short.MAX_VALUE)
-        );
-        jPanel19Layout.setVerticalGroup(
-            jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 419, Short.MAX_VALUE)
-        );
+    javax.swing.GroupLayout jPanel19Layout = new javax.swing.GroupLayout(jPanel19);
+    jPanel19.setLayout(jPanel19Layout);
+    jPanel19Layout.setHorizontalGroup(
+        jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGap(0, 788, Short.MAX_VALUE)
+    );
+    jPanel19Layout.setVerticalGroup(
+        jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGap(0, 419, Short.MAX_VALUE)
+    );
 
-        jTabbedPane4.addTab("tab1", jPanel19);
+    jTabbedPane4.addTab("tab1", jPanel19);
 
-        jTabbedPane1.addTab("Elimnar tab", jTabbedPane4);
+    jTabbedPane1.addTab("Elimnar tab", jTabbedPane4);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 881, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(105, 105, 105)
-                        .addComponent(jLabel1)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addGap(20, 20, 20)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 449, Short.MAX_VALUE)
-                .addContainerGap())
-        );
+    javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+    getContentPane().setLayout(layout);
+    layout.setHorizontalGroup(
+        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(layout.createSequentialGroup()
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 881, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(105, 105, 105)
+                    .addComponent(jLabel1)))
+            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+    );
+    layout.setVerticalGroup(
+        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(layout.createSequentialGroup()
+            .addContainerGap()
+            .addComponent(jLabel1)
+            .addGap(20, 20, 20)
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 449, Short.MAX_VALUE)
+            .addContainerGap())
+    );
 
-        pack();
+    pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -2508,12 +2565,11 @@ public class InterfazPrincipal extends javax.swing.JFrame {
 
             String identificacionCliente = mostrarIdentificacionCliente.getText();
             Double abono = Double.parseDouble(abonoClente.getText());
-            
-            if(abono<=0.0)
-            {
+
+            if (abono <= 0.0) {
                 throw new Exception();
             }
-            
+
             ControladorFlujoFactura controladorFlujoFactura = new ControladorFlujoFactura();
             ControladorFactura controladorFactura = new ControladorFactura();
 
@@ -2546,7 +2602,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
 
             int numeroRegistros = -1;
             for (int i = 0; i < modeloClientes.getRowCount(); i++) {
-            //System.out.println("Entro al for " + i);
+                //System.out.println("Entro al for " + i);
                 //Se necesita 0: Factura ID, 1 Tipo, 3 Valor
                 // Codigofactura contiene los cogidos de las facturas
                 // totalDebe contiene lo que debe de las facturas, la posicion coincide con la lista CodigoFactura
@@ -2571,7 +2627,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                 }
 
             }
-        //System.out.println(Arrays.toString(codigoFactura.toArray()));
+            //System.out.println(Arrays.toString(codigoFactura.toArray()));
             //System.out.println(Arrays.toString(totalDebe.toArray()));
 
             for (int i = 0; i < totalDebe.size(); i++) {
@@ -2605,7 +2661,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                             break;
 
                         } else {
-                        //Caso final pago menor 0, es decir el abono paga la factura pero queda disponible para otras facturas
+                            //Caso final pago menor 0, es decir el abono paga la factura pero queda disponible para otras facturas
                             //Registrar flujo
                             String[] value = {codigoFactura.get(i), "abono", fecha, String.valueOf(totalDebe.get(i))};
                             //String [] selection = {"factura_id","tipo_flujo","fecha","valor"};
@@ -2718,154 +2774,240 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-       String nombreCliente = nombreClienteBusquedaSaldo.getText();
-        //08-11-2014 listar clientes por nombre
-        ControladorCliente controladorCliente = new ControladorCliente();
-        ArrayList<Cliente> listaClientes = new ArrayList<>();
+        String nombreCliente = nombreClienteReporteCliente.getText();
+        String identificacion = identificacionClienteCliente.getText();
+        try {
+            //08-11-2014 listar clientes por nombre
+            ControladorCliente controladorCliente = new ControladorCliente();
+            ArrayList<Cliente> listaClientes = new ArrayList<Cliente>();
 
-        if (nombreCliente.equals("")) {
-            listaClientes = controladorCliente.obtenerClientes();
-        } else {
-            listaClientes = controladorCliente.obtenerClientes(nombreCliente, 0);
-        }
-
-        //08-11-2014 Crear dialogo de búsqueda
-        final JDialog dialogoEditar = new JDialog(this);
-
-        dialogoEditar.setTitle("Buscar clientes");
-        dialogoEditar.setSize(300, 300);
-        dialogoEditar.setResizable(false);
-
-        JPanel panelDialogo = new JPanel();
-
-        panelDialogo.setLayout(new GridBagLayout());
-
-        GridBagConstraints c = new GridBagConstraints();
-        c.fill = GridBagConstraints.HORIZONTAL;
-
-        JLabel ediitarTextoPrincipalDialogo = new JLabel("Buscar cliente");
-        c.gridx = 0;
-        c.gridy = 0;
-        c.gridwidth = 2;
-        c.insets = new Insets(10, 60, 10, 10);
-        Font textoGrande = new Font("Arial", 1, 16);
-        ediitarTextoPrincipalDialogo.setFont(textoGrande);
-        panelDialogo.add(ediitarTextoPrincipalDialogo, c);
-
-        c.gridx = 0;
-        c.gridy = 1;
-        c.gridwidth = 2;
-        c.insets = new Insets(10, 10, 10, 10);
-        final JTable tablaDialogo = new JTable();
-        DefaultTableModel modeloTabla = new DefaultTableModel() {
-
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                //all cells false
-                return false;
+            if (nombreCliente.equals("") && identificacion.equals("")) {
+                listaClientes = controladorCliente.obtenerClientes();
+            } else {
+                int identificacionNumerico = 0;
+                if (!identificacion.equals("")) {
+                    identificacionNumerico = Integer.parseInt(identificacion);
+                }
+                listaClientes = controladorCliente.obtenerClientes(nombreCliente, identificacionNumerico);
             }
-        };;
 
-        modeloTabla.addColumn("Identificación");
-        modeloTabla.addColumn("Nombre");
+            //08-11-2014 Crear dialogo de búsqueda
+            final JDialog dialogoEditar = new JDialog(this);
 
-        //LLenar tabla
-        for (int i = 0; i < listaClientes.size(); i++) {
-            Object[] data = {"1", "2"};
-            data[0] = listaClientes.get(i).getCliente_id();
-            data[1] = listaClientes.get(i).getNombre();
-            modeloTabla.addRow(data);
-        }
+            dialogoEditar.setTitle("Buscar clientes");
+            dialogoEditar.setSize(300, 300);
+            dialogoEditar.setResizable(false);
 
-        tablaDialogo.setModel(modeloTabla);
-        tablaDialogo.getColumn("Identificación").setMinWidth(110);
-        tablaDialogo.getColumn("Nombre").setMinWidth(110);
-        tablaDialogo.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        JScrollPane scroll = new JScrollPane(tablaDialogo);
-        scroll.setPreferredSize(new Dimension(220, 150));
+            JPanel panelDialogo = new JPanel();
 
-        panelDialogo.add(scroll, c);
+            panelDialogo.setLayout(new GridBagLayout());
 
-        c.insets = new Insets(0, 0, 0, 10);
-        c.gridx = 0;
-        c.gridy = 2;
-        c.gridwidth = 1;
-        JButton botonGuardarClienteDialogo = new JButton("Elegir");
-        panelDialogo.add(botonGuardarClienteDialogo, c);
+            GridBagConstraints c = new GridBagConstraints();
+            c.fill = GridBagConstraints.HORIZONTAL;
 
-        c.gridx = 1;
-        c.gridy = 2;
-        c.gridwidth = 1;
-        JButton botonCerrarClienteDialogo = new JButton("Cancelar");
-        panelDialogo.add(botonCerrarClienteDialogo, c);
+            JLabel ediitarTextoPrincipalDialogo = new JLabel("Buscar cliente");
+            c.gridx = 0;
+            c.gridy = 0;
+            c.gridwidth = 2;
+            c.insets = new Insets(10, 60, 10, 10);
+            Font textoGrande = new Font("Arial", 1, 16);
+            ediitarTextoPrincipalDialogo.setFont(textoGrande);
+            panelDialogo.add(ediitarTextoPrincipalDialogo, c);
 
-        dialogoEditar.add(panelDialogo);
-        dialogoEditar.setVisible(true);
+            c.gridx = 0;
+            c.gridy = 1;
+            c.gridwidth = 2;
+            c.insets = new Insets(10, 10, 10, 10);
+            final JTable tablaDialogo = new JTable();
+            DefaultTableModel modeloTabla = new DefaultTableModel() {
 
-        botonCerrarClienteDialogo.addActionListener(new ActionListener() {
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    //all cells false
+                    return false;
+                }
+            };;
 
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dialogoEditar.dispose();
+            modeloTabla.addColumn("Identificación");
+            modeloTabla.addColumn("Nombre");
+
+            //LLenar tabla
+            for (int i = 0; i < listaClientes.size(); i++) {
+                Object[] data = {"1", "2"};
+                data[0] = listaClientes.get(i).getCliente_id();
+                data[1] = listaClientes.get(i).getNombre();
+                modeloTabla.addRow(data);
             }
-        });
 
-        botonGuardarClienteDialogo.addActionListener(new ActionListener() {
+            tablaDialogo.setModel(modeloTabla);
+            tablaDialogo.getColumn("Identificación").setMinWidth(110);
+            tablaDialogo.getColumn("Nombre").setMinWidth(110);
+            tablaDialogo.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            JScrollPane scroll = new JScrollPane(tablaDialogo);
+            scroll.setPreferredSize(new Dimension(220, 150));
 
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int row = tablaDialogo.getSelectedRow();
-                if (row == -1) {
-                    JOptionPane.showMessageDialog(dialogoEditar, "Por favor seleccione una fila");
+            panelDialogo.add(scroll, c);
 
-                } else {
-                    Object identificacionCliente = tablaDialogo.getValueAt(row, 0);
-                    mostrarIdentificacionCliente.setText(String.valueOf(identificacionCliente));
-                    String nombreClientePago = String.valueOf(tablaDialogo.getValueAt(row, 1));
+            c.insets = new Insets(0, 0, 0, 10);
+            c.gridx = 0;
+            c.gridy = 2;
+            c.gridwidth = 1;
+            JButton botonGuardarClienteDialogo = new JButton("Elegir");
+            panelDialogo.add(botonGuardarClienteDialogo, c);
 
-                    //Limitar a 15 caracteres
-                    if (nombreClientePago.length() >= 15) {
-                        nombreClientePago = nombreClientePago.substring(0, 12);
+            c.gridx = 1;
+            c.gridy = 2;
+            c.gridwidth = 1;
+            JButton botonCerrarClienteDialogo = new JButton("Cancelar");
+            panelDialogo.add(botonCerrarClienteDialogo, c);
 
-                    }
-                    textoPersonaSaldo.setText(nombreClientePago);
+            dialogoEditar.add(panelDialogo);
+            dialogoEditar.setVisible(true);
 
-                    DefaultTableModel modeloClientes = (DefaultTableModel) TablaDeSaldoClientes.getModel();
-                    for (int i = 0; i < modeloClientes.getRowCount(); i++) {
-                        modeloClientes.removeRow(i);
-                    }
+            botonCerrarClienteDialogo.addActionListener(new ActionListener() {
 
-                    modeloClientes.setRowCount(0);
-                    ControladorFlujoFactura controladorFlujoFactura = new ControladorFlujoFactura();
-
-                    //SELECT * FROM Flujo_Factura where factura_id in (select factura_id from Factura where cliente_id = 1130614506);
-                    ArrayList<String[]> flujosCliente = controladorFlujoFactura.getTodosFlujo_Factura(" where factura_id in (select factura_id from Factura where cliente_id = " + String.valueOf(identificacionCliente) + " and estado=\"fiado\") order by factura_id");
-                    double pago = 0.0;
-
-                    for (int i = 0; i < flujosCliente.size(); i++) {
-                        String[] datos = flujosCliente.get(i);
-                        Object[] rowData = {datos[1], datos[2], datos[3], datos[4]};
-
-                        if (datos[2].equals("deuda")) {
-                            pago += Double.parseDouble(datos[4]);
-                        } else {
-                            pago -= Double.parseDouble(datos[4]);
-                        }
-
-                        modeloClientes.addRow(rowData);
-                    }
-
-                    TablaDeSaldoClientes.setModel(modeloClientes);
-                    textoTotalDebe.setText(String.valueOf(pago));
+                @Override
+                public void actionPerformed(ActionEvent e) {
                     dialogoEditar.dispose();
+                }
+            });
 
-                    //Mostrar en table de clientes los datos
-                    botonRegistrarAbono.setEnabled(true);
+            botonGuardarClienteDialogo.addActionListener(new ActionListener() {
+
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    int row = tablaDialogo.getSelectedRow();
+                    if (row == -1) {
+                        JOptionPane.showMessageDialog(dialogoEditar, "Por favor seleccione una fila");
+
+                    } else {
+                        Object identificacionCliente = tablaDialogo.getValueAt(row, 0);
+                        jTextFieldIdentificacionClienteReporte.setText(String.valueOf(identificacionCliente));
+                        botonGenerarReporteCliente.setEnabled(true);
+                        dialogoEditar.dispose();
+
+                    }
+
+                }
+            });        // TODO add your handling code here:     
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "El valor de la identificación de ser numérico");
+
+        }
+
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void botonGenerarReporteClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonGenerarReporteClienteActionPerformed
+        // TODO add your handling code here:
+
+        if (clienteReporteClienteFechaFinal.getSelectedDate().getTime().compareTo(clienteReporteClienteFechaInicial.getSelectedDate().getTime()) < 0) {
+            JOptionPane.showMessageDialog(this, "La fecha final debe ser posterior al dia de inicio");
+        } else {
+
+            JDialog dialogoEditar = new JDialog();
+            dialogoEditar.setTitle("Buscar clientes");
+            dialogoEditar.setSize(600, 600);
+            dialogoEditar.setResizable(false);
+
+            JPanel panelDialogo = new JPanel();
+            panelDialogo.setLayout(new GridBagLayout());
+
+            GridBagConstraints c = new GridBagConstraints();
+            c.fill = GridBagConstraints.HORIZONTAL;
+
+            JLabel ediitarTextoPrincipalDialogo = new JLabel("Informe cliente");
+            c.gridx = 0;
+            c.gridy = 0;
+            c.gridwidth = 2;
+            c.insets = new Insets(10, 60, 10, 10);
+            Font textoGrande = new Font("Arial", 1, 16);
+            ediitarTextoPrincipalDialogo.setFont(textoGrande);
+            panelDialogo.add(ediitarTextoPrincipalDialogo, c);
+
+            final JTable tablaDialogo = new JTable();
+            DefaultTableModel modeloTabla = new DefaultTableModel() {
+
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    //all cells false
+                    return false;
+                }
+            };;
+
+            modeloTabla.addColumn("Factura");
+            modeloTabla.addColumn("Tipo Flujo");
+            modeloTabla.addColumn("Fecha");
+            modeloTabla.addColumn("Valor");
+
+            //Llenar tabla
+            ControladorFlujoFactura controladorFlujoFactura = new ControladorFlujoFactura();
+            ArrayList<String[]> flujosCliente = controladorFlujoFactura.getTodosFlujo_Factura(" where factura_id in (select factura_id from Factura where cliente_id = " + String.valueOf(jTextFieldIdentificacionClienteReporte.getText()) + ") order by factura_id");
+            // {"flujo_id","factura_id","tipo_flujo","fecha","valor"};
+
+            for (int i = 0; i < flujosCliente.size(); i++) {
+                String fila[] = new String[4];
+                String[] objeto = flujosCliente.get(i);
+                fila[0] = objeto[1];
+                fila[1] = objeto[2];
+                fila[2] = objeto[3];
+
+                //Filtrar, mirar las fechas
+                String[] partirEspacios = objeto[3].split("\\s");
+                //El primer string es la fecha sin hora
+                //Ahora esparamos por -
+                String[] tomarAgeMesDia = partirEspacios[0].split("-");
+
+                //Realizar filtro
+                int ageConsulta = Integer.parseInt(tomarAgeMesDia[0]);
+                int mesConsulta = Integer.parseInt(tomarAgeMesDia[1]);
+                int diaConsulta = Integer.parseInt(tomarAgeMesDia[2]);
+
+                //Obtenemos dias, mes y año de la consulta
+                //Inicial
+                int anioInicial = clienteReporteClienteFechaFinal.getSelectedDate().get(Calendar.YEAR);
+                int mesInicial = clienteReporteClienteFechaFinal.getSelectedDate().get(Calendar.MONTH) + 1;
+                int diaInicial = clienteReporteClienteFechaFinal.getSelectedDate().get(Calendar.DAY_OF_MONTH);
+                //Final
+                int anioFinal = clienteReporteClienteFechaInicial.getSelectedDate().get(Calendar.YEAR);
+                int mesFinal = clienteReporteClienteFechaInicial.getSelectedDate().get(Calendar.MONTH) + 1;
+                int diaFinal = clienteReporteClienteFechaInicial.getSelectedDate().get(Calendar.DAY_OF_MONTH);
+                
+                
+                //Construir fechas
+                Calendar fechaDeLaBD = new GregorianCalendar(ageConsulta,mesConsulta,diaConsulta);
+                //Set year, month, day)
+              
+                
+                Calendar fechaInicialRango = new GregorianCalendar(anioInicial,mesInicial,diaInicial);
+                Calendar fechaFinalRango = new GregorianCalendar(anioFinal,mesFinal,diaFinal);                
+                
+                if(fechaDeLaBD.compareTo(fechaInicialRango)<=0 && fechaDeLaBD.compareTo(fechaFinalRango)>=0)
+                {
+                    modeloTabla.addRow(fila);
                 }
 
+                
             }
-        });        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton7ActionPerformed
+            tablaDialogo.setModel(modeloTabla);
+            tablaDialogo.getColumn("Factura").setMinWidth(80);
+            tablaDialogo.getColumn("Tipo Flujo").setMinWidth(80);
+            tablaDialogo.getColumn("Fecha").setMinWidth(80);
+            tablaDialogo.getColumn("Valor").setMinWidth(80);
+            tablaDialogo.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            JScrollPane scroll = new JScrollPane(tablaDialogo);
+            scroll.setPreferredSize(new Dimension(320, 200));
+
+            c.gridx = 0;
+            c.gridy = 1;
+            c.gridwidth = 1;
+            c.insets = new Insets(0, 0, 0, 0);
+            panelDialogo.add(scroll, c);
+
+            dialogoEditar.add(panelDialogo);
+            dialogoEditar.setVisible(true);
+        }
+
+    }//GEN-LAST:event_botonGenerarReporteClienteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -2918,11 +3060,12 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JTable TablaDeSaldoClientes;
     private javax.swing.JTextField abonoClente;
     private javax.swing.JButton botonAgregarNuevoCliente;
+    private javax.swing.JButton botonGenerarReporteCliente;
     private javax.swing.JButton botonGuardarFactura;
     private javax.swing.JButton botonRegistrarAbono;
     private javax.swing.JTextField celularNuevoCliente;
-    private datechooser.beans.DateChooserCombo dateChooserCombo3;
-    private datechooser.beans.DateChooserCombo dateChooserCombo4;
+    private datechooser.beans.DateChooserCombo clienteReporteClienteFechaFinal;
+    private datechooser.beans.DateChooserCombo clienteReporteClienteFechaInicial;
     private javax.swing.JTextField identificacionClienteBusqueda;
     private javax.swing.JTextField identificacionClienteCliente;
     private javax.swing.JTextField identificacionNuevoCliente;
@@ -2933,7 +3076,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -3013,6 +3155,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField jTextFieldIdentificacionClienteReporte;
     private javax.swing.JTextField jTextField_BuscarFactura_Cliente;
     private javax.swing.JTextField jTextField_BuscarFactura_ID;
     private javax.swing.JTextField jTextField_Factura_Cliente_Id;
