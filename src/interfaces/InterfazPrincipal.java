@@ -2262,163 +2262,168 @@ public class InterfazPrincipal extends javax.swing.JFrame {
 
     private void botonRegistrarAbonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRegistrarAbonoActionPerformed
         // TODO add your handling code here:
-        // try {
+        try {
 
-        String identificacionCliente = mostrarIdentificacionCliente.getText();
-        Double abono = Double.parseDouble(abonoClente.getText());
-        ControladorFlujoFactura controladorFlujoFactura = new ControladorFlujoFactura();
-        ControladorFactura controladorFactura = new ControladorFactura();
-
-        Calendar calendario = Calendar.getInstance();
-        String dia = Integer.toString(calendario.get(Calendar.DATE));
-        String mes = Integer.toString(calendario.get(Calendar.MONTH));
-        String annio = Integer.toString(calendario.get(Calendar.YEAR));
-        Date date = new Date();
-        DateFormat hourFormat = new SimpleDateFormat("HH:mm:ss");
-        String hora = hourFormat.format(date);
-
-        String fecha = annio + "-" + mes + "-" + dia + " " + hora;
-        /*
-         * -----------------Tomar el abono y los pagos-----------------
-         * Procedimiento
-         * 1 Tomar flujos de deuda de cada factura con estado fiado
-         * 2 Tomar abonos de abono de cada factura con estado fiado
-         * 3 Calcular la resta de estos dos para deteminar lo que se debe por factura
-         * 4 Cancelar con el flujo la factura y si lo debido es 0 colocar estado pagado
-         * 5 Mostrar una información en un JOptionPane y recalcular la deuda
-         * 
-         */
-        DefaultTableModel modeloClientes = (DefaultTableModel) TablaDeSaldoClientes.getModel();
-        ArrayList<String> codigoFactura = new ArrayList<>();
-        ArrayList<Double> totalDebe = new ArrayList<>();
-
-        JTextArea area = new JTextArea(10, 30);
-        String informe = "\t Registro flujo pago del abono \n\n";
-        informe += "Factura \t Pago \t ¿Queda pagada? \n\n";
-
-        int numeroRegistros = -1;
-        for (int i = 0; i < modeloClientes.getRowCount(); i++) {
-            //System.out.println("Entro al for " + i);
-            //Se necesita 0: Factura ID, 1 Tipo, 3 Valor
-            // Codigofactura contiene los cogidos de las facturas
-            // totalDebe contiene lo que debe de las facturas, la posicion coincide con la lista CodigoFactura
-            String factura_id = String.valueOf(modeloClientes.getValueAt(i, 0));
-            String tipo_flujo = String.valueOf(modeloClientes.getValueAt(i, 1));
-            Double valor = Double.parseDouble(String.valueOf(modeloClientes.getValueAt(i, 3)));
-            if (codigoFactura.contains(factura_id)) {
-
-                if (tipo_flujo.equals("abono")) {
-                    totalDebe.set(numeroRegistros, totalDebe.get(numeroRegistros) - valor);
-                } else {
-                    totalDebe.set(numeroRegistros, totalDebe.get(numeroRegistros) + valor);
-                }
-            } else {
-                numeroRegistros++;
-                codigoFactura.add(factura_id);
-                if (tipo_flujo.equals("abono")) {
-                    totalDebe.add(-valor);
-                } else {
-                    totalDebe.add(valor);
-                }
+            String identificacionCliente = mostrarIdentificacionCliente.getText();
+            Double abono = Double.parseDouble(abonoClente.getText());
+            
+            if(abono<=0.0)
+            {
+                throw new Exception();
             }
+            
+            ControladorFlujoFactura controladorFlujoFactura = new ControladorFlujoFactura();
+            ControladorFactura controladorFactura = new ControladorFactura();
 
-        }
-        //System.out.println(Arrays.toString(codigoFactura.toArray()));
-        //System.out.println(Arrays.toString(totalDebe.toArray()));
+            Calendar calendario = Calendar.getInstance();
+            String dia = Integer.toString(calendario.get(Calendar.DATE));
+            String mes = Integer.toString(calendario.get(Calendar.MONTH));
+            String annio = Integer.toString(calendario.get(Calendar.YEAR));
+            Date date = new Date();
+            DateFormat hourFormat = new SimpleDateFormat("HH:mm:ss");
+            String hora = hourFormat.format(date);
 
-        for (int i = 0; i < totalDebe.size(); i++) {
-            //Tomar flujos
-            if (abono > 0.0) {
-                Double pago = totalDebe.get(i) - abono;
+            String fecha = annio + "-" + mes + "-" + dia + " " + hora;
+            /*
+             * -----------------Tomar el abono y los pagos-----------------
+             * Procedimiento
+             * 1 Tomar flujos de deuda de cada factura con estado fiado
+             * 2 Tomar abonos de abono de cada factura con estado fiado
+             * 3 Calcular la resta de estos dos para deteminar lo que se debe por factura
+             * 4 Cancelar con el flujo la factura y si lo debido es 0 colocar estado pagado
+             * 5 Mostrar una información en un JOptionPane y recalcular la deuda
+             * 
+             */
+            DefaultTableModel modeloClientes = (DefaultTableModel) TablaDeSaldoClientes.getModel();
+            ArrayList<String> codigoFactura = new ArrayList<>();
+            ArrayList<Double> totalDebe = new ArrayList<>();
 
-                //Pago igual a 0 significa que se pagó la factura
-                if (pago == 0) {
-                    //Registrar flujo
-                    String[] value = {codigoFactura.get(i), "abono", fecha, String.valueOf(abono)};
-                    //String [] selection = {"factura_id","tipo_flujo","fecha","valor"};
-                    controladorFlujoFactura.insertFlujo_Factura(value);
+            JTextArea area = new JTextArea(10, 30);
+            String informe = "\t Registro flujo pago del abono \n\n";
+            informe += "Factura \t Pago \t ¿Queda pagada? \n\n";
 
-                    controladorFactura.cambiarEstadoFactura(codigoFactura.get(i), "pagada");
-                    informe += codigoFactura.get(i) + "\t" + String.valueOf(abono) + "\tSI\n";
-                    //Romper el for
-                    break;
+            int numeroRegistros = -1;
+            for (int i = 0; i < modeloClientes.getRowCount(); i++) {
+            //System.out.println("Entro al for " + i);
+                //Se necesita 0: Factura ID, 1 Tipo, 3 Valor
+                // Codigofactura contiene los cogidos de las facturas
+                // totalDebe contiene lo que debe de las facturas, la posicion coincide con la lista CodigoFactura
+                String factura_id = String.valueOf(modeloClientes.getValueAt(i, 0));
+                String tipo_flujo = String.valueOf(modeloClientes.getValueAt(i, 1));
+                Double valor = Double.parseDouble(String.valueOf(modeloClientes.getValueAt(i, 3)));
+                if (codigoFactura.contains(factura_id)) {
+
+                    if (tipo_flujo.equals("abono")) {
+                        totalDebe.set(numeroRegistros, totalDebe.get(numeroRegistros) - valor);
+                    } else {
+                        totalDebe.set(numeroRegistros, totalDebe.get(numeroRegistros) + valor);
+                    }
                 } else {
+                    numeroRegistros++;
+                    codigoFactura.add(factura_id);
+                    if (tipo_flujo.equals("abono")) {
+                        totalDebe.add(-valor);
+                    } else {
+                        totalDebe.add(valor);
+                    }
+                }
 
-                    //Pago mayor que 0, es decir se queda debiendo
-                    if (pago > 0) {
+            }
+        //System.out.println(Arrays.toString(codigoFactura.toArray()));
+            //System.out.println(Arrays.toString(totalDebe.toArray()));
 
+            for (int i = 0; i < totalDebe.size(); i++) {
+                //Tomar flujos
+                if (abono > 0.0) {
+                    Double pago = totalDebe.get(i) - abono;
+
+                    //Pago igual a 0 significa que se pagó la factura
+                    if (pago == 0) {
                         //Registrar flujo
                         String[] value = {codigoFactura.get(i), "abono", fecha, String.valueOf(abono)};
                         //String [] selection = {"factura_id","tipo_flujo","fecha","valor"};
                         controladorFlujoFactura.insertFlujo_Factura(value);
-                        //Como el abono ahora es menor que 0 debe romperse el for
-                        informe += codigoFactura.get(i) + "\t" + String.valueOf(abono) + "\tNO\n";
-
-                        break;
-
-                    } else {
-                        //Caso final pago menor 0, es decir el abono paga la factura pero queda disponible para otras facturas
-                        //Registrar flujo
-                        String[] value = {codigoFactura.get(i), "abono", fecha, String.valueOf(totalDebe.get(i))};
-                        //String [] selection = {"factura_id","tipo_flujo","fecha","valor"};
-                        controladorFlujoFactura.insertFlujo_Factura(value);
 
                         controladorFactura.cambiarEstadoFactura(codigoFactura.get(i), "pagada");
-
-                        //Ajustamos ahora el abono restando lo que debe la factura
                         informe += codigoFactura.get(i) + "\t" + String.valueOf(abono) + "\tSI\n";
-                        abono -= totalDebe.get(i);
+                        //Romper el for
+                        break;
+                    } else {
+
+                        //Pago mayor que 0, es decir se queda debiendo
+                        if (pago > 0) {
+
+                            //Registrar flujo
+                            String[] value = {codigoFactura.get(i), "abono", fecha, String.valueOf(abono)};
+                            //String [] selection = {"factura_id","tipo_flujo","fecha","valor"};
+                            controladorFlujoFactura.insertFlujo_Factura(value);
+                            //Como el abono ahora es menor que 0 debe romperse el for
+                            informe += codigoFactura.get(i) + "\t" + String.valueOf(abono) + "\tNO\n";
+
+                            break;
+
+                        } else {
+                        //Caso final pago menor 0, es decir el abono paga la factura pero queda disponible para otras facturas
+                            //Registrar flujo
+                            String[] value = {codigoFactura.get(i), "abono", fecha, String.valueOf(totalDebe.get(i))};
+                            //String [] selection = {"factura_id","tipo_flujo","fecha","valor"};
+                            controladorFlujoFactura.insertFlujo_Factura(value);
+
+                            controladorFactura.cambiarEstadoFactura(codigoFactura.get(i), "pagada");
+
+                            //Ajustamos ahora el abono restando lo que debe la factura
+                            informe += codigoFactura.get(i) + "\t" + String.valueOf(abono) + "\tSI\n";
+                            abono -= totalDebe.get(i);
+                        }
+
                     }
-
+                } else {
+                    //Romper el for
+                    break;
                 }
-            } else {
-                //Romper el for
-                break;
+
             }
 
-        }
-
-        //Reordenar y volver a consultar
-        for (int i = 0; i < modeloClientes.getRowCount(); i++) {
-            modeloClientes.removeRow(i);
-        }
-
-        modeloClientes.setRowCount(0);
-
-        //SELECT * FROM Flujo_Factura where factura_id in (select factura_id from Factura where cliente_id = 1130614506);
-        ArrayList<String[]> flujosCliente = controladorFlujoFactura.getTodosFlujo_Factura(" where factura_id in (select factura_id from Factura where cliente_id = " + String.valueOf(identificacionCliente) + " and estado=\"fiado\") order by factura_id");
-        double pago = 0.0;
-
-        for (int i = 0; i < flujosCliente.size(); i++) {
-            String[] datos = flujosCliente.get(i);
-            Object[] rowData = {datos[1], datos[2], datos[3], datos[4]};
-            modeloClientes.addRow(rowData);
-            if (datos[2].equals("deuda")) {
-                pago += Double.parseDouble(datos[4]);
-            } else {
-                pago -= Double.parseDouble(datos[4]);
+            //Reordenar y volver a consultar
+            for (int i = 0; i < modeloClientes.getRowCount(); i++) {
+                modeloClientes.removeRow(i);
             }
+
+            modeloClientes.setRowCount(0);
+
+            //SELECT * FROM Flujo_Factura where factura_id in (select factura_id from Factura where cliente_id = 1130614506);
+            ArrayList<String[]> flujosCliente = controladorFlujoFactura.getTodosFlujo_Factura(" where factura_id in (select factura_id from Factura where cliente_id = " + String.valueOf(identificacionCliente) + " and estado=\"fiado\") order by factura_id");
+            double pago = 0.0;
+
+            for (int i = 0; i < flujosCliente.size(); i++) {
+                String[] datos = flujosCliente.get(i);
+                Object[] rowData = {datos[1], datos[2], datos[3], datos[4]};
+                modeloClientes.addRow(rowData);
+                if (datos[2].equals("deuda")) {
+                    pago += Double.parseDouble(datos[4]);
+                } else {
+                    pago -= Double.parseDouble(datos[4]);
+                }
+            }
+
+            textoTotalDebe.setText(String.valueOf(pago));
+            TablaDeSaldoClientes.setModel(modeloClientes);
+            area.setText(informe);
+            JScrollPane panelInformePago = new JScrollPane(area);
+            JOptionPane.showMessageDialog(this, panelInformePago);
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Debe ingresar un valor numérico mayor que 0 en el abono ");
         }
-
-        textoTotalDebe.setText(String.valueOf(pago));
-        TablaDeSaldoClientes.setModel(modeloClientes);
-        area.setText(informe);
-        JScrollPane panelInformePago = new JScrollPane(area);
-        JOptionPane.showMessageDialog(this, panelInformePago);
-
-        // } catch (Exception e) {
-        //     JOptionPane.showMessageDialog(this, "Debe ingresar un valor numérico en el abono " + e.getMessage());
-        // }
     }//GEN-LAST:event_botonRegistrarAbonoActionPerformed
 
     private void TablaDeBuscarFacturaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaDeBuscarFacturaMouseClicked
         int fila = TablaDeBuscarFactura.getSelectedRow();
         int identificacion = (int) TablaDeBuscarFactura.getValueAt(fila, 1);
-        int confirmacion = JOptionPane.showConfirmDialog(this, "Quieres eliminar la factura "+identificacion+" factura?");
-        if(confirmacion == JOptionPane.YES_OPTION)
-        {
+        int confirmacion = JOptionPane.showConfirmDialog(this, "Quieres eliminar la factura " + identificacion + " factura?");
+        if (confirmacion == JOptionPane.YES_OPTION) {
             ControladorFactura controladorFactura = new ControladorFactura();
-            controladorFactura.deleteFactura(" where factura_id = "+identificacion);
+            controladorFactura.deleteFactura(" where factura_id = " + identificacion);
             jButton5ActionPerformed(null);
         }
         System.out.println(identificacion);
@@ -2429,25 +2434,20 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         String cliente_id = jTextField_BuscarFactura_Cliente.getText();
         ControladorFactura controladorFactura = new ControladorFactura();
         String restriccion = "";
-        if(!factura_id.equals(""))
-        {
-            restriccion += " where factura_id like '%"+factura_id+"%'";
-            if(!cliente_id.equals(""))
-            {
-                restriccion += " or cliente_id like '%"+cliente_id+"%'";
+        if (!factura_id.equals("")) {
+            restriccion += " where factura_id like '%" + factura_id + "%'";
+            if (!cliente_id.equals("")) {
+                restriccion += " or cliente_id like '%" + cliente_id + "%'";
+            }
+        } else {
+            if (!cliente_id.equals("")) {
+                restriccion += " where cliente_id like '%" + cliente_id + "%'";
             }
         }
-        else
-        {
-            if(!cliente_id.equals(""))
-            {
-                restriccion += " where cliente_id like '%"+cliente_id+"%'";
-            }
-        }
-        
+
         //String restriccion2 = " where factura_id like '%"+factura_id+"%' or cliente_id like '%"+cliente_id+"%'";
-        ArrayList <Factura> listaFactura = controladorFactura.getFactura(restriccion);
-        
+        ArrayList<Factura> listaFactura = controladorFactura.getFactura(restriccion);
+
         DefaultTableModel modelo = (DefaultTableModel) TablaDeBuscarFactura.getModel();
 
         for (int i = 0; i < modelo.getRowCount(); i++) {
@@ -2457,7 +2457,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         for (int i = 0; i < listaFactura.size(); i++) {
             Factura factura = listaFactura.get(i);
             Object[] fila = new Object[6];
-            fila[0] = (i+1);
+            fila[0] = (i + 1);
             fila[1] = factura.getFactura_id();
             fila[2] = factura.getFecha();
             fila[3] = factura.getCliente_id();
@@ -2471,7 +2471,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         TablaDeBuscarFactura.setModel(modelo);
     }//GEN-LAST:event_jButton5ActionPerformed
 
-    
     /**
      * @param args the command line arguments
      */
