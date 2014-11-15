@@ -1915,15 +1915,15 @@
                                           <Component id="jLabel43" alignment="0" min="-2" max="-2" attributes="0"/>
                                           <Component id="jLabel44" alignment="0" min="-2" max="-2" attributes="0"/>
                                       </Group>
-                                      <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="dateChooserCombo1" min="-2" max="-2" attributes="0"/>
-                                          <Component id="dateChooserCombo2" min="-2" max="-2" attributes="0"/>
+                                          <Component id="dateChooserCombo3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="dateChooserCombo4" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <Component id="jButton8" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace pref="196" max="32767" attributes="0"/>
+                              <EmptySpace pref="192" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -1933,12 +1933,12 @@
                               <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="jLabel43" min="-2" max="-2" attributes="0"/>
-                                  <Component id="dateChooserCombo1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="dateChooserCombo3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="jLabel44" min="-2" max="-2" attributes="0"/>
-                                  <Component id="dateChooserCombo2" min="-2" max="-2" attributes="0"/>
+                                  <Component id="dateChooserCombo4" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jButton8" min="-2" max="-2" attributes="0"/>
@@ -1963,9 +1963,9 @@
                         <Property name="text" type="java.lang.String" value="Generar"/>
                       </Properties>
                     </Component>
-                    <Component class="datechooser.beans.DateChooserCombo" name="dateChooserCombo1">
+                    <Component class="datechooser.beans.DateChooserCombo" name="dateChooserCombo3">
                     </Component>
-                    <Component class="datechooser.beans.DateChooserCombo" name="dateChooserCombo2">
+                    <Component class="datechooser.beans.DateChooserCombo" name="dateChooserCombo4">
                     </Component>
                   </SubComponents>
                 </Container>
