@@ -10,9 +10,11 @@ import controladores.ControladorFactura;
 import controladores.ControladorFactura_Productos;
 import controladores.ControladorFlujoFactura;
 import controladores.ControladorProducto;
+import controladores.ControladorUsuarios;
 import entidades.Cliente;
 import entidades.Factura;
 import entidades.Productos;
+import entidades.Usuarios;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -30,6 +32,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Vector;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -42,16 +47,25 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.DateAxis;
+import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
+import org.jfree.chart.title.LegendTitle;
+import org.jfree.chart.title.TextTitle;
+import org.jfree.data.Range;
 import org.jfree.data.time.Day;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
-import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
+import org.jfree.ui.RectangleInsets;
+import seguridad.GeneradorMD5;
 
 /**
  *
@@ -213,13 +227,25 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         clienteReporteClienteFechaFinal = new datechooser.beans.DateChooserCombo();
         label1 = new java.awt.Label();
         jTabbedPane6 = new javax.swing.JTabbedPane();
-        jTabbedPane4 = new javax.swing.JTabbedPane();
-        jPanel19 = new javax.swing.JPanel();
+        jPanel21 = new javax.swing.JPanel();
+        jLabel47 = new javax.swing.JLabel();
+        jLabel48 = new javax.swing.JLabel();
+        jLabel49 = new javax.swing.JLabel();
+        nombreNuevoUsuario = new javax.swing.JTextField();
+        passwordNuevoUsuario = new javax.swing.JTextField();
+        jLabel50 = new javax.swing.JLabel();
+        checkBoxEstadoNuevoUsuario = new javax.swing.JCheckBox();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        tablaUsuariosDelSistema = new javax.swing.JTable();
+        jLabel51 = new javax.swing.JLabel();
+        jButton8 = new javax.swing.JButton();
+        jLabel52 = new javax.swing.JLabel();
+        JTextFieldnombreDeUsuario = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel1.setText("Bienvenido al aplicativo del Mini-market <Nombre>");
+        jLabel1.setText("Bienvenido al aplicativo del Mini-market");
 
         jTabbedPane1.setTabPlacement(javax.swing.JTabbedPane.LEFT);
 
@@ -557,7 +583,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 274, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -672,7 +698,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                     .addComponent(montoPrestamoNuevoCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(46, 46, 46)
                 .addComponent(botonAgregarNuevoCliente)
-                .addContainerGap(143, Short.MAX_VALUE))
+                .addContainerGap(153, Short.MAX_VALUE))
         );
 
         jTabbedPane3.addTab("Crear clientes", jPanel1);
@@ -911,7 +937,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                             .addGap(6, 6, 6))
                         .addComponent(jLabel35))
                     .addComponent(textoPersonaSaldo))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel37)
                     .addComponent(abonoClente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1029,7 +1055,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -1140,7 +1166,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                 .addComponent(jLabel14)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(165, Short.MAX_VALUE))
+                .addContainerGap(176, Short.MAX_VALUE))
         );
 
         jTabbedPane7.addTab("Nuevo Producto", jPanel4);
@@ -1270,7 +1296,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                     .addComponent(jPanel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(17, 17, 17)
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 295, Short.MAX_VALUE)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 307, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1402,83 +1428,161 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                 .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(113, Short.MAX_VALUE))
+                .addContainerGap(122, Short.MAX_VALUE))
         );
 
         jTabbedPane5.addTab("Cliente", jPanel15);
 
         jTabbedPane1.addTab("Reportes", jTabbedPane5);
+
+        jLabel47.setText("Nombre de usuario:");
+
+        jLabel48.setText("Contraseña:");
+
+        jLabel49.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel49.setText("Administrar usuarios del sistema");
+
+        jLabel50.setText("Habilitado");
+
+        checkBoxEstadoNuevoUsuario.setSelected(true);
+
+        tablaUsuariosDelSistema.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Nombre", "Fecha de creación", "Habilitado"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tablaUsuariosDelSistema.setColumnSelectionAllowed(true);
+        tablaUsuariosDelSistema.setPreferredSize(new java.awt.Dimension(50, 64));
+        tablaUsuariosDelSistema.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaUsuariosDelSistemaMouseClicked(evt);
+            }
+        });
+        jScrollPane7.setViewportView(tablaUsuariosDelSistema);
+        tablaUsuariosDelSistema.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+
+        jLabel51.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel51.setText("Usuarios registrados en el sistema");
+
+        jButton8.setText("Registrar usuario");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel21Layout = new javax.swing.GroupLayout(jPanel21);
+        jPanel21.setLayout(jPanel21Layout);
+        jPanel21Layout.setHorizontalGroup(
+            jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel21Layout.createSequentialGroup()
+                .addGroup(jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel21Layout.createSequentialGroup()
+                        .addGap(27, 27, 27)
+                        .addGroup(jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel21Layout.createSequentialGroup()
+                                .addGroup(jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel47)
+                                    .addComponent(jLabel48)
+                                    .addComponent(jLabel50))
+                                .addGap(30, 30, 30)
+                                .addGroup(jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(checkBoxEstadoNuevoUsuario)
+                                    .addGroup(jPanel21Layout.createSequentialGroup()
+                                        .addGroup(jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(nombreNuevoUsuario)
+                                            .addComponent(passwordNuevoUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE))
+                                        .addGap(139, 139, 139)
+                                        .addComponent(jButton8))))
+                            .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 728, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel21Layout.createSequentialGroup()
+                        .addGap(245, 245, 245)
+                        .addComponent(jLabel49))
+                    .addGroup(jPanel21Layout.createSequentialGroup()
+                        .addGap(307, 307, 307)
+                        .addComponent(jLabel51)))
+                .addGap(33, 33, 33))
+        );
+        jPanel21Layout.setVerticalGroup(
+            jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel21Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel49)
+                .addGap(25, 25, 25)
+                .addGroup(jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel47)
+                    .addComponent(nombreNuevoUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel21Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel48)
+                            .addComponent(passwordNuevoUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel21Layout.createSequentialGroup()
+                        .addGap(9, 9, 9)
+                        .addComponent(jButton8)))
+                .addGap(22, 22, 22)
+                .addGroup(jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel50)
+                    .addComponent(checkBoxEstadoNuevoUsuario))
+                .addGap(13, 13, 13)
+                .addComponent(jLabel51)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(33, Short.MAX_VALUE))
+        );
+
+        generarTablaUsuarios();
+
+        jTabbedPane6.addTab("Administrar usuarios", jPanel21);
+
         jTabbedPane1.addTab("Administración", jTabbedPane6);
 
-        jPanel19.setLayout(new java.awt.BorderLayout());
+        jLabel52.setText("Bienvenido:");
 
-        // create the chart...
-        XYSeries series = new XYSeries("X vs Y");
-        series.add(1, 1);
-        series.add(1, 2);
-        series.add(2, 1);
-        series.add(3, 9);
-        series.add(4, 10);
-
-        // Add the series to your data set
-        XYSeriesCollection dataset = new XYSeriesCollection();
-        dataset.addSeries(series);
-
-        // Generate the graph
-        JFreeChart chart = ChartFactory.createXYLineChart(
-            "X-Y comparación", // Title
-            "Eje x", // x-axis Label
-            "Eje y", // y-axis Label
-            dataset, // Dataset
-            PlotOrientation.VERTICAL, // Plot Orientation
-            true, // Show Legend
-            true, // Use tooltips
-            false // Configure chart to generate URLs?
-        );
-
-        ChartPanel CP = new ChartPanel(chart);
-        CP.setSize(400, 400);
-        CP.setVisible(true);
-
-        jPanel19.add(CP,BorderLayout.CENTER);
-        jPanel19.validate();
-
-        javax.swing.GroupLayout jPanel19Layout = new javax.swing.GroupLayout(jPanel19);
-        jPanel19.setLayout(jPanel19Layout);
-        jPanel19Layout.setHorizontalGroup(
-            jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 788, Short.MAX_VALUE)
-        );
-        jPanel19Layout.setVerticalGroup(
-            jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 419, Short.MAX_VALUE)
-        );
-
-        jTabbedPane4.addTab("tab1", jPanel19);
-
-        jTabbedPane1.addTab("Elimnar tab", jTabbedPane4);
+        JTextFieldnombreDeUsuario.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        JTextFieldnombreDeUsuario.setText("Nombre");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 881, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(105, 105, 105)
-                        .addComponent(jLabel1)))
+                .addContainerGap()
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 881, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(133, 133, 133)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel52)
+                .addGap(18, 18, 18)
+                .addComponent(JTextFieldnombreDeUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addGap(20, 20, 20)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 449, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel52)
+                            .addComponent(JTextFieldnombreDeUsuario)))
+                    .addComponent(jLabel1))
+                .addGap(22, 22, 22)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 458, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -2819,21 +2923,20 @@ public class InterfazPrincipal extends javax.swing.JFrame {
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         ControladorFlujoFactura controladorFlujoFactura = new ControladorFlujoFactura();
-        ArrayList <String[]> listado = controladorFlujoFactura.getTodosFlujo_Factura("");
+        ArrayList<String[]> listado = controladorFlujoFactura.getTodosFlujo_Factura("");
         DefaultTableModel modelo = (DefaultTableModel) TablaDeReporteDiario.getModel();
-        
+
         if (modelo.getRowCount() > 0) {
             for (int k = modelo.getRowCount() - 1; k > -1; k--) {
                 modelo.removeRow(k);
             }
         }
-        int contador=1;
+        int contador = 1;
         double abono = 0;
         double deuda = 0;
-        for(int i = 0; i < listado.size();i++)
-        {   
-            String [] fila = listado.get(i);
-            
+        for (int i = 0; i < listado.size(); i++) {
+            String[] fila = listado.get(i);
+
             String[] partirEspacios = fila[3].split("\\s");
             //El primer string es la fecha sin hora
             //Ahora esparamos por -
@@ -2843,21 +2946,18 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             int ageConsulta = Integer.parseInt(tomarAgeMesDia[0]);
             int mesConsulta = Integer.parseInt(tomarAgeMesDia[1]);
             int diaConsulta = Integer.parseInt(tomarAgeMesDia[2]);
-            Calendar fechaDeLaBD = new GregorianCalendar(ageConsulta,mesConsulta,diaConsulta);
+            Calendar fechaDeLaBD = new GregorianCalendar(ageConsulta, mesConsulta, diaConsulta);
 
             int anioInicial = fechaReporteDiario.getSelectedDate().get(Calendar.YEAR);
             int mesInicial = fechaReporteDiario.getSelectedDate().get(Calendar.MONTH) + 1;
             int diaInicial = fechaReporteDiario.getSelectedDate().get(Calendar.DAY_OF_MONTH);
-            Calendar fechaInicialRango = new GregorianCalendar(anioInicial,mesInicial,diaInicial);
+            Calendar fechaInicialRango = new GregorianCalendar(anioInicial, mesInicial, diaInicial);
             System.out.println("antes");
             System.out.println("Va a comparar" + fechaDeLaBD.toString());
 
             System.out.println(" con " + fechaInicialRango.toString());
 
-
-
-            if( fechaDeLaBD.compareTo(fechaInicialRango)==0 )
-            {
+            if (fechaDeLaBD.compareTo(fechaInicialRango) == 0) {
                 System.out.println("Entra");
                 Object[] row = new Object[5];
                 row[0] = (contador);
@@ -2869,19 +2969,20 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                 modelo.addRow(row);
                 //flujo_id","factura_id","tipo_flujo","fecha","valor"
                 /*System.out.println("fila 0" + fila[0]);
-                System.out.println("fila 1" + fila[1]);
-                System.out.println("fila 2" + fila[2]);
-                System.out.println("fila 3" + fila[3]);*/
-                if( fila[2].equals("abono"))
-                    abono += Double.parseDouble(fila[4]);                 
-                else
+                 System.out.println("fila 1" + fila[1]);
+                 System.out.println("fila 2" + fila[2]);
+                 System.out.println("fila 3" + fila[3]);*/
+                if (fila[2].equals("abono")) {
+                    abono += Double.parseDouble(fila[4]);
+                } else {
                     deuda += Double.parseDouble(fila[4]);
-                    ;
+                }
+                ;
             }
-            
+
         }
-        ReporteDiarioAbono.setText(abono+"");
-        ReporteDiarioDeuda.setText(deuda+"");
+        ReporteDiarioAbono.setText(abono + "");
+        ReporteDiarioDeuda.setText(deuda + "");
         TablaDeReporteDiario.setModel(modelo);
     }//GEN-LAST:event_jButton6ActionPerformed
 
@@ -3011,161 +3112,458 @@ public class InterfazPrincipal extends javax.swing.JFrame {
 
     private void botonGenerarReporteClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonGenerarReporteClienteActionPerformed
         // TODO add your handling code here:
-
-        if (clienteReporteClienteFechaFinal.getSelectedDate().getTime().compareTo(clienteReporteClienteFechaInicial.getSelectedDate().getTime()) < 0) {
-            JOptionPane.showMessageDialog(this, "La fecha final debe ser posterior al dia de inicio");
-        } else {
-
-            JDialog dialogoEditar = new JDialog();
-            dialogoEditar.setTitle("Buscar clientes");
-            dialogoEditar.setSize(600, 600);
-            dialogoEditar.setResizable(false);
-
-            JPanel panelDialogo = new JPanel();
-            panelDialogo.setLayout(new GridBagLayout());
-
-            GridBagConstraints c = new GridBagConstraints();
-            c.fill = GridBagConstraints.HORIZONTAL;
-
-            JLabel ediitarTextoPrincipalDialogo = new JLabel("Informe cliente");
-            c.gridx = 0;
-            c.gridy = 0;
-            c.gridwidth = 2;
-            c.insets = new Insets(10, 60, 10, 10);
-            Font textoGrande = new Font("Arial", 1, 18);
-            ediitarTextoPrincipalDialogo.setFont(textoGrande);
-            panelDialogo.add(ediitarTextoPrincipalDialogo, c);
-
-            final JTable tablaDialogo = new JTable();
-            DefaultTableModel modeloTabla = new DefaultTableModel() {
-
-                @Override
-                public boolean isCellEditable(int row, int column) {
-                    //all cells false
-                    return false;
-                }
-            };;
-
-            modeloTabla.addColumn("Factura");
-            modeloTabla.addColumn("Tipo Flujo");
-            modeloTabla.addColumn("Fecha");
-            modeloTabla.addColumn("Valor");
-
-            //Llenar tabla
-            ControladorFlujoFactura controladorFlujoFactura = new ControladorFlujoFactura();
-            ArrayList<String[]> flujosCliente = controladorFlujoFactura.getTodosFlujo_Factura(" where factura_id in (select factura_id from Factura where cliente_id = " + String.valueOf(jTextFieldIdentificacionClienteReporte.getText()) + ") order by factura_id");
-            // {"flujo_id","factura_id","tipo_flujo","fecha","valor"};
-            ArrayList<Calendar> fechasFlujos = new ArrayList<>();
-
-            for (int i = 0; i < flujosCliente.size(); i++) {
-                String fila[] = new String[4];
-                String[] objeto = flujosCliente.get(i);
-                fila[0] = objeto[1];
-                fila[1] = objeto[2];
-                fila[2] = objeto[3];
-                fila[3] = objeto[4];
-
-                //Filtrar, mirar las fechas
-                String[] partirEspacios = objeto[3].split("\\s");
-                //El primer string es la fecha sin hora
-                //Ahora esparamos por -
-                String[] tomarAgeMesDia = partirEspacios[0].split("-");
-
-                //Realizar filtro
-                int ageConsulta = Integer.parseInt(tomarAgeMesDia[0]);
-                int mesConsulta = Integer.parseInt(tomarAgeMesDia[1]);
-                int diaConsulta = Integer.parseInt(tomarAgeMesDia[2]);
-
-                //Obtenemos dias, mes y año de la consulta
-                //Inicial
-                int anioInicial = clienteReporteClienteFechaFinal.getSelectedDate().get(Calendar.YEAR);
-                int mesInicial = clienteReporteClienteFechaFinal.getSelectedDate().get(Calendar.MONTH) + 1;
-                int diaInicial = clienteReporteClienteFechaFinal.getSelectedDate().get(Calendar.DAY_OF_MONTH);
-                //Final
-                int anioFinal = clienteReporteClienteFechaInicial.getSelectedDate().get(Calendar.YEAR);
-                int mesFinal = clienteReporteClienteFechaInicial.getSelectedDate().get(Calendar.MONTH) + 1;
-                int diaFinal = clienteReporteClienteFechaInicial.getSelectedDate().get(Calendar.DAY_OF_MONTH);
-
-                //Construir fechas
-                Calendar fechaDeLaBD = new GregorianCalendar(ageConsulta, mesConsulta, diaConsulta);
-                //Set year, month, day)
-
-                Calendar fechaInicialRango = new GregorianCalendar(anioInicial, mesInicial, diaInicial);
-                Calendar fechaFinalRango = new GregorianCalendar(anioFinal, mesFinal, diaFinal);
-
-                if (fechaDeLaBD.compareTo(fechaInicialRango) <= 0 && fechaDeLaBD.compareTo(fechaFinalRango) >= 0) {
-                    fechasFlujos.add(fechaDeLaBD);
-                    modeloTabla.addRow(fila);
-                }
-
-            }
-
-            if (modeloTabla.getRowCount() > 0) {
-                tablaDialogo.setModel(modeloTabla);
-                tablaDialogo.getColumn("Factura").setMinWidth(80);
-                tablaDialogo.getColumn("Tipo Flujo").setMinWidth(80);
-                tablaDialogo.getColumn("Fecha").setMinWidth(80);
-                tablaDialogo.getColumn("Valor").setMinWidth(80);
-                tablaDialogo.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-                JScrollPane scroll = new JScrollPane(tablaDialogo);
-                scroll.setPreferredSize(new Dimension(320, 200));
-
-                c.gridx = 0;
-                c.gridy = 1;
-                c.gridwidth = 1;
-                c.insets = new Insets(0, 0, 0, 0);
-                panelDialogo.add(scroll, c);
-
-                c.gridx = 2;
-                c.gridy = 1;
-                c.gridwidth = 1;
-                c.insets = new Insets(0, 0, 0, 0);
-                TimeSeries localTimeSeries = new TimeSeries("Abonos cliente con el tiempo");
-
-                for (int i = 0; i < modeloTabla.getRowCount(); i++) {
-                    Calendar fechaFlujo = fechasFlujos.get(i);
-                    double valor = Double.parseDouble(String.valueOf(modeloTabla.getValueAt(i, 3)));
-
-                    int anoDato = fechaFlujo.get(Calendar.YEAR);
-                    int mesDato = fechaFlujo.get(Calendar.MONTH) + 1;
-                    int diaDato = fechaFlujo.get(Calendar.DAY_OF_MONTH);
-                    localTimeSeries.add(new Day(diaDato,mesDato,anoDato), valor);
-
-                }
-                TimeSeriesCollection datos = new TimeSeriesCollection(localTimeSeries);
-
-                JFreeChart chart = ChartFactory.createXYLineChart(
-                        "X-Y comparación", // Title
-                        "Eje x", // x-axis Label
-                        "Eje y", // y-axis Label
-                        datos, // Dataset
-                        PlotOrientation.VERTICAL, // Plot Orientation
-                        true, // Show Legend
-                        true, // Use tooltips
-                        false // Configure chart to generate URLs?
-                );
-
-                ChartPanel CP = new ChartPanel(chart);
-                CP.setSize(400, 400);
-                CP.setVisible(true);
-
-                dialogoEditar.add(CP, BorderLayout.CENTER);
-  
-
-                dialogoEditar.add(panelDialogo);
-                dialogoEditar.setVisible(true);
-
+        try {
+            if (clienteReporteClienteFechaFinal.getSelectedDate().getTime().compareTo(clienteReporteClienteFechaInicial.getSelectedDate().getTime()) < 0) {
+                JOptionPane.showMessageDialog(this, "La fecha final debe ser posterior al dia de inicio");
             } else {
-                JOptionPane.showMessageDialog(this, "El cliente no registra movimientos en el rango de fechas seleccionado");
-            }
 
+                final JDialog dialogoEditar = new JDialog();
+                dialogoEditar.setTitle("Reporte cliente");
+                dialogoEditar.setSize(350, 610);
+                dialogoEditar.setResizable(false);
+
+                JPanel panelDialogo = new JPanel();
+                panelDialogo.setLayout(new GridBagLayout());
+
+                GridBagConstraints c = new GridBagConstraints();
+                //c.fill = GridBagConstraints.HORIZONTAL;
+
+                JLabel ediitarTextoPrincipalDialogo = new JLabel("Informe cliente");
+                c.gridx = 0;
+                c.gridy = 0;
+                c.gridwidth = 1;
+                c.insets = new Insets(10, 45, 10, 10);
+                Font textoGrande = new Font("Arial", 1, 18);
+                ediitarTextoPrincipalDialogo.setFont(textoGrande);
+                panelDialogo.add(ediitarTextoPrincipalDialogo, c);
+
+                final JTable tablaDialogo = new JTable();
+                DefaultTableModel modeloTabla = new DefaultTableModel() {
+
+                    @Override
+                    public boolean isCellEditable(int row, int column) {
+                        //all cells false
+                        return false;
+                    }
+                };;
+
+                modeloTabla.addColumn("Factura");
+                modeloTabla.addColumn("Tipo Flujo");
+                modeloTabla.addColumn("Fecha");
+                modeloTabla.addColumn("Valor");
+
+                //Llenar tabla
+                ControladorFlujoFactura controladorFlujoFactura = new ControladorFlujoFactura();
+                ArrayList<String[]> flujosCliente = controladorFlujoFactura.getTodosFlujo_Factura(" where factura_id in (select factura_id from Factura where cliente_id = " + String.valueOf(jTextFieldIdentificacionClienteReporte.getText()) + ") order by factura_id");
+                // {"flujo_id","factura_id","tipo_flujo","fecha","valor"};
+                ArrayList<Calendar> fechasFlujos = new ArrayList<>();
+
+                for (int i = 0; i < flujosCliente.size(); i++) {
+                    String fila[] = new String[4];
+                    String[] objeto = flujosCliente.get(i);
+                    fila[0] = objeto[1];
+                    fila[1] = objeto[2];
+                    fila[2] = objeto[3];
+                    fila[3] = objeto[4];
+
+                    //Filtrar, mirar las fechas
+                    String[] partirEspacios = objeto[3].split("\\s");
+                    //El primer string es la fecha sin hora
+                    //Ahora esparamos por -
+                    String[] tomarAgeMesDia = partirEspacios[0].split("-");
+
+                    //Realizar filtro
+                    int ageConsulta = Integer.parseInt(tomarAgeMesDia[0]);
+                    int mesConsulta = Integer.parseInt(tomarAgeMesDia[1]);
+                    int diaConsulta = Integer.parseInt(tomarAgeMesDia[2]);
+
+                    //Obtenemos dias, mes y año de la consulta
+                    //Inicial
+                    int anioInicial = clienteReporteClienteFechaFinal.getSelectedDate().get(Calendar.YEAR);
+                    int mesInicial = clienteReporteClienteFechaFinal.getSelectedDate().get(Calendar.MONTH) + 1;
+                    int diaInicial = clienteReporteClienteFechaFinal.getSelectedDate().get(Calendar.DAY_OF_MONTH);
+                    //Final
+                    int anioFinal = clienteReporteClienteFechaInicial.getSelectedDate().get(Calendar.YEAR);
+                    int mesFinal = clienteReporteClienteFechaInicial.getSelectedDate().get(Calendar.MONTH) + 1;
+                    int diaFinal = clienteReporteClienteFechaInicial.getSelectedDate().get(Calendar.DAY_OF_MONTH);
+
+                    //Construir fechas
+                    Calendar fechaDeLaBD = new GregorianCalendar(ageConsulta, mesConsulta, diaConsulta);
+                    //Set year, month, day)
+
+                    Calendar fechaInicialRango = new GregorianCalendar(anioInicial, mesInicial, diaInicial);
+                    Calendar fechaFinalRango = new GregorianCalendar(anioFinal, mesFinal, diaFinal);
+
+                    if (fechaDeLaBD.compareTo(fechaInicialRango) <= 0 && fechaDeLaBD.compareTo(fechaFinalRango) >= 0) {
+                        fechasFlujos.add(fechaDeLaBD);
+                        modeloTabla.addRow(fila);
+                    }
+
+                }
+
+                if (modeloTabla.getRowCount() > 0) {
+                    tablaDialogo.setModel(modeloTabla);
+                    tablaDialogo.getColumn("Factura").setMinWidth(80);
+                    tablaDialogo.getColumn("Tipo Flujo").setMinWidth(80);
+                    tablaDialogo.getColumn("Fecha").setMinWidth(90);
+                    tablaDialogo.getColumn("Valor").setMinWidth(80);
+                    tablaDialogo.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+                    JScrollPane scroll = new JScrollPane(tablaDialogo);
+                    scroll.setPreferredSize(new Dimension(330, 150));
+
+                    c.gridx = 0;
+                    c.gridy = 1;
+                    c.gridwidth = 1;
+                    c.insets = new Insets(0, 0, 0, 0);
+                    panelDialogo.add(scroll, c);
+
+                    TimeSeries localTimeSeries = new TimeSeries("Compras del cliente en el periodo");
+
+                    Map listaAbonos = new HashMap();
+
+                    for (int i = 0; i < modeloTabla.getRowCount(); i++) {
+
+                        if (modeloTabla.getValueAt(i, 1).equals("abono")) {
+                            Calendar fechaFlujo = fechasFlujos.get(i);
+
+                            double valor = Double.parseDouble(String.valueOf(modeloTabla.getValueAt(i, 3)));
+
+                            int anoDato = fechaFlujo.get(Calendar.YEAR);
+                            int mesDato = fechaFlujo.get(Calendar.MONTH) + 1;
+                            int diaDato = fechaFlujo.get(Calendar.DAY_OF_MONTH);
+                            Day FechaDato = new Day(diaDato, mesDato, anoDato);
+
+                            if (listaAbonos.get(FechaDato) != null) {
+                                double valorAbono = (double) listaAbonos.get(FechaDato);
+                                listaAbonos.remove(FechaDato);
+                                listaAbonos.put(FechaDato, valorAbono + valor);
+                            } else {
+                                listaAbonos.put(FechaDato, valor);
+
+                            }
+
+                        }
+
+                    }
+                    Double maximo = 0.0;
+                    Iterator iterator = listaAbonos.keySet().iterator();
+                    while (iterator.hasNext()) {
+                        Day key = (Day) iterator.next();
+                        Double value = (double) listaAbonos.get(key);
+                        maximo = Math.max(maximo, value);
+                        localTimeSeries.add(key, value);
+                    }
+
+                    //localTimeSeries.add();
+                    TimeSeriesCollection datos = new TimeSeriesCollection(localTimeSeries);
+
+                    JFreeChart chart = ChartFactory.createTimeSeriesChart(
+                            "Compras del cliente en el periodo", // Title
+                            "Tiempo", // x-axis Label
+                            "Total ($)", // y-axis Label
+                            datos, // Dataset
+                            true, // Show Legend
+                            true, // Use tooltips
+                            false // Configure chart to generate URLs?
+                    );
+                    /*Altering the graph */
+                    XYPlot plot = (XYPlot) chart.getPlot();
+                    plot.setAxisOffset(new RectangleInsets(5.0, 10.0, 10.0, 5.0));
+                    plot.setDomainCrosshairVisible(true);
+                    plot.setRangeCrosshairVisible(true);
+
+                    XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer) plot.getRenderer();
+                    renderer.setBaseShapesVisible(true);
+                    renderer.setBaseShapesFilled(true);
+
+                    NumberAxis numberAxis = (NumberAxis) plot.getRangeAxis();
+                    numberAxis.setRange(new Range(0, maximo * 1.2));
+                    Font font = new Font("Dialog", Font.PLAIN, 9);
+                    numberAxis.setTickLabelFont(font);
+                    numberAxis.setLabelFont(font);
+
+                    DateAxis axis = (DateAxis) plot.getDomainAxis();
+                    axis.setDateFormatOverride(new SimpleDateFormat("dd-MM-yyyy"));
+                    axis.setAutoTickUnitSelection(false);
+                    axis.setVerticalTickLabels(true);
+                    axis.setTickLabelFont(font);
+                    axis.setLabelFont(font);
+
+                    LegendTitle leyendaChart = chart.getLegend();
+                    leyendaChart.setItemFont(font);
+
+                    Font fontTitulo = new Font("Dialog", Font.BOLD, 12);
+                    TextTitle tituloChart = chart.getTitle();
+                    tituloChart.setFont(fontTitulo);
+
+                    ChartPanel CP = new ChartPanel(chart);
+                    Dimension D = new Dimension(330, 300);
+                    CP.setPreferredSize(D);
+                    CP.setVisible(true);
+                    c.gridx = 0;
+                    c.gridy = 2;
+                    c.gridwidth = 1;
+                    c.insets = new Insets(10, 0, 0, 0);
+                    panelDialogo.add(CP, c);
+
+                    c.gridx = 0;
+                    c.gridy = 3;
+                    c.gridwidth = 1;
+                    c.insets = new Insets(10, 0, 0, 0);
+
+                    JButton botonCerrar = new JButton("Cerrar");
+                    botonCerrar.addActionListener(new ActionListener() {
+
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            dialogoEditar.dispose();
+                        }
+                    });
+                    panelDialogo.add(botonCerrar, c);
+
+                    dialogoEditar.add(panelDialogo);
+                    dialogoEditar.setVisible(true);
+
+                } else {
+                    JOptionPane.showMessageDialog(this, "El cliente no registra movimientos en el rango de fechas seleccionado");
+                }
+
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un día inicial y final de fechas");
         }
+
 
     }//GEN-LAST:event_botonGenerarReporteClienteActionPerformed
 
     private void TablaDeReporteDiarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaDeReporteDiarioMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_TablaDeReporteDiarioMouseClicked
+
+    //Llenar tabla usuarios
+    public void generarTablaUsuarios() {
+        //tablaUsuariosDelSistema
+        ControladorUsuarios controladorUsuarios = new ControladorUsuarios();
+        ArrayList<Usuarios> listaUsuarios = controladorUsuarios.obtenerTodosUsuarios();
+
+        DefaultTableModel modeloTabla = (DefaultTableModel) tablaUsuariosDelSistema.getModel();
+        
+        for(int i=0; i<modeloTabla.getRowCount();i++)
+        {
+             modeloTabla.removeRow(i);
+        }
+       modeloTabla.setRowCount(0);
+
+        for (int i = 0; i < listaUsuarios.size(); i++) {
+            Usuarios usuarioActual = listaUsuarios.get(i);
+
+            Object[] rowData = new Object[3];
+            rowData[0] = usuarioActual.getLogin();
+            rowData[1] = usuarioActual.getCreation_data();
+
+            char habilitado = usuarioActual.getStatus();
+
+            if (habilitado == 'e') {
+                rowData[2] = "Habilitado";
+            } else {
+                rowData[2] = "Inhablitado";
+            }
+
+            modeloTabla.addRow(rowData);
+        }
+        tablaUsuariosDelSistema.setModel(modeloTabla);
+
+    }
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        // TODO add your handling code here:
+        String nombreUsuario = nombreNuevoUsuario.getText();
+        String passwordUsuario = passwordNuevoUsuario.getText();
+
+        if (nombreUsuario.equals("") || passwordUsuario.equals("")) {
+            JOptionPane.showMessageDialog(this, "Debe indicar un nombre y contraseña para el nuevo usuario");
+        } else {
+            ControladorUsuarios controladorUsuarios = new ControladorUsuarios();
+
+            if (controladorUsuarios.obtenerUsuario(nombreUsuario) == null) {
+                
+                String estado = "e";
+                
+                if(!checkBoxEstadoNuevoUsuario.isSelected()) estado = "i";
+                
+                controladorUsuarios.CrearUsuario(nombreUsuario, passwordUsuario,estado);
+                JOptionPane.showMessageDialog(this, "Se ha creado el usuario existosamente");
+            } else {
+                JOptionPane.showMessageDialog(this, "El login de usuario ya existe en el sistema");
+
+            }
+
+            generarTablaUsuarios();
+
+        }
+    }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void tablaUsuariosDelSistemaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaUsuariosDelSistemaMouseClicked
+        // TODO add your handling code here:
+        String opcionHabilitar = "Habilitar";
+
+        String nombreUsuario = String.valueOf(tablaUsuariosDelSistema.getValueAt(tablaUsuariosDelSistema.getSelectedRow(), 0));
+        String estado = String.valueOf(tablaUsuariosDelSistema.getValueAt(tablaUsuariosDelSistema.getSelectedRow(), 2));
+
+        if (estado.equals("Habilitado")) {
+            opcionHabilitar = "Deshabilitar";
+        }
+        Object[] opciones = {"Cancelar", "Editar", opcionHabilitar};
+        final ControladorUsuarios controladorUsuarios = new ControladorUsuarios();
+        final Usuarios usuarioSelecionado = controladorUsuarios.obtenerUsuario(nombreUsuario);
+
+        if (nombreUsuario.equals("admin") || nombreUsuario.equals(JTextFieldnombreDeUsuario.getText())) {
+            JOptionPane.showMessageDialog(this, "No se puede editarse a si mismo o el usuario administrador del sistema", "Mensaje del sistema", JOptionPane.WARNING_MESSAGE);
+        } else {
+            int opcionElegida = JOptionPane.showOptionDialog(this, "Por favor elija una opción", "Editar cliente", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, opciones, null);
+
+            switch (opcionElegida) {
+                case 1:
+                    final JDialog dialogoEditar = new JDialog(this);
+
+                    dialogoEditar.setTitle("Editar usuario");
+                    dialogoEditar.setSize(400, 310);
+                    dialogoEditar.setResizable(false);
+
+                    JPanel panelDialogo = new JPanel();
+
+                    panelDialogo.setLayout(new GridBagLayout());
+
+                    GridBagConstraints c = new GridBagConstraints();
+                    c.fill = GridBagConstraints.HORIZONTAL;
+
+                    JLabel editarTextoPrincipalDialogo = new JLabel("Editar clientes");
+                    c.gridx = 0;
+                    c.gridy = 0;
+                    c.gridwidth = 2;
+                    c.insets = new Insets(15, 10, 40, 0);
+                    c.ipadx = 0;
+                    Font textoGrande = new Font("Arial", 1, 18);
+                    editarTextoPrincipalDialogo.setFont(textoGrande);
+                    panelDialogo.add(editarTextoPrincipalDialogo, c);
+
+                    c.insets = new Insets(0, 5, 10, 0);
+                    c.gridx = 0;
+                    c.gridy = 1;
+                    c.gridwidth = 1;
+                    c.ipadx = 0;
+                    JLabel editarNombreClienteDialogo = new JLabel("Login:");
+                    panelDialogo.add(editarNombreClienteDialogo, c);
+
+                    final JTextField valorEditarNombreClienteDialogo = new JTextField();
+                    c.gridx = 1;
+                    c.gridy = 1;
+                    c.gridwidth = 1;
+                    c.ipadx = 0;
+                    c.insets = new Insets(0, 5, 10, 0);
+                    valorEditarNombreClienteDialogo.setText(usuarioSelecionado.getLogin());
+                    panelDialogo.add(valorEditarNombreClienteDialogo, c);
+
+                    c.gridx = 0;
+                    c.gridy = 2;
+                    c.gridwidth = 1;
+                    c.ipadx = 0;
+                    c.insets = new Insets(0, 5, 10, 0);
+                    JLabel editarPasswordClienteDialogo = new JLabel("Contraseña:");
+                    panelDialogo.add(editarPasswordClienteDialogo, c);
+
+                    final JTextField valoreditarPasswordClienteDialogo = new JTextField();
+                    c.gridx = 1;
+                    c.gridy = 2;
+                    c.gridwidth = 1;
+                    c.ipadx = 0;
+                    c.insets = new Insets(0, 5, 10, 0);
+                    panelDialogo.add(valoreditarPasswordClienteDialogo, c);
+
+                    c.gridx = 0;
+                    c.gridy = 3;
+                    c.gridwidth = 2;
+                    c.ipadx = 0;
+                    c.insets = new Insets(0, 5, 10, 0);
+                    JLabel mensajeEditarPassword = new JLabel("Si no desea editar la contraseña deje este espacio en blanco:");
+                    panelDialogo.add(mensajeEditarPassword, c);
+
+                    c.gridx = 0;
+                    c.gridy = 4;
+                    c.gridwidth = 1;
+                    c.ipadx = 0;
+                    c.insets = new Insets(0, 15, 10, 15);
+
+                    JButton botonGuardarClienteDialogo = new JButton("Guardar");
+                    panelDialogo.add(botonGuardarClienteDialogo, c);
+
+                    c.gridx = 1;
+                    c.gridy = 4;
+                    c.gridwidth = 1;
+                    c.insets = new Insets(0, 15, 10, 15);
+                    c.ipadx = 0;
+
+                    JButton botonCerrarClienteDialogo = new JButton("Cancelar");
+                    panelDialogo.add(botonCerrarClienteDialogo, c);
+
+                    botonCerrarClienteDialogo.addActionListener(new ActionListener() {
+
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            dialogoEditar.dispose();
+                        }
+                    });
+
+                    botonGuardarClienteDialogo.addActionListener(new ActionListener() {
+
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            GeneradorMD5 generadorMD5 = new GeneradorMD5();
+                            String password = generadorMD5.getMD5(valoreditarPasswordClienteDialogo.getText());
+
+                            String nombreUsuario = valorEditarNombreClienteDialogo.getText();
+
+                            usuarioSelecionado.setLogin(nombreUsuario);
+
+                            if (!valoreditarPasswordClienteDialogo.getText().equals("")) {
+                                usuarioSelecionado.setPassword(password);
+                            }
+
+                            controladorUsuarios.modificarUsuario(usuarioSelecionado.getUser_id(), usuarioSelecionado.getLogin(), usuarioSelecionado.getPassword());
+                            JOptionPane.showMessageDialog(dialogoEditar, "Se ha modificado el usuario con éxito", "Mensaje del sistema", JOptionPane.INFORMATION_MESSAGE);
+                            generarTablaUsuarios();
+                            dialogoEditar.dispose();
+
+                        }
+                    });
+
+                    dialogoEditar.add(panelDialogo);
+                    dialogoEditar.setVisible(true);
+
+                    break;
+                case 2:
+
+                    if (estado.equals("Habilitado")) {
+                        usuarioSelecionado.setStatus('i');
+                    } else {
+                        usuarioSelecionado.setStatus('e');
+                    }
+                    controladorUsuarios.modificarEstadoUsuario(usuarioSelecionado);
+                    JOptionPane.showMessageDialog(this, "Se ha cambiado el estado del usuario", "Mensaje del sistema", JOptionPane.INFORMATION_MESSAGE);
+                    generarTablaUsuarios();
+                    break;
+                default:
+                    break;
+            }
+        }
+    }//GEN-LAST:event_tablaUsuariosDelSistemaMouseClicked
+    /*
+     * Cambiar nombre de usuario
+     */
+
+    public void cambiarNombreUsuario(String nombre) {
+        JTextFieldnombreDeUsuario.setText(nombre);
+    }
 
     /**
      * @param args the command line arguments
@@ -3211,6 +3609,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton BotonBuscarCliente;
     private javax.swing.JButton BotonBuscarClienteSaldo;
     private javax.swing.JTextField DireccionNuevoCliente;
+    private javax.swing.JLabel JTextFieldnombreDeUsuario;
     private javax.swing.JTextField ReporteDiarioAbono;
     private javax.swing.JTextField ReporteDiarioDeuda;
     private javax.swing.JTable TablaDeBuscarFactura;
@@ -3225,6 +3624,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton botonGuardarFactura;
     private javax.swing.JButton botonRegistrarAbono;
     private javax.swing.JTextField celularNuevoCliente;
+    private javax.swing.JCheckBox checkBoxEstadoNuevoUsuario;
     private datechooser.beans.DateChooserCombo clienteReporteClienteFechaFinal;
     private datechooser.beans.DateChooserCombo clienteReporteClienteFechaInicial;
     private datechooser.beans.DateChooserCombo fechaReporteDiario;
@@ -3238,6 +3638,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -3279,7 +3680,13 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel44;
     private javax.swing.JLabel jLabel45;
     private javax.swing.JLabel jLabel46;
+    private javax.swing.JLabel jLabel47;
+    private javax.swing.JLabel jLabel48;
+    private javax.swing.JLabel jLabel49;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel50;
+    private javax.swing.JLabel jLabel51;
+    private javax.swing.JLabel jLabel52;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
@@ -3295,9 +3702,9 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel16;
     private javax.swing.JPanel jPanel17;
     private javax.swing.JPanel jPanel18;
-    private javax.swing.JPanel jPanel19;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel20;
+    private javax.swing.JPanel jPanel21;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
@@ -3311,10 +3718,10 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JTabbedPane jTabbedPane3;
-    private javax.swing.JTabbedPane jTabbedPane4;
     private javax.swing.JTabbedPane jTabbedPane5;
     private javax.swing.JTabbedPane jTabbedPane6;
     private javax.swing.JTabbedPane jTabbedPane7;
@@ -3342,7 +3749,10 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JTextField nombreClienteBusquedaSaldo;
     private javax.swing.JTextField nombreClienteReporteCliente;
     private javax.swing.JTextField nombreNuevoCliente;
+    private javax.swing.JTextField nombreNuevoUsuario;
+    private javax.swing.JTextField passwordNuevoUsuario;
     private javax.swing.JSlider sliderNumeroUnidades;
+    private javax.swing.JTable tablaUsuariosDelSistema;
     private javax.swing.JTextField telefonoNuevoCliente;
     private javax.swing.JLabel textoPersonaSaldo;
     private javax.swing.JLabel textoTotalDebe;

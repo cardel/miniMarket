@@ -52,7 +52,7 @@ public class InicioAplicacion extends javax.swing.JFrame {
         jPanel1.setLayout(new java.awt.GridBagLayout());
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 26)); // NOI18N
-        jLabel1.setText("Bienvenido al minimarket <dato>");
+        jLabel1.setText("Bienvenido al aplicativo minimarket");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -177,7 +177,8 @@ public class InicioAplicacion extends javax.swing.JFrame {
                 
                 
                 this.dispose();
-                interfazPrincipal.show();
+                interfazPrincipal.cambiarNombreUsuario(usuarioActual.getLogin());
+                interfazPrincipal.setVisible(true);
             }
             else
             {

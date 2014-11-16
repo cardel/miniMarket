@@ -74,7 +74,7 @@ public class test {
         String password = JOptionPane.showInputDialog("Ingresa el password");
         
         ControladorUsuarios controladorUsuario = new ControladorUsuarios();
-        controladorUsuario.CrearUsuario(nombre, password);
+        controladorUsuario.CrearUsuario(nombre, password,"e");
     
     }
 }

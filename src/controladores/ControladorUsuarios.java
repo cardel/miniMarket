@@ -25,7 +25,7 @@ public class ControladorUsuarios {
         generador = new GeneradorMD5();
     }
 
-    public boolean CrearUsuario(String login, String password) {
+    public boolean CrearUsuario(String login, String password, String estado) {
 
         password = generador.getMD5(password);
         Calendar calendario = Calendar.getInstance();
@@ -36,8 +36,8 @@ public class ControladorUsuarios {
         String fecha = annio + "-" + mes + "-" + dia;
 
         String selection[] = {"login", "password", "creation_date", "status"};
-        String value[] = {login, password, fecha, "e"};
-        String type_value[] = {"int", "varchar", "varchar", "varchar", "varchar"};
+        String value[] = {login, password, fecha, estado};
+        String type_value[] = {"varchar", "varchar", "varchar", "varchar", "varchar"};
         String table = "Usuarios";
         String table_id[] = {"user_id"};
         String type_table_id[] = {"int"};
@@ -48,28 +48,60 @@ public class ControladorUsuarios {
 
     public Usuarios obtenerUsuario(String login) {
 
-        String selection[] = {"user_id","login","password","creation_date","status"};
-        String selection_type[] = {"int","varchar","varchar","varchar","varchar"};
+        String selection[] = {"user_id", "login", "password", "creation_date", "status"};
+        String selection_type[] = {"int", "varchar", "varchar", "varchar", "varchar"};
         String table = "Usuarios";
         String restriction = " where login=\"" + login + "\"";
         ArrayList<String[]> resultadoSet = sqlManager.select_query(selection, selection_type, table, restriction);
-        System.out.println(resultadoSet.size());
-        String [] resultado = resultadoSet.get(0);
-        Usuarios usuario = new Usuarios(Integer.parseInt(resultado[0]), resultado[1], resultado[2], resultado[3], resultado[4].toCharArray()[0]);
+
+        Usuarios usuario = null;
+        if (resultadoSet.size() > 0) {
+            String[] resultado = resultadoSet.get(0);
+            usuario = new Usuarios(Integer.parseInt(resultado[0]), resultado[1], resultado[2], resultado[3], resultado[4].toCharArray()[0]);
+        }
 
         return usuario;
     }
 
-    public boolean modificarUsuarioPassword(int user_id, String password) {
-        
-        password = generador.getMD5(password);
-        String selection[] = {"password"};
+    public ArrayList<Usuarios> obtenerTodosUsuarios() {
+
+        ArrayList<Usuarios> listaUsuarios = new ArrayList<>();
+        String selection[] = {"user_id", "login", "password", "creation_date", "status"};
+        String selection_type[] = {"int", "varchar", "varchar", "varchar", "varchar"};
         String table = "Usuarios";
-        String value[] = {password};
-        String type_value[] = {"varchar"};
+        String restriction = "";
+        ArrayList<String[]> resultadoSet = sqlManager.select_query(selection, selection_type, table, restriction);
+
+        for (int i = 0; i < resultadoSet.size(); i++) {
+            String[] resultado = resultadoSet.get(i);
+            Usuarios usuario = new Usuarios(Integer.parseInt(resultado[0]), resultado[1], resultado[2], resultado[3], resultado[4].toCharArray()[0]);
+            listaUsuarios.add(usuario);
+        }
+
+        return listaUsuarios;
+    }
+
+    public boolean modificarUsuario(int user_id, String login, String password) {
+
+        password = generador.getMD5(password);
+        String selection[] = {"login","password"};
+        String table = "Usuarios";
+        String value[] = {login,password};
+        String type_value[] = {"varchar","varchar"};
         String restriction = " where user_id=" + user_id;
 
         sqlManager.update_query(selection, value, type_value, table, restriction);
         return false;
+    }
+
+    public void modificarEstadoUsuario(Usuarios usuario) {
+        
+        String selection[] = {"status"};;
+        String table = "Usuarios";
+        String value[] = {""+usuario.getStatus()};
+        String type_value[] = {"varchar"};
+        String restriction = " where user_id=" + usuario.getUser_id();
+
+        sqlManager.update_query(selection, value, type_value, table, restriction);
     }
 }

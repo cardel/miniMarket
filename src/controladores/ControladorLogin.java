@@ -27,7 +27,7 @@ public class ControladorLogin {
         String md5Prueba = generadorAplicativo.getMD5(password);
         String seleccion[] = {"login", "password"};
         String tipo_seleccion[] = {"varchar", "varchar"};
-        String restriccion = " where login = \"" + usuario + "\" and password = \"" + md5Prueba + "\"";
+        String restriccion = " where login = \"" + usuario + "\" and password = \"" + md5Prueba + "\" and status='e'";
         String tabla = "Usuarios";
 
         ArrayList<String[]> resultSet = sqlManager.select_query(seleccion, tipo_seleccion, tabla, restriccion);
