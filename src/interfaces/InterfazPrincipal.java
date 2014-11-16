@@ -46,6 +46,10 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.time.Day;
+import org.jfree.data.time.TimeSeries;
+import org.jfree.data.time.TimeSeriesCollection;
+import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
@@ -2920,7 +2924,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             c.gridy = 0;
             c.gridwidth = 2;
             c.insets = new Insets(10, 60, 10, 10);
-            Font textoGrande = new Font("Arial", 1, 16);
+            Font textoGrande = new Font("Arial", 1, 18);
             ediitarTextoPrincipalDialogo.setFont(textoGrande);
             panelDialogo.add(ediitarTextoPrincipalDialogo, c);
 
@@ -2943,6 +2947,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             ControladorFlujoFactura controladorFlujoFactura = new ControladorFlujoFactura();
             ArrayList<String[]> flujosCliente = controladorFlujoFactura.getTodosFlujo_Factura(" where factura_id in (select factura_id from Factura where cliente_id = " + String.valueOf(jTextFieldIdentificacionClienteReporte.getText()) + ") order by factura_id");
             // {"flujo_id","factura_id","tipo_flujo","fecha","valor"};
+            ArrayList<Calendar> fechasFlujos = new ArrayList<>();
 
             for (int i = 0; i < flujosCliente.size(); i++) {
                 String fila[] = new String[4];
@@ -2950,6 +2955,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                 fila[0] = objeto[1];
                 fila[1] = objeto[2];
                 fila[2] = objeto[3];
+                fila[3] = objeto[4];
 
                 //Filtrar, mirar las fechas
                 String[] partirEspacios = objeto[3].split("\\s");
@@ -2971,40 +2977,80 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                 int anioFinal = clienteReporteClienteFechaInicial.getSelectedDate().get(Calendar.YEAR);
                 int mesFinal = clienteReporteClienteFechaInicial.getSelectedDate().get(Calendar.MONTH) + 1;
                 int diaFinal = clienteReporteClienteFechaInicial.getSelectedDate().get(Calendar.DAY_OF_MONTH);
-                
-                
+
                 //Construir fechas
-                Calendar fechaDeLaBD = new GregorianCalendar(ageConsulta,mesConsulta,diaConsulta);
+                Calendar fechaDeLaBD = new GregorianCalendar(ageConsulta, mesConsulta, diaConsulta);
                 //Set year, month, day)
-              
-                
-                Calendar fechaInicialRango = new GregorianCalendar(anioInicial,mesInicial,diaInicial);
-                Calendar fechaFinalRango = new GregorianCalendar(anioFinal,mesFinal,diaFinal);                
-                
-                if(fechaDeLaBD.compareTo(fechaInicialRango)<=0 && fechaDeLaBD.compareTo(fechaFinalRango)>=0)
-                {
+
+                Calendar fechaInicialRango = new GregorianCalendar(anioInicial, mesInicial, diaInicial);
+                Calendar fechaFinalRango = new GregorianCalendar(anioFinal, mesFinal, diaFinal);
+
+                if (fechaDeLaBD.compareTo(fechaInicialRango) <= 0 && fechaDeLaBD.compareTo(fechaFinalRango) >= 0) {
+                    fechasFlujos.add(fechaDeLaBD);
                     modeloTabla.addRow(fila);
                 }
 
-                
             }
-            tablaDialogo.setModel(modeloTabla);
-            tablaDialogo.getColumn("Factura").setMinWidth(80);
-            tablaDialogo.getColumn("Tipo Flujo").setMinWidth(80);
-            tablaDialogo.getColumn("Fecha").setMinWidth(80);
-            tablaDialogo.getColumn("Valor").setMinWidth(80);
-            tablaDialogo.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-            JScrollPane scroll = new JScrollPane(tablaDialogo);
-            scroll.setPreferredSize(new Dimension(320, 200));
 
-            c.gridx = 0;
-            c.gridy = 1;
-            c.gridwidth = 1;
-            c.insets = new Insets(0, 0, 0, 0);
-            panelDialogo.add(scroll, c);
+            if (modeloTabla.getRowCount() > 0) {
+                tablaDialogo.setModel(modeloTabla);
+                tablaDialogo.getColumn("Factura").setMinWidth(80);
+                tablaDialogo.getColumn("Tipo Flujo").setMinWidth(80);
+                tablaDialogo.getColumn("Fecha").setMinWidth(80);
+                tablaDialogo.getColumn("Valor").setMinWidth(80);
+                tablaDialogo.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+                JScrollPane scroll = new JScrollPane(tablaDialogo);
+                scroll.setPreferredSize(new Dimension(320, 200));
 
-            dialogoEditar.add(panelDialogo);
-            dialogoEditar.setVisible(true);
+                c.gridx = 0;
+                c.gridy = 1;
+                c.gridwidth = 1;
+                c.insets = new Insets(0, 0, 0, 0);
+                panelDialogo.add(scroll, c);
+
+                c.gridx = 2;
+                c.gridy = 1;
+                c.gridwidth = 1;
+                c.insets = new Insets(0, 0, 0, 0);
+                TimeSeries localTimeSeries = new TimeSeries("Abonos cliente con el tiempo");
+
+                for (int i = 0; i < modeloTabla.getRowCount(); i++) {
+                    Calendar fechaFlujo = fechasFlujos.get(i);
+                    double valor = Double.parseDouble(String.valueOf(modeloTabla.getValueAt(i, 3)));
+
+                    int anoDato = fechaFlujo.get(Calendar.YEAR);
+                    int mesDato = fechaFlujo.get(Calendar.MONTH) + 1;
+                    int diaDato = fechaFlujo.get(Calendar.DAY_OF_MONTH);
+                    localTimeSeries.add(new Day(diaDato,mesDato,anoDato), valor);
+
+                }
+                TimeSeriesCollection datos = new TimeSeriesCollection(localTimeSeries);
+
+                JFreeChart chart = ChartFactory.createXYLineChart(
+                        "X-Y comparación", // Title
+                        "Eje x", // x-axis Label
+                        "Eje y", // y-axis Label
+                        datos, // Dataset
+                        PlotOrientation.VERTICAL, // Plot Orientation
+                        true, // Show Legend
+                        true, // Use tooltips
+                        false // Configure chart to generate URLs?
+                );
+
+                ChartPanel CP = new ChartPanel(chart);
+                CP.setSize(400, 400);
+                CP.setVisible(true);
+
+                dialogoEditar.add(CP, BorderLayout.CENTER);
+  
+
+                dialogoEditar.add(panelDialogo);
+                dialogoEditar.setVisible(true);
+
+            } else {
+                JOptionPane.showMessageDialog(this, "El cliente no registra movimientos en el rango de fechas seleccionado");
+            }
+
         }
 
     }//GEN-LAST:event_botonGenerarReporteClienteActionPerformed
