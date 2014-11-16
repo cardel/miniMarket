@@ -31,10 +31,13 @@ public class ControladorLogin {
         String tabla = "Usuarios";
 
         ArrayList<String[]> resultSet = sqlManager.select_query(seleccion, tipo_seleccion, tabla, restriccion);
-        String [] result = resultSet.get(0);
 
-        if (result[0]!=null) {
-            return true;
+        if (resultSet.size() > 0) {
+            String[] result = resultSet.get(0);
+
+            if (result[0] != null) {
+                return true;
+            }
         }
         return false;
 
