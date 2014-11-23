@@ -2457,7 +2457,8 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                 jTextField_Factura_Cliente_Id.setText("");
                 jTextField_Factura_Producto_Nombre.setText("");
                 jTextField_Factura_Producto_Descripcion.setText("");
-                valorMontoFactura.setText("0.0");
+                valorMontoFactura.setText("");
+                valorActualFactura.setText("0.0");
                 valorActualPrestamo.setText("0.0");
                 botonGuardarFactura.setEnabled(false);
                 botonEstablecerMontoFactura.setEnabled(false);
