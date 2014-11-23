@@ -26,6 +26,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -38,6 +39,7 @@ import java.util.Map;
 import java.util.Vector;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -46,6 +48,7 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
@@ -2303,6 +2306,24 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             double monto = 0d;
             try {
                 double pago = Double.parseDouble((String) JOptionPane.showInputDialog("Ingrese por favor el monto pagado por el cliente"));
+                while (pago <= 0.0) {
+                    pago = Double.parseDouble((String) JOptionPane.showInputDialog("El pago debe ser positivo \nIngrese por favor el monto pagado por el cliente"));
+
+                }
+
+                double prestamo = Double.parseDouble(valorActualPrestamo.getText());
+                double montoFactura = Double.parseDouble(valorActualFactura.getText());
+                while (monto - pago <= 0.0) {
+                    pago = Double.parseDouble((String) JOptionPane.showInputDialog("El pago no debe ser superior al monto de la factura \nIngrese por favor el monto pagado por el cliente"));
+
+                }
+                if (prestamo - montoFactura <= 0.0) {
+                    int opcion = JOptionPane.showConfirmDialog(this, "Con este préstamo el cliente excede su limite de prestamos. \n ¿Desea continuar?", "Mensaje del sistema", JOptionPane.YES_NO_OPTION);
+                    if (opcion != JOptionPane.YES_OPTION) {
+                        return;
+                    }
+
+                }
 
                 for (int i = 0; i < TablaDeFacturaProducto.getRowCount(); i++) {
                     /*
@@ -2389,10 +2410,41 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                 switch (opcion) {
                     case 1:
                         imprimirFactura(Integer.parseInt(facturaActual.get(0)[0]));
+                        break;
+                    case 2:
+                        PDDocument documento = crearFactura(Integer.parseInt(facturaActual.get(0)[0]));
+                        JFileChooser fc = new JFileChooser();
+                        FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivo PDF", "pdf", "text");
+                        fc.setFileFilter(filter);
+                        fc.showSaveDialog(this);
+                        if (fc.getSelectedFile() != null) {
+                            File selectedFile = fc.getSelectedFile();
+                            try {
+
+                                documento.save(selectedFile + ".pdf");
+                                JOptionPane.showMessageDialog(this, "El archivo ha sido guardado en disco");
+
+                            } catch (Exception ex) {
+                                JOptionPane.showMessageDialog(this,
+                                        "EL Archivo no se puede leer!");
+                            }
+                        }
+                        break;
+
                     default:
                         break;
                 }
 
+                nombreClienteCrearFactura.setText("");
+                IdentificacionClienteBuscarFactura.setText("");
+                valorActualPrestamo.setText("");
+                jTextField_Factura_Cliente_Id.setText("");
+                jTextField_Factura_Producto_Nombre.setText("");
+                jTextField_Factura_Producto_Descripcion.setText("");
+                valorMontoFactura.setText("");
+                botonGuardarFactura.setEnabled(false);
+                botonEstablecerMontoFactura.setEnabled(false);
+                botonAgregarProducto.setEnabled(false);
             } catch (Exception e) {
             }
 
@@ -2403,7 +2455,8 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     /*
      * Operaciones con pdf
      */
-    void imprimirFactura(int facturaID) {
+    void imprimirFactura(int facturaID
+    ) {
         try {
             PDDocument document = crearFactura(facturaID);
             document.print();
@@ -2436,25 +2489,37 @@ public class InterfazPrincipal extends javax.swing.JFrame {
 
             contenido.beginText();
             contenido.setFont(font, 16);
-            contenido.moveTextPositionByAmount(100, 700);
+            contenido.moveTextPositionByAmount(30, 730);
             contenido.drawString("Factura #" + facturaActual.getFactura_id());
             contenido.endText();
 
             contenido.beginText();
+            contenido.setFont(font, 12);
+            contenido.moveTextPositionByAmount(30, 700);
+            contenido.drawString("Minimarte Barrio Nuevo.       NIT: 1234567898-9");
+            contenido.endText();
+
+            contenido.beginText();
+            contenido.setFont(font, 16);
+            contenido.moveTextPositionByAmount(30, 680);
+            contenido.drawString("Calle Falsa 1 2 3");
+            contenido.endText();
+
+            contenido.beginText();
             contenido.setFont(fontNormal, 11);
-            contenido.moveTextPositionByAmount(20, 650);
+            contenido.moveTextPositionByAmount(30, 650);
             contenido.drawString("Fecha:" + facturaActual.getFecha());
             contenido.endText();
 
             contenido.beginText();
             contenido.setFont(fontNormal, 11);
-            contenido.moveTextPositionByAmount(20, 635);
+            contenido.moveTextPositionByAmount(30, 635);
             contenido.drawString("Nombre: " + cliente.getNombre());
             contenido.endText();
 
             contenido.beginText();
             contenido.setFont(fontNormal, 11);
-            contenido.moveTextPositionByAmount(20, 620);
+            contenido.moveTextPositionByAmount(30, 620);
             contenido.drawString("Dirección: " + cliente.getDireccion());
             contenido.endText();
 
@@ -2509,7 +2574,25 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             int altura = 550;
             ControladorProducto controladorProducto = new ControladorProducto();
 
-            for (int i = 0; i < listaProductosFactura.size(); i++) {
+            /*
+             * Caben en la pagina
+             * Primera pagina 14
+             * Seguientes paginas 21
+             * Footer cuenta como 3 mas
+             */
+            int indiceProductos = 0;
+            double totalEspaciosNecesarios = listaProductosFactura.size() + 3 + 1;
+            double totalPaginas = 1;
+
+            if (Math.floor(totalEspaciosNecesarios / 17) == 0) {
+                totalPaginas = 1;
+            } else {
+                totalEspaciosNecesarios -= 17;
+                totalPaginas += (int) Math.ceil(totalEspaciosNecesarios / 21);
+            }
+
+            //Primer pagina
+            for (int i = 0; i < listaProductosFactura.size() && altura >= 30; i++) {
                 //Imprime por paginas
                 Factura_Productos facturaProducto = listaProductosFactura.get(i);
                 Productos productoActual = controladorProducto.getProducto(" where producto_id=" + facturaProducto.getProducto_id()).get(0);
@@ -2526,10 +2609,18 @@ public class InterfazPrincipal extends javax.swing.JFrame {
 
                 contenido.beginText();
                 contenido.setFont(fontNormal, 12);
-                contenido.moveTextPositionByAmount(60, altura - 15);
-                contenido.drawString(nombreProducto);
+                contenido.moveTextPositionByAmount(40, altura - 15);
+                contenido.drawString(String.valueOf(i + 1));
                 contenido.endText();
                 contenido.drawLine(30, altura, 30, altura - 30);
+                contenido.drawLine(200, altura, 200, altura - 30);
+
+                contenido.beginText();
+                contenido.setFont(fontNormal, 12);
+                contenido.moveTextPositionByAmount(70, altura - 15);
+                contenido.drawString(nombreProducto);
+                contenido.endText();
+                contenido.drawLine(70, altura, 70, altura - 30);
                 contenido.drawLine(200, altura, 200, altura - 30);
 
                 contenido.beginText();
@@ -2538,14 +2629,14 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                 contenido.drawString(valorUnitario);
                 contenido.endText();
                 contenido.drawLine(300, altura, 300, altura - 30);
-                
+
                 contenido.beginText();
                 contenido.setFont(fontNormal, 12);
                 contenido.moveTextPositionByAmount(320, altura - 15);
                 contenido.drawString(unidades);
                 contenido.endText();
                 contenido.drawLine(380, altura, 380, altura - 30);
-                
+
                 contenido.beginText();
                 contenido.setFont(fontNormal, 12);
                 contenido.moveTextPositionByAmount(400, altura - 15);
@@ -2555,13 +2646,199 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                 //Linea inferior
                 contenido.drawLine(30, altura - 30, 500, altura - 30);
                 altura -= 30;
-                
-                
-                
+                indiceProductos = i + 1;
+            }
+            //Escribir footer si paginas es igual a 1
+            if (totalPaginas == 1) {
+                Double valor = facturaActual.getValor();
+                Double iva = Math.ceil(valor * 0.16);
+                Double subtotal = Math.floor(valor * 0.84);
+                contenido.beginText();
+                contenido.setFont(fontNormal, 12);
+                contenido.moveTextPositionByAmount(320, altura - 15);
+                contenido.drawString("Subtotal");
+                contenido.endText();
+                contenido.drawLine(380, altura, 380, altura - 30);
+
+                contenido.beginText();
+                contenido.setFont(fontNormal, 12);
+                contenido.moveTextPositionByAmount(400, altura - 15);
+                contenido.drawString(String.valueOf(subtotal));
+                contenido.endText();
+                contenido.drawLine(500, altura, 500, altura - 30);
+
+                //Linea inferior
+                contenido.drawLine(320, altura, 320, altura - 30);
+                contenido.drawLine(320, altura - 30, 500, altura - 30);
+
+                altura -= 30;
+                contenido.beginText();
+                contenido.setFont(fontNormal, 12);
+                contenido.moveTextPositionByAmount(320, altura - 15);
+                contenido.drawString("IVA (16%)");
+                contenido.endText();
+                contenido.drawLine(380, altura, 380, altura - 30);
+
+                contenido.beginText();
+                contenido.setFont(fontNormal, 12);
+                contenido.moveTextPositionByAmount(400, altura - 15);
+                contenido.drawString(String.valueOf(iva));
+                contenido.endText();
+                contenido.drawLine(500, altura, 500, altura - 30);
+                //Linea inferior
+                contenido.drawLine(320, altura, 320, altura - 30);
+                contenido.drawLine(320, altura - 30, 500, altura - 30);
+                altura -= 30;
+
+                contenido.beginText();
+                contenido.setFont(fontNormal, 12);
+                contenido.moveTextPositionByAmount(320, altura - 15);
+                contenido.drawString("Total");
+                contenido.endText();
+                contenido.drawLine(380, altura, 380, altura - 30);
+
+                contenido.beginText();
+                contenido.setFont(font, 12);
+                contenido.moveTextPositionByAmount(400, altura - 15);
+                contenido.drawString(String.valueOf(valor));
+                contenido.endText();
+                contenido.drawLine(500, altura, 500, altura - 30);
+                //Linea inferior
+                contenido.drawLine(320, altura - 30, 500, altura - 30);
+                contenido.drawLine(320, altura, 320, altura - 30);
 
             }
-            //contenido.dra
-            //Cerrar flujo
+
+            //Siguientes paginas
+            for (int j = 1; j < totalPaginas; j++) {
+                altura = 650;
+                PDPage paginaSiguiente = new PDPage();
+                document.addPage(paginaSiguiente);
+
+                PDPageContentStream contenidoSiguiente = new PDPageContentStream(document, paginaSiguiente);
+                //Escribir paginas
+                for (int i = indiceProductos; i < listaProductosFactura.size() && altura >= 30; i++) {
+                    //Imprime por paginas
+                    Factura_Productos facturaProducto = listaProductosFactura.get(i);
+                    Productos productoActual = controladorProducto.getProducto(" where producto_id=" + facturaProducto.getProducto_id()).get(0);
+
+                    String nombreProducto = productoActual.getNombre();
+
+                    if (nombreProducto.length() > 25) {
+                        nombreProducto = nombreProducto.substring(0, 26);
+                    }
+
+                    String valorUnitario = String.valueOf(productoActual.getPrecio());
+                    String unidades = String.valueOf(facturaProducto.getUnidades());
+                    String valorTotal = String.valueOf(productoActual.getPrecio() * facturaProducto.getUnidades());
+
+                    contenidoSiguiente.beginText();
+                    contenidoSiguiente.setFont(fontNormal, 12);
+                    contenidoSiguiente.moveTextPositionByAmount(40, altura - 15);
+                    contenidoSiguiente.drawString(String.valueOf(i + 1));
+                    contenidoSiguiente.endText();
+                    contenidoSiguiente.drawLine(30, altura, 30, altura - 30);
+                    contenidoSiguiente.drawLine(200, altura, 200, altura - 30);
+
+                    contenidoSiguiente.beginText();
+                    contenidoSiguiente.setFont(fontNormal, 12);
+                    contenidoSiguiente.moveTextPositionByAmount(70, altura - 15);
+                    contenidoSiguiente.drawString(nombreProducto);
+                    contenidoSiguiente.endText();
+                    contenidoSiguiente.drawLine(70, altura, 70, altura - 30);
+                    contenidoSiguiente.drawLine(200, altura, 200, altura - 30);
+
+                    contenidoSiguiente.beginText();
+                    contenidoSiguiente.setFont(fontNormal, 12);
+                    contenidoSiguiente.moveTextPositionByAmount(320, altura - 15);
+                    contenidoSiguiente.drawString(unidades);
+                    contenidoSiguiente.endText();
+                    contenidoSiguiente.drawLine(380, altura, 380, altura - 30);
+
+                    contenidoSiguiente.beginText();
+                    contenidoSiguiente.setFont(font, 12);
+                    contenidoSiguiente.moveTextPositionByAmount(400, altura - 15);
+                    contenidoSiguiente.drawString(valorTotal);
+                    contenidoSiguiente.endText();
+                    contenidoSiguiente.drawLine(500, altura, 500, altura - 30);
+                    //Linea inferior
+                    contenidoSiguiente.drawLine(30, altura - 30, 500, altura - 30);
+                    indiceProductos = i + 1;
+                    altura -= 30;
+                }
+                //Si no cabe mas cierre el flujo.
+                if (indiceProductos < listaProductosFactura.size()) {
+                    contenidoSiguiente.close();
+                }
+                //En ultima pagina escribir footer
+                if (j == totalPaginas - 1 && altura >= 40) {
+                    Double valor = facturaActual.getValor();
+                    Double iva = Math.ceil(valor * 0.16);
+                    Double subtotal = Math.floor(valor * 0.84);
+
+                    contenidoSiguiente.beginText();
+                    contenidoSiguiente.setFont(fontNormal, 12);
+                    contenidoSiguiente.moveTextPositionByAmount(320, altura - 15);
+                    contenidoSiguiente.drawString("Subtotal");
+                    contenidoSiguiente.endText();
+                    contenidoSiguiente.drawLine(380, altura, 380, altura - 30);
+
+                    contenidoSiguiente.beginText();
+                    contenidoSiguiente.setFont(fontNormal, 12);
+                    contenidoSiguiente.moveTextPositionByAmount(400, altura - 15);
+                    contenidoSiguiente.drawString(String.valueOf(subtotal));
+                    contenidoSiguiente.endText();
+                    contenidoSiguiente.drawLine(500, altura, 500, altura - 30);
+
+                    //Linea inferior
+                    contenidoSiguiente.drawLine(320, altura, 320, altura - 30);
+                    contenidoSiguiente.drawLine(320, altura - 30, 500, altura - 30);
+
+                    altura -= 30;
+                    contenidoSiguiente.beginText();
+                    contenidoSiguiente.setFont(fontNormal, 12);
+                    contenidoSiguiente.moveTextPositionByAmount(320, altura - 15);
+                    contenidoSiguiente.drawString("IVA (16%)");
+                    contenidoSiguiente.endText();
+                    contenidoSiguiente.drawLine(380, altura, 380, altura - 30);
+
+                    contenidoSiguiente.beginText();
+                    contenidoSiguiente.setFont(fontNormal, 12);
+                    contenidoSiguiente.moveTextPositionByAmount(400, altura - 15);
+                    contenidoSiguiente.drawString(String.valueOf(iva));
+                    contenidoSiguiente.endText();
+                    contenidoSiguiente.drawLine(500, altura, 500, altura - 30);
+                    //Linea inferior
+                    contenidoSiguiente.drawLine(320, altura, 320, altura - 30);
+                    contenidoSiguiente.drawLine(320, altura - 30, 500, altura - 30);
+                    altura -= 30;
+
+                    contenidoSiguiente.beginText();
+                    contenidoSiguiente.setFont(fontNormal, 12);
+                    contenidoSiguiente.moveTextPositionByAmount(320, altura - 15);
+                    contenidoSiguiente.drawString("Total");
+                    contenidoSiguiente.endText();
+                    contenidoSiguiente.drawLine(380, altura, 380, altura - 30);
+
+                    contenidoSiguiente.beginText();
+                    contenidoSiguiente.setFont(fontNormal, 12);
+                    contenidoSiguiente.moveTextPositionByAmount(400, altura - 15);
+                    contenidoSiguiente.drawString(String.valueOf(valor));
+                    contenidoSiguiente.endText();
+                    contenidoSiguiente.drawLine(500, altura, 500, altura - 30);
+                    //Linea inferior
+                    contenidoSiguiente.drawLine(320, altura - 30, 500, altura - 30);
+                    contenidoSiguiente.drawLine(320, altura, 320, altura - 30);
+
+                    contenidoSiguiente.close();
+                } else {
+                    contenidoSiguiente.close();
+                }
+
+                System.out.println("Pagina numero: " + j + " De  " + totalPaginas);
+
+            }
+
             contenido.close();
             return document;
 
@@ -3183,8 +3460,27 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         switch (opcion) {
             case 0:
                 imprimirFactura(identificacion);
-            case 1:
                 break;
+            case 1:
+                PDDocument documento = crearFactura(identificacion);
+                JFileChooser fc = new JFileChooser();
+                FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivo PDF", "pdf", "text");
+                fc.setFileFilter(filter);
+                fc.showSaveDialog(this);
+                if (fc.getSelectedFile() != null) {
+                    File selectedFile = fc.getSelectedFile();
+                    try {
+
+                        documento.save(selectedFile + ".pdf");
+                        JOptionPane.showMessageDialog(this, "El archivo ha sido guardado en disco");
+
+                    } catch (Exception ex) {
+                        JOptionPane.showMessageDialog(this,
+                                "EL Archivo no se puede leer!");
+                    }
+                    break;
+                }
+
             case 2:
                 int confirmacion = JOptionPane.showConfirmDialog(this, "Quieres eliminar la factura " + identificacion + " factura?");
 
@@ -3896,6 +4192,11 @@ public class InterfazPrincipal extends javax.swing.JFrame {
 
             try {
                 double monto = Double.parseDouble(valorMontoFactura.getText());
+
+                if (monto <= 0.0) {
+                    throw new Exception();
+
+                }
                 valorActualFactura.setText(valorMontoFactura.getText());
 
                 DefaultTableModel modeloTabla = (DefaultTableModel) TablaDeFacturaProducto.getModel();
@@ -3910,7 +4211,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                 botonAgregarProducto.setEnabled(false);
 
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, "El valor debe ser numérico", "Advertencia", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(this, "El valor debe ser numérico positivo", "Advertencia", JOptionPane.WARNING_MESSAGE);
             }
 
         }
