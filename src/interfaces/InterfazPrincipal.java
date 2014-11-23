@@ -204,6 +204,8 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         jLabel40 = new javax.swing.JLabel();
         jButton6 = new javax.swing.JButton();
         fechaReporteDiario = new datechooser.beans.DateChooserCombo();
+        jLabel53 = new javax.swing.JLabel();
+        fechaReporteDiarioHasta = new datechooser.beans.DateChooserCombo();
         jScrollPane6 = new javax.swing.JScrollPane();
         TablaDeReporteDiario = new javax.swing.JTable();
         jPanel20 = new javax.swing.JPanel();
@@ -1175,7 +1177,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
 
         jPanel16.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jLabel40.setText("Fecha");
+        jLabel40.setText("Fecha Desde");
 
         jButton6.setText("Generar");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
@@ -1183,6 +1185,8 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                 jButton6ActionPerformed(evt);
             }
         });
+
+        jLabel53.setText("Fecha Hasta");
 
         javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);
         jPanel16.setLayout(jPanel16Layout);
@@ -1192,22 +1196,34 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                 .addGap(19, 19, 19)
                 .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton6)
-                    .addGroup(jPanel16Layout.createSequentialGroup()
-                        .addComponent(jLabel40)
-                        .addGap(59, 59, 59)
-                        .addComponent(fechaReporteDiario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(jPanel16Layout.createSequentialGroup()
+                            .addComponent(jLabel53)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(fechaReporteDiarioHasta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel16Layout.createSequentialGroup()
+                            .addComponent(jLabel40)
+                            .addGap(59, 59, 59)
+                            .addComponent(fechaReporteDiario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(87, Short.MAX_VALUE))
         );
         jPanel16Layout.setVerticalGroup(
             jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel16Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel40)
-                    .addComponent(fechaReporteDiario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel16Layout.createSequentialGroup()
+                        .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel40)
+                            .addComponent(fechaReporteDiario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                        .addComponent(jLabel53))
+                    .addGroup(jPanel16Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(fechaReporteDiarioHasta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
                 .addComponent(jButton6)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         TablaDeReporteDiario.setModel(new javax.swing.table.DefaultTableModel(
@@ -1292,11 +1308,11 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel14Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(17, 17, 17)
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 307, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -2952,12 +2968,21 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             int mesInicial = fechaReporteDiario.getSelectedDate().get(Calendar.MONTH) + 1;
             int diaInicial = fechaReporteDiario.getSelectedDate().get(Calendar.DAY_OF_MONTH);
             Calendar fechaInicialRango = new GregorianCalendar(anioInicial, mesInicial, diaInicial);
+            
+            //fechaReporteDiarioHasta
+            
+            int anioFinal = fechaReporteDiarioHasta.getSelectedDate().get(Calendar.YEAR);
+            int mesFinal = fechaReporteDiarioHasta.getSelectedDate().get(Calendar.MONTH) + 1;
+            int diaFinal = fechaReporteDiarioHasta.getSelectedDate().get(Calendar.DAY_OF_MONTH);
+            Calendar fechaFinalRango = new GregorianCalendar(anioFinal, mesFinal, diaFinal);
+            
+            
             System.out.println("antes");
             System.out.println("Va a comparar" + fechaDeLaBD.toString());
 
             System.out.println(" con " + fechaInicialRango.toString());
 
-            if (fechaDeLaBD.compareTo(fechaInicialRango) == 0) {
+            if (fechaDeLaBD.compareTo(fechaInicialRango) >= 0 && fechaDeLaBD.compareTo(fechaFinalRango) <= 0) {
                 System.out.println("Entra");
                 Object[] row = new Object[5];
                 row[0] = (contador);
@@ -3628,6 +3653,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private datechooser.beans.DateChooserCombo clienteReporteClienteFechaFinal;
     private datechooser.beans.DateChooserCombo clienteReporteClienteFechaInicial;
     private datechooser.beans.DateChooserCombo fechaReporteDiario;
+    private datechooser.beans.DateChooserCombo fechaReporteDiarioHasta;
     private javax.swing.JTextField identificacionClienteBusqueda;
     private javax.swing.JTextField identificacionClienteCliente;
     private javax.swing.JTextField identificacionNuevoCliente;
@@ -3687,6 +3713,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel50;
     private javax.swing.JLabel jLabel51;
     private javax.swing.JLabel jLabel52;
+    private javax.swing.JLabel jLabel53;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
