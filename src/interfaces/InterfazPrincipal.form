@@ -152,12 +152,12 @@
                                           <Component id="jPanel19" alignment="0" max="32767" attributes="0"/>
                                           <Group type="102" attributes="0">
                                               <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="valorActualPrestamo" min="-2" pref="160" max="-2" attributes="0"/>
-                                                  <Component id="jLabel53" min="-2" max="-2" attributes="0"/>
                                                   <Component id="valorActualFactura" min="-2" pref="160" max="-2" attributes="0"/>
                                                   <Component id="jLabel30" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="jLabel53" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="valorActualPrestamo" alignment="0" min="-2" pref="160" max="-2" attributes="0"/>
                                               </Group>
-                                              <EmptySpace min="0" pref="86" max="32767" attributes="0"/>
+                                              <EmptySpace min="0" pref="166" max="32767" attributes="0"/>
                                           </Group>
                                       </Group>
                                       <EmptySpace max="-2" attributes="0"/>
@@ -181,9 +181,9 @@
                                       <Component id="botonGuardarFactura" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="jLabel53" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                       <Component id="valorActualPrestamo" min="-2" pref="37" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
                                       <Component id="jLabel30" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
@@ -1861,7 +1861,7 @@
                                   <Component id="jButton6" min="-2" max="-2" attributes="0"/>
                                   <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
                                       <Group type="102" attributes="0">
-                                          <Component id="jLabel53" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jLabel54" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="32767" attributes="0"/>
                                           <Component id="fechaReporteDiarioHasta" min="-2" max="-2" attributes="0"/>
                                       </Group>
@@ -1887,7 +1887,7 @@
                                           <Component id="fechaReporteDiario" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace pref="15" max="32767" attributes="0"/>
-                                      <Component id="jLabel53" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabel54" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="102" attributes="0">
                                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
@@ -1917,7 +1917,7 @@
                     </Component>
                     <Component class="datechooser.beans.DateChooserCombo" name="fechaReporteDiario">
                     </Component>
-                    <Component class="javax.swing.JLabel" name="jLabel53">
+                    <Component class="javax.swing.JLabel" name="jLabel54">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Fecha Hasta"/>
                       </Properties>

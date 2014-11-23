@@ -213,7 +213,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         jLabel40 = new javax.swing.JLabel();
         jButton6 = new javax.swing.JButton();
         fechaReporteDiario = new datechooser.beans.DateChooserCombo();
-        jLabel53 = new javax.swing.JLabel();
+        jLabel54 = new javax.swing.JLabel();
         fechaReporteDiarioHasta = new datechooser.beans.DateChooserCombo();
         jScrollPane6 = new javax.swing.JScrollPane();
         TablaDeReporteDiario = new javax.swing.JTable();
@@ -458,11 +458,11 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                             .addComponent(jPanel19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(jPanel9Layout.createSequentialGroup()
                                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(valorActualPrestamo, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel53)
                                     .addComponent(valorActualFactura, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel30))
-                                .addGap(0, 86, Short.MAX_VALUE)))
+                                    .addComponent(jLabel30)
+                                    .addComponent(jLabel53)
+                                    .addComponent(valorActualPrestamo, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 166, Short.MAX_VALUE)))
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -479,9 +479,9 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                         .addComponent(botonGuardarFactura)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel53)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(valorActualPrestamo, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(1, 1, 1)
                         .addComponent(jLabel30)))
                 .addGap(5, 5, 5)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1249,7 +1249,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             }
         });
 
-        jLabel53.setText("Fecha Hasta");
+        jLabel54.setText("Fecha Hasta");
 
         javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);
         jPanel16.setLayout(jPanel16Layout);
@@ -1261,7 +1261,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                     .addComponent(jButton6)
                     .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addGroup(jPanel16Layout.createSequentialGroup()
-                            .addComponent(jLabel53)
+                            .addComponent(jLabel54)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(fechaReporteDiarioHasta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(jPanel16Layout.createSequentialGroup()
@@ -1280,7 +1280,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                             .addComponent(jLabel40)
                             .addComponent(fechaReporteDiario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
-                        .addComponent(jLabel53))
+                        .addComponent(jLabel54))
                     .addGroup(jPanel16Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(fechaReporteDiarioHasta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -2329,7 +2329,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
 
                 double prestamo = Double.parseDouble(valorActualPrestamo.getText());
                 double montoFactura = Double.parseDouble(valorActualFactura.getText());
-                while (monto - pago <= 0.0) {
+                while (montoFactura - pago <= 0.0) {
                     pago = Double.parseDouble((String) JOptionPane.showInputDialog("El pago no debe ser superior al monto de la factura \nIngrese por favor el monto pagado por el cliente"));
 
                 }
@@ -2457,7 +2457,8 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                 jTextField_Factura_Cliente_Id.setText("");
                 jTextField_Factura_Producto_Nombre.setText("");
                 jTextField_Factura_Producto_Descripcion.setText("");
-                valorMontoFactura.setText("");
+                valorMontoFactura.setText("0.0");
+                valorActualPrestamo.setText("0.0");
                 botonGuardarFactura.setEnabled(false);
                 botonEstablecerMontoFactura.setEnabled(false);
                 botonAgregarProducto.setEnabled(false);
@@ -2512,11 +2513,11 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             contenido.beginText();
             contenido.setFont(font, 12);
             contenido.moveTextPositionByAmount(30, 700);
-            contenido.drawString("Minimarte Barrio Nuevo.       NIT: 1234567898-9");
+            contenido.drawString("Minimarket Barrio Nuevo.       NIT: 1234567898-9");
             contenido.endText();
 
             contenido.beginText();
-            contenido.setFont(font, 16);
+            contenido.setFont(font, 12);
             contenido.moveTextPositionByAmount(30, 680);
             contenido.drawString("Calle Falsa 1 2 3");
             contenido.endText();
@@ -4376,6 +4377,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel51;
     private javax.swing.JLabel jLabel52;
     private javax.swing.JLabel jLabel53;
+    private javax.swing.JLabel jLabel54;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
