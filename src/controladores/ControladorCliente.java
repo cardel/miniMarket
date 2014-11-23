@@ -58,13 +58,13 @@ public class ControladorCliente {
 
         String restriction = "";
         if (nombreVacio && identificacionVacia) {
-            restriction = " where nombre like \"%" + nombreIn + "%\" and cliente_id="+identificacion;
+            restriction = " where nombre like \"%" + nombreIn + "%\" and cliente_id=" + identificacion;
         }
         if (!nombreVacio && identificacionVacia) {
-            restriction = " where cliente_id like "+identificacion;
+            restriction = " where cliente_id like " + identificacion;
         }
         if (nombreVacio && !identificacionVacia) {
-            restriction = " where nombre like \"%" + nombreIn+ "%\"";
+            restriction = " where nombre like \"%" + nombreIn + "%\"";
         }
 
         ArrayList<String[]> resultadoSet = sQLManager.select_query(selection, selection_type, table, restriction);
@@ -101,7 +101,8 @@ public class ControladorCliente {
         return true;
 
     }
-      public boolean editarCliente(Cliente cliente) {
+
+    public boolean editarCliente(Cliente cliente) {
         int cliente_id = cliente.getCliente_id();
         String tipo_cliente_id = cliente.getTipo_cliente_id();
         String nombre = cliente.getNombre();
@@ -119,7 +120,8 @@ public class ControladorCliente {
         sQLManager.update_query(selection, value, type_value, table, condition);
         return true;
 
-    }  
+    }
+
     public boolean agregarCliente(int cliente_id, String tipo_cliente_id, String nombre, String numero_telefono, String numero_celular, String direccion, double monto_prestamo) {
         //cliente_id Es la identificación.
         String selection[] = {"cliente_id", "tipo_id_cliente", "nombre", "numero_de_telefono", "numero_celular", "direccion", "monto_prestamo"};
@@ -133,5 +135,29 @@ public class ControladorCliente {
         sQLManager.insert_query(selection, value, type_value, table, table_id, type_table_id);
         return true;
 
+    }
+
+    public Cliente obtenerClientePorID(int cliente_id) {
+        String selection[] = {"cliente_id", "tipo_id_cliente", "nombre", "numero_de_telefono", "numero_celular", "direccion", "monto_prestamo"};
+        String selection_type[] = {"int", "varchar", "varchar", "varchar", "varchar", "varchar", "int"};
+        String table = "Cliente";
+        String restriction = " where cliente_id="+cliente_id;
+        ArrayList<String[]> resultadoSet = sQLManager.select_query(selection, selection_type, table, restriction);
+
+        //Pendiente
+        Cliente cliente = null;
+        for (int i = 0; i < resultadoSet.size(); i++) {
+            String[] resultado = resultadoSet.get(i);
+            String tipo_cliente_id = resultado[1];
+            String nombre = resultado[2];
+            String numero_telefono = resultado[3];
+            String numero_celular = resultado[4];
+            String direccion = resultado[5];
+            double monto_prestamo = Double.parseDouble(resultado[6]);
+            cliente = new Cliente(cliente_id, direccion, nombre, numero_telefono, numero_celular, direccion, monto_prestamo);
+
+        }
+
+        return cliente;
     }
 }
