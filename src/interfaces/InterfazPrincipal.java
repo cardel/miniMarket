@@ -13,9 +13,9 @@ import controladores.ControladorProducto;
 import controladores.ControladorUsuarios;
 import entidades.Cliente;
 import entidades.Factura;
+import entidades.Factura_Productos;
 import entidades.Productos;
 import entidades.Usuarios;
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -26,6 +26,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -38,6 +39,7 @@ import java.util.Map;
 import java.util.Vector;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -46,14 +48,18 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.edit.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.font.PDFont;
+import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.DateAxis;
 import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.chart.title.LegendTitle;
@@ -62,8 +68,6 @@ import org.jfree.data.Range;
 import org.jfree.data.time.Day;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
-import org.jfree.data.xy.XYSeries;
-import org.jfree.data.xy.XYSeriesCollection;
 import org.jfree.ui.RectangleInsets;
 import seguridad.GeneradorMD5;
 
@@ -96,11 +100,11 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         jPanel9 = new javax.swing.JPanel();
         jPanel10 = new javax.swing.JPanel();
         jLabel24 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
+        botonBuscarClienteCrearFactura = new javax.swing.JButton();
         jLabel25 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        nombreClienteCrearFactura = new javax.swing.JTextField();
         jLabel26 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        IdentificacionClienteBuscarFactura = new javax.swing.JTextField();
         jTextField_Factura_Cliente_Id = new javax.swing.JTextField();
         mensajesBusquedaClientesFactura = new javax.swing.JLabel();
         jPanel11 = new javax.swing.JPanel();
@@ -109,12 +113,16 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         jLabel28 = new javax.swing.JLabel();
         jTextField_Factura_Producto_Nombre = new javax.swing.JTextField();
         jTextField_Factura_Producto_Descripcion = new javax.swing.JTextField();
-        jButton4 = new javax.swing.JButton();
+        botonAgregarProducto = new javax.swing.JButton();
         botonGuardarFactura = new javax.swing.JButton();
-        valorActualFactura = new javax.swing.JLabel();
+        valorActualPrestamo = new javax.swing.JLabel();
         jLabel30 = new javax.swing.JLabel();
+        jLabel53 = new javax.swing.JLabel();
+        valorActualFactura = new javax.swing.JLabel();
+        jPanel19 = new javax.swing.JPanel();
         jLabel31 = new javax.swing.JLabel();
-        jLabel32 = new javax.swing.JLabel();
+        valorMontoFactura = new javax.swing.JTextField();
+        botonEstablecerMontoFactura = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         TablaDeFacturaProducto = new javax.swing.JTable();
         jPanel8 = new javax.swing.JPanel();
@@ -125,6 +133,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         jTextField_BuscarFactura_ID = new javax.swing.JTextField();
         jTextField_BuscarFactura_Cliente = new javax.swing.JTextField();
         jButton5 = new javax.swing.JButton();
+        jLabel32 = new javax.swing.JLabel();
         jScrollPane5 = new javax.swing.JScrollPane();
         TablaDeBuscarFactura = new javax.swing.JTable();
         jTabbedPane3 = new javax.swing.JTabbedPane();
@@ -250,6 +259,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         jLabel1.setText("Bienvenido al aplicativo del Mini-market");
 
         jTabbedPane1.setTabPlacement(javax.swing.JTabbedPane.LEFT);
+        jTabbedPane1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         jPanel9.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -257,10 +267,10 @@ public class InterfazPrincipal extends javax.swing.JFrame {
 
         jLabel24.setText("Cliente");
 
-        jButton3.setText("Buscar");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        botonBuscarClienteCrearFactura.setText("Buscar");
+        botonBuscarClienteCrearFactura.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                botonBuscarClienteCrearFacturaActionPerformed(evt);
             }
         });
 
@@ -282,8 +292,8 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                     .addComponent(jLabel25))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)
-                    .addComponent(jTextField1))
+                    .addComponent(IdentificacionClienteBuscarFactura, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)
+                    .addComponent(nombreClienteCrearFactura))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel10Layout.createSequentialGroup()
@@ -291,8 +301,8 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                         .addComponent(mensajesBusquedaClientesFactura, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel10Layout.createSequentialGroup()
                         .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField_Factura_Cliente_Id, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton3))
+                            .addComponent(botonBuscarClienteCrearFactura)
+                            .addComponent(jTextField_Factura_Cliente_Id, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -304,13 +314,13 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel25)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nombreClienteCrearFactura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField_Factura_Cliente_Id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel26)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3))
+                    .addComponent(IdentificacionClienteBuscarFactura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(botonBuscarClienteCrearFactura))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -326,10 +336,11 @@ public class InterfazPrincipal extends javax.swing.JFrame {
 
         jLabel28.setText("Descripcion");
 
-        jButton4.setText("Buscar");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        botonAgregarProducto.setText("Buscar");
+        botonAgregarProducto.setEnabled(false);
+        botonAgregarProducto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                botonAgregarProductoActionPerformed(evt);
             }
         });
 
@@ -340,7 +351,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             .addGroup(jPanel11Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel23)
                     .addGroup(jPanel11Layout.createSequentialGroup()
                         .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel27)
@@ -349,9 +359,10 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                         .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jTextField_Factura_Producto_Nombre)
                             .addComponent(jTextField_Factura_Producto_Descripcion, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE))
-                        .addGap(42, 42, 42)
-                        .addComponent(jButton4)))
-                .addContainerGap(100, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addComponent(botonAgregarProducto))
+                    .addComponent(jLabel23))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel11Layout.setVerticalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -361,38 +372,75 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel27)
-                    .addComponent(jTextField_Factura_Producto_Nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel11Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel28)
-                            .addComponent(jTextField_Factura_Producto_Descripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton4)
-                        .addGap(31, 31, 31))))
+                    .addComponent(jTextField_Factura_Producto_Nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(botonAgregarProducto))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel28)
+                    .addComponent(jTextField_Factura_Producto_Descripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         botonGuardarFactura.setText("Guardar factura");
+        botonGuardarFactura.setEnabled(false);
         botonGuardarFactura.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonGuardarFacturaActionPerformed(evt);
             }
         });
 
+        valorActualPrestamo.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        valorActualPrestamo.setText("0.0");
+
+        jLabel30.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel30.setText("Valor factura:");
+
+        jLabel53.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel53.setText("Monto préstamo disponible");
+
         valorActualFactura.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         valorActualFactura.setText("0.0");
 
-        jLabel30.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel30.setText("Valor actual:");
+        jPanel19.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jLabel31.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel31.setText("Si desea editar o borrar un producto");
+        jLabel31.setText("Establecer monto factura");
 
-        jLabel32.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel32.setText("clic en el");
+        botonEstablecerMontoFactura.setText("Establecer");
+        botonEstablecerMontoFactura.setEnabled(false);
+        botonEstablecerMontoFactura.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonEstablecerMontoFacturaActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel19Layout = new javax.swing.GroupLayout(jPanel19);
+        jPanel19.setLayout(jPanel19Layout);
+        jPanel19Layout.setHorizontalGroup(
+            jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel19Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel19Layout.createSequentialGroup()
+                        .addComponent(jLabel31)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel19Layout.createSequentialGroup()
+                        .addComponent(valorMontoFactura)
+                        .addGap(18, 18, 18)
+                        .addComponent(botonEstablecerMontoFactura)))
+                .addContainerGap())
+        );
+        jPanel19Layout.setVerticalGroup(
+            jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel19Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel31)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(valorMontoFactura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(botonEstablecerMontoFactura))
+                .addContainerGap(23, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
@@ -400,46 +448,48 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addContainerGap()
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, 445, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel9Layout.createSequentialGroup()
-                        .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(51, 51, 51)
+                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jPanel9Layout.createSequentialGroup()
+                                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(valorActualPrestamo, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel53)
+                                    .addComponent(valorActualFactura, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel30))
+                                .addGap(0, 86, Short.MAX_VALUE)))
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(botonGuardarFactura)
-                        .addGap(81, 81, 81))
-                    .addGroup(jPanel9Layout.createSequentialGroup()
-                        .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(62, 62, 62)
-                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel30)
-                            .addGroup(jPanel9Layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(valorActualFactura, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel31)
-                            .addComponent(jLabel32))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(82, 82, 82))))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel9Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel9Layout.createSequentialGroup()
-                        .addGap(62, 62, 62)
-                        .addComponent(botonGuardarFactura)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(botonGuardarFactura)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel53)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(valorActualPrestamo, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel30)))
+                .addGap(5, 5, 5)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel9Layout.createSequentialGroup()
-                        .addComponent(jLabel30)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(valorActualFactura, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel31)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel32)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
@@ -474,7 +524,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 768, Short.MAX_VALUE))
+                    .addComponent(jScrollPane3))
                 .addContainerGap())
         );
         jPanel7Layout.setVerticalGroup(
@@ -483,7 +533,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -491,11 +541,12 @@ public class InterfazPrincipal extends javax.swing.JFrame {
 
         jPanel13.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
+        jLabel36.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel36.setText("Buscar Factura");
 
-        jLabel38.setText("ID Factura");
+        jLabel38.setText("Número factura");
 
-        jLabel39.setText("ID Cliente");
+        jLabel39.setText("Identificación cliente");
 
         jButton5.setText("Buscar");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
@@ -504,6 +555,8 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             }
         });
 
+        jLabel32.setText("Si desea borrar, guardar o imprimir una factura, haga clic sobre ella");
+
         javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
         jPanel13.setLayout(jPanel13Layout);
         jPanel13Layout.setHorizontalGroup(
@@ -511,27 +564,31 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             .addGroup(jPanel13Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel36)
+                    .addComponent(jLabel38)
+                    .addComponent(jLabel39))
+                .addGap(36, 36, 36)
+                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jTextField_BuscarFactura_Cliente, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
+                    .addComponent(jTextField_BuscarFactura_ID))
+                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel13Layout.createSequentialGroup()
-                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel38)
-                            .addComponent(jLabel39))
-                        .addGap(36, 36, 36)
-                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField_BuscarFactura_Cliente, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
-                            .addComponent(jTextField_BuscarFactura_ID))
                         .addGap(73, 73, 73)
-                        .addComponent(jButton5)))
+                        .addComponent(jButton5))
+                    .addGroup(jPanel13Layout.createSequentialGroup()
+                        .addGap(34, 34, 34)
+                        .addComponent(jLabel32)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel13Layout.createSequentialGroup()
+                .addContainerGap(337, Short.MAX_VALUE)
+                .addComponent(jLabel36)
+                .addGap(326, 326, 326))
         );
         jPanel13Layout.setVerticalGroup(
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel13Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel36)
                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel13Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(39, 39, 39)
                         .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel38)
                             .addComponent(jTextField_BuscarFactura_ID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -540,9 +597,13 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                             .addComponent(jLabel39)
                             .addComponent(jTextField_BuscarFactura_Cliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel13Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel36)
                         .addGap(20, 20, 20)
-                        .addComponent(jButton5)))
-                .addContainerGap(25, Short.MAX_VALUE))
+                        .addComponent(jButton5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel32)))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         TablaDeBuscarFactura.setModel(new javax.swing.table.DefaultTableModel(
@@ -561,12 +622,14 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        TablaDeBuscarFactura.setColumnSelectionAllowed(true);
         TablaDeBuscarFactura.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 TablaDeBuscarFacturaMouseClicked(evt);
             }
         });
         jScrollPane5.setViewportView(TablaDeBuscarFactura);
+        TablaDeBuscarFactura.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -576,7 +639,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 766, Short.MAX_VALUE))
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 768, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel8Layout.setVerticalGroup(
@@ -585,7 +648,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 274, Short.MAX_VALUE)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 271, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1478,6 +1541,9 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        DefaultTableModel modelo = (DefaultTableModel)tablaUsuariosDelSistema.getModel();
+        modelo.setRowCount(0);
+        tablaUsuariosDelSistema.setModel(modelo);
         tablaUsuariosDelSistema.setColumnSelectionAllowed(true);
         tablaUsuariosDelSistema.setPreferredSize(new java.awt.Dimension(50, 64));
         tablaUsuariosDelSistema.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1487,6 +1553,11 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         });
         jScrollPane7.setViewportView(tablaUsuariosDelSistema);
         tablaUsuariosDelSistema.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        if (tablaUsuariosDelSistema.getColumnModel().getColumnCount() > 0) {
+            tablaUsuariosDelSistema.getColumnModel().getColumn(0).setResizable(false);
+            tablaUsuariosDelSistema.getColumnModel().getColumn(1).setResizable(false);
+            tablaUsuariosDelSistema.getColumnModel().getColumn(2).setResizable(false);
+        }
 
         jLabel51.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel51.setText("Usuarios registrados en el sistema");
@@ -1884,88 +1955,120 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         dialogoEditar.setVisible(true);
     }//GEN-LAST:event_TablaDeProductosMouseClicked
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void botonBuscarClienteCrearFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonBuscarClienteCrearFacturaActionPerformed
 
-        String nombre = jTextField1.getText();
-        String identificacion = jTextField2.getText();
+        String nombre = nombreClienteCrearFactura.getText();
+        String identificacion = IdentificacionClienteBuscarFactura.getText();
 
         ControladorCliente controladorCliente = new ControladorCliente();
-        int id = 0;
-        if (!identificacion.equals("")) {
-            mensajesBusquedaClientesFactura.setText("La identificacion debe ser un numero");
-            return;
-        }
 
-        ArrayList<Cliente> listaClientes = controladorCliente.obtenerClientes(nombre, id);
-
-        if (listaClientes.isEmpty()) {
-            mensajesBusquedaClientesFactura.setText("La busqueda no arrojo resultados");
-            return;
-        }
-
-        final JDialog dialogoEditar = new JDialog(this);
-        dialogoEditar.setTitle("Buscar clientes");
-        dialogoEditar.setSize(600, 310);
-        dialogoEditar.setResizable(false);
-
-        JPanel panelDialogo = new JPanel();
-
-        panelDialogo.setLayout(new GridBagLayout());
-
-        GridBagConstraints c = new GridBagConstraints();
-        c.fill = GridBagConstraints.HORIZONTAL;
-
-        JLabel editarTextoPrincipalDialogo = new JLabel("Buscar Cliente");
-        c.gridx = 0;
-        c.gridy = 0;
-        c.gridwidth = 4;
-        c.insets = new Insets(15, 200, 40, 0);
-        c.ipadx = 100;
-        Font textoGrande = new Font("Arial", 1, 18);
-        editarTextoPrincipalDialogo.setFont(textoGrande);
-        panelDialogo.add(editarTextoPrincipalDialogo, c);
-
-        Vector col = new Vector();
-        col.add("1");
-        col.add("2");
-        col.add("3");
-        col.add("4");
-        col.add("5");
-        Vector row = new Vector();
-
-        for (int i = 0; i < listaClientes.size(); i++) {
-            Cliente cliente = listaClientes.get(i);
-            Vector temp = new Vector();
-            temp.add((i + 1) + "");
-            temp.add(cliente.getNombre());
-            temp.add(cliente.getTipo_cliente_id() + "");
-            temp.add(cliente.getCliente_id() + "");
-            temp.add(cliente.getMonto_prestamo() + "");
-            System.out.println("info" + cliente.getNombre() + "," + cliente.getMonto_prestamo());
-            row.add(temp);
-        }
-
-        final JTable table = new JTable(row, col);
-
-        table.addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                jTextField_Factura_Cliente_Id.setText(table.getValueAt(table.getSelectedRow(), 3).toString());
-                //System.out.println(table.getValueAt(table.getSelectedRow(), 3).toString());
-                dialogoEditar.dispose();
+        try {
+            int id = 0;
+            if (!identificacion.equals("")) {
+                id = Integer.parseInt(identificacion);
             }
-        });
 
-        c.insets = new Insets(0, 5, 10, 0);
-        c.gridx = 0;
-        c.gridy = 1;
-        c.gridwidth = 1;
-        c.ipadx = 200;
+            ArrayList<Cliente> listaClientes = controladorCliente.obtenerClientes(nombre, id);
 
-        panelDialogo.add(table, c);
-        dialogoEditar.add(panelDialogo);
-        dialogoEditar.setVisible(true);
+            if (listaClientes.isEmpty()) {
+                mensajesBusquedaClientesFactura.setText("La busqueda no arrojo resultados");
+                return;
+            }
 
-    }//GEN-LAST:event_jButton3ActionPerformed
+            final JDialog dialogoEditar = new JDialog(this);
+            dialogoEditar.setTitle("Buscar clientes");
+            dialogoEditar.setSize(600, 310);
+            dialogoEditar.setResizable(false);
+
+            JPanel panelDialogo = new JPanel();
+
+            panelDialogo.setLayout(new GridBagLayout());
+
+            GridBagConstraints c = new GridBagConstraints();
+            c.fill = GridBagConstraints.HORIZONTAL;
+
+            JLabel editarTextoPrincipalDialogo = new JLabel("Buscar Cliente");
+            c.gridx = 0;
+            c.gridy = 0;
+            c.gridwidth = 4;
+            c.insets = new Insets(15, 200, 40, 0);
+            c.ipadx = 100;
+            Font textoGrande = new Font("Arial", 1, 18);
+            editarTextoPrincipalDialogo.setFont(textoGrande);
+            panelDialogo.add(editarTextoPrincipalDialogo, c);
+
+            Vector col = new Vector();
+            col.add("1");
+            col.add("2");
+            col.add("3");
+            col.add("4");
+            col.add("5");
+            Vector row = new Vector();
+
+            for (int i = 0; i < listaClientes.size(); i++) {
+                Cliente cliente = listaClientes.get(i);
+                Vector temp = new Vector();
+                temp.add((i + 1) + "");
+                temp.add(cliente.getNombre());
+                temp.add(cliente.getTipo_cliente_id() + "");
+                temp.add(cliente.getCliente_id() + "");
+                temp.add(cliente.getMonto_prestamo() + "");
+                System.out.println("info" + cliente.getNombre() + "," + cliente.getMonto_prestamo());
+                row.add(temp);
+            }
+
+            final JTable table = new JTable(row, col);
+
+            table.addMouseListener(new MouseAdapter() {
+                public void mouseClicked(MouseEvent e) {
+                    jTextField_Factura_Cliente_Id.setText(table.getValueAt(table.getSelectedRow(), 3).toString());
+                    String identificacion = table.getValueAt(table.getSelectedRow(), 3).toString();
+                    ControladorFlujoFactura controladorFlujoFactura = new ControladorFlujoFactura();
+
+                    //SELECT * FROM Flujo_Factura where factura_id in (select factura_id from Factura where cliente_id = 1130614506);
+                    ArrayList<String[]> flujosCliente = controladorFlujoFactura.getTodosFlujo_Factura(" where factura_id in (select factura_id from Factura where cliente_id = " + String.valueOf(identificacion) + " and estado=\"fiado\") order by factura_id");
+                    double pago = 0.0;
+
+                    for (int i = 0; i < flujosCliente.size(); i++) {
+                        String[] datos = flujosCliente.get(i);
+                        Object[] rowData = {datos[1], datos[2], datos[3], datos[4]};
+
+                        if (datos[2].equals("deuda")) {
+                            pago += Double.parseDouble(datos[4]);
+                        } else {
+                            pago -= Double.parseDouble(datos[4]);
+                        }
+
+                    }
+                    nombreClienteCrearFactura.setText(table.getValueAt(table.getSelectedRow(), 1).toString());
+                    IdentificacionClienteBuscarFactura.setText(table.getValueAt(table.getSelectedRow(), 3).toString());
+                    double montoPrestamo = Double.parseDouble(table.getValueAt(table.getSelectedRow(), 4).toString());
+                    Double totalDisponible = montoPrestamo - pago;
+                    valorActualPrestamo.setText(String.valueOf(totalDisponible));
+                    //System.out.println(table.getValueAt(table.getSelectedRow(), 3).toString());
+                    botonAgregarProducto.setEnabled(true);
+                    botonGuardarFactura.setEnabled(true);
+                    botonEstablecerMontoFactura.setEnabled(true);
+                    dialogoEditar.dispose();
+                }
+            });
+
+            c.insets = new Insets(0, 5, 10, 0);
+            c.gridx = 0;
+            c.gridy = 1;
+            c.gridwidth = 1;
+            c.ipadx = 200;
+
+            panelDialogo.add(table, c);
+            dialogoEditar.add(panelDialogo);
+            dialogoEditar.setVisible(true);
+        } catch (Exception e) {
+            mensajesBusquedaClientesFactura.setText("La identificacion debe ser un numero");
+
+        }
+
+
+    }//GEN-LAST:event_botonBuscarClienteCrearFacturaActionPerformed
 
     private void TablaDeFacturaProductoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaDeFacturaProductoMouseClicked
         final int fila = TablaDeFacturaProducto.getSelectedRow();
@@ -2079,7 +2182,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         dialogoEdicionProducto.setVisible(true);
     }//GEN-LAST:event_TablaDeFacturaProductoMouseClicked
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void botonAgregarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAgregarProductoActionPerformed
         String nombre = jTextField_Factura_Producto_Nombre.getText();
         String descripcion = jTextField_Factura_Producto_Descripcion.getText();
         ControladorProducto controladorPro = new ControladorProducto();
@@ -2195,7 +2298,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         dialogoEditar.setVisible(true);
 
 
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_botonAgregarProductoActionPerformed
 
     private void sliderNumeroUnidadesStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sliderNumeroUnidadesStateChanged
         // TODO add your handling code here:
@@ -2208,80 +2311,559 @@ public class InterfazPrincipal extends javax.swing.JFrame {
 
         String id_cliente = jTextField_Factura_Cliente_Id.getText();
 
-        if (id_cliente.equals("") || TablaDeFacturaProducto.getRowCount() == 0) {
-            JOptionPane.showMessageDialog(this, "Por favor ingrese un cliente o al menos un producto");
+        if (id_cliente.equals("") || valorActualFactura.equals("0.0")) {
+            JOptionPane.showMessageDialog(this, "Por favor indique el monto de la factura o ingrese los productos a ella");
 
         } else {
-            System.err.println("Numero de filas" + TablaDeFacturaProducto.getRowCount());
+            //System.err.println("Numero de filas" + TablaDeFacturaProducto.getRowCount());
             ArrayList<String> lineaCodigoProductos = new ArrayList<String>();
             ArrayList<String> lineaUnidadesProductos = new ArrayList<String>();
             ArrayList<String> lineaMontoProductos = new ArrayList<String>();
             double monto = 0d;
-            double pago = Double.parseDouble((String) JOptionPane.showInputDialog("Ingrese por favor el monto pagado por el cliente"));
+            try {
+                double pago = Double.parseDouble((String) JOptionPane.showInputDialog("Ingrese por favor el monto pagado por el cliente"));
+                while (pago <= 0.0) {
+                    pago = Double.parseDouble((String) JOptionPane.showInputDialog("El pago debe ser positivo \nIngrese por favor el monto pagado por el cliente"));
 
-            for (int i = 0; i < TablaDeFacturaProducto.getRowCount(); i++) {
-                /*
-                 * Fila 0: ID producto
-                 * Fila 4: Cantidad
-                 */
-                String ProductoId = String.valueOf(TablaDeFacturaProducto.getValueAt(i, 0));
-                lineaCodigoProductos.add(ProductoId);
+                }
 
-                int numeroUnidades = Integer.parseInt(String.valueOf(TablaDeFacturaProducto.getValueAt(i, 4)));
+                double prestamo = Double.parseDouble(valorActualPrestamo.getText());
+                double montoFactura = Double.parseDouble(valorActualFactura.getText());
+                while (monto - pago <= 0.0) {
+                    pago = Double.parseDouble((String) JOptionPane.showInputDialog("El pago no debe ser superior al monto de la factura \nIngrese por favor el monto pagado por el cliente"));
 
-                String unidades = String.valueOf(numeroUnidades);
-                lineaUnidadesProductos.add(unidades);
+                }
+                if (prestamo - montoFactura <= 0.0) {
+                    int opcion = JOptionPane.showConfirmDialog(this, "Con este préstamo el cliente excede su limite de prestamos. \n ¿Desea continuar?", "Mensaje del sistema", JOptionPane.YES_NO_OPTION);
+                    if (opcion != JOptionPane.YES_OPTION) {
+                        return;
+                    }
 
-                double valorUnitario = Double.parseDouble(String.valueOf(TablaDeFacturaProducto.getValueAt(i, 5)));
-                double valorProductoTotal = numeroUnidades * valorUnitario;
-                lineaMontoProductos.add(String.valueOf(valorProductoTotal));
+                }
 
-                monto += valorProductoTotal;
+                for (int i = 0; i < TablaDeFacturaProducto.getRowCount(); i++) {
+                    /*
+                     * Fila 0: ID producto
+                     * Fila 4: Cantidad
+                     */
+                    String ProductoId = String.valueOf(TablaDeFacturaProducto.getValueAt(i, 0));
+                    lineaCodigoProductos.add(ProductoId);
+
+                    int numeroUnidades = Integer.parseInt(String.valueOf(TablaDeFacturaProducto.getValueAt(i, 4)));
+
+                    String unidades = String.valueOf(numeroUnidades);
+                    lineaUnidadesProductos.add(unidades);
+
+                    double valorUnitario = Double.parseDouble(String.valueOf(TablaDeFacturaProducto.getValueAt(i, 5)));
+                    double valorProductoTotal = numeroUnidades * valorUnitario;
+                    lineaMontoProductos.add(String.valueOf(valorProductoTotal));
+
+                    monto += valorProductoTotal;
+                }
+
+                if (TablaDeFacturaProducto.getRowCount() == 0) {
+                    monto = Double.parseDouble(valorActualFactura.getText());
+                }
+
+                String estado = "";
+                if (monto == pago) {
+                    estado = "pagado";
+                } else {
+                    estado = "fiado";
+                }
+
+                ControladorFactura controladorFactura = new ControladorFactura();
+                //String[] selection = {"cliente_id", "fecha", "estado", "identificacionCliente"};
+                Calendar calendario = Calendar.getInstance();
+                String dia = Integer.toString(calendario.get(Calendar.DATE));
+                String mes = Integer.toString(calendario.get(Calendar.MONTH) + 1);
+                String annio = Integer.toString(calendario.get(Calendar.YEAR));
+                Date date = new Date();
+                DateFormat hourFormat = new SimpleDateFormat("HH:mm:ss");
+                String hora = hourFormat.format(date);
+
+                String fecha = annio + "-" + mes + "-" + dia + " " + hora;
+                String[] selection = {id_cliente, fecha, estado, String.valueOf(monto)};
+                ArrayList<String[]> facturaActual = controladorFactura.insertFactura(selection);
+
+                //Ingresar productos
+                if (TablaDeFacturaProducto.getRowCount() > 0) {
+                    ControladorFactura_Productos controladorFactura_Productos = new ControladorFactura_Productos();
+                    for (int i = 0; i < lineaCodigoProductos.size(); i++) {
+                        //        String [] selection = {"factura_id","producto_id","unidades","precio"};
+                        String[] insertarLineaProducto = {facturaActual.get(0)[0], lineaCodigoProductos.get(i), lineaUnidadesProductos.get(i), lineaMontoProductos.get(i)};
+                        controladorFactura_Productos.insertFactura_Productos(insertarLineaProducto);
+                    }
+                }
+                //Ingresar flujo factura
+                ControladorFlujoFactura controladorFlujoFactura = new ControladorFlujoFactura();
+                // String [] selection = {"factura_id","tipo_flujo","fecha","identificacionCliente"};
+
+                String value[] = {facturaActual.get(0)[0], "abono", fecha, String.valueOf(pago)};
+                controladorFlujoFactura.insertFlujo_Factura(value);
+
+                String value2[] = {facturaActual.get(0)[0], "deuda", fecha, String.valueOf(monto)};
+                controladorFlujoFactura.insertFlujo_Factura(value2);
+
+                botonEstablecerMontoFactura.setEnabled(false);
+                botonAgregarProducto.setEnabled(false);
+                botonGuardarFactura.setEnabled(false);
+                jTextField_Factura_Cliente_Id.setText("");
+
+                DefaultTableModel modeloTabla = (DefaultTableModel) TablaDeFacturaProducto.getModel();
+
+                for (int i = 0; i < modeloTabla.getRowCount(); i++) {
+                    modeloTabla.removeRow(i);
+                }
+
+                modeloTabla.setRowCount(0);
+                TablaDeFacturaProducto.setModel(modeloTabla);
+
+                Object opciones[] = {"Cerrar", "Imprimir", "Guardar en disco"};
+
+                int opcion = JOptionPane.showOptionDialog(this, "Se ha guardado la factura con éxito\n¿Que desea hacer?", "Elija una opción", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, opciones, null);
+
+                switch (opcion) {
+                    case 1:
+                        imprimirFactura(Integer.parseInt(facturaActual.get(0)[0]));
+                        break;
+                    case 2:
+                        PDDocument documento = crearFactura(Integer.parseInt(facturaActual.get(0)[0]));
+                        JFileChooser fc = new JFileChooser();
+                        FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivo PDF", "pdf", "text");
+                        fc.setFileFilter(filter);
+                        fc.showSaveDialog(this);
+                        if (fc.getSelectedFile() != null) {
+                            File selectedFile = fc.getSelectedFile();
+                            try {
+
+                                documento.save(selectedFile + ".pdf");
+                                JOptionPane.showMessageDialog(this, "El archivo ha sido guardado en disco");
+
+                            } catch (Exception ex) {
+                                JOptionPane.showMessageDialog(this,
+                                        "EL Archivo no se puede leer!");
+                            }
+                        }
+                        break;
+
+                    default:
+                        break;
+                }
+
+                nombreClienteCrearFactura.setText("");
+                IdentificacionClienteBuscarFactura.setText("");
+                valorActualPrestamo.setText("");
+                jTextField_Factura_Cliente_Id.setText("");
+                jTextField_Factura_Producto_Nombre.setText("");
+                jTextField_Factura_Producto_Descripcion.setText("");
+                valorMontoFactura.setText("");
+                botonGuardarFactura.setEnabled(false);
+                botonEstablecerMontoFactura.setEnabled(false);
+                botonAgregarProducto.setEnabled(false);
+            } catch (Exception e) {
             }
-            String estado = "";
-            if (monto == pago) {
-                estado = "pagado";
-            } else {
-                estado = "fiado";
-            }
-
-            ControladorFactura controladorFactura = new ControladorFactura();
-            //String[] selection = {"cliente_id", "fecha", "estado", "identificacionCliente"};
-            Calendar calendario = Calendar.getInstance();
-            String dia = Integer.toString(calendario.get(Calendar.DATE));
-            String mes = Integer.toString(calendario.get(Calendar.MONTH));
-            String annio = Integer.toString(calendario.get(Calendar.YEAR));
-            Date date = new Date();
-            DateFormat hourFormat = new SimpleDateFormat("HH:mm:ss");
-            String hora = hourFormat.format(date);
-
-            String fecha = annio + "-" + mes + "-" + dia + " " + hora;
-            String[] selection = {id_cliente, fecha, estado, String.valueOf(monto)};
-            ArrayList<String[]> facturaActual = controladorFactura.insertFactura(selection);
-
-            //Ingresar productos
-            ControladorFactura_Productos controladorFactura_Productos = new ControladorFactura_Productos();
-            for (int i = 0; i < lineaCodigoProductos.size(); i++) {
-                //        String [] selection = {"factura_id","producto_id","unidades","precio"};
-                String[] insertarLineaProducto = {facturaActual.get(0)[0], lineaCodigoProductos.get(i), lineaUnidadesProductos.get(i), lineaMontoProductos.get(i)};
-                controladorFactura_Productos.insertFactura_Productos(insertarLineaProducto);
-            }
-
-            //Ingresar flujo factura
-            ControladorFlujoFactura controladorFlujoFactura = new ControladorFlujoFactura();
-            // String [] selection = {"factura_id","tipo_flujo","fecha","identificacionCliente"};
-
-            String value[] = {facturaActual.get(0)[0], "abono", fecha, String.valueOf(pago)};
-            controladorFlujoFactura.insertFlujo_Factura(value);
-
-            String value2[] = {facturaActual.get(0)[0], "deuda", fecha, String.valueOf(monto - pago)};
-            controladorFlujoFactura.insertFlujo_Factura(value2);
-
-            JOptionPane.showMessageDialog(this, "Factura guardada con éxito.");
 
         }
 
     }//GEN-LAST:event_botonGuardarFacturaActionPerformed
+
+    /*
+     * Operaciones con pdf
+     */
+    void imprimirFactura(int facturaID
+    ) {
+        try {
+            PDDocument document = crearFactura(facturaID);
+            document.print();
+            document.close();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al crear la factura", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+    }
+
+    PDDocument crearFactura(int facturaID) {
+
+        try {
+
+            ControladorFactura controladorFactura = new ControladorFactura();
+            Factura facturaActual = controladorFactura.getFactura(" where factura_id=" + facturaID).get(0);
+
+            ControladorCliente controladorCliente = new ControladorCliente();
+            Cliente cliente = controladorCliente.obtenerClientePorID(facturaActual.getCliente_id());
+            PDDocument document = new PDDocument();
+
+            PDPage pagina1 = new PDPage();
+            document.addPage(pagina1);
+
+            PDFont font = PDType1Font.HELVETICA_BOLD;
+            PDFont fontNormal = PDType1Font.HELVETICA;
+
+            PDPageContentStream contenido = new PDPageContentStream(document, pagina1);
+
+            contenido.beginText();
+            contenido.setFont(font, 16);
+            contenido.moveTextPositionByAmount(30, 730);
+            contenido.drawString("Factura #" + facturaActual.getFactura_id());
+            contenido.endText();
+
+            contenido.beginText();
+            contenido.setFont(font, 12);
+            contenido.moveTextPositionByAmount(30, 700);
+            contenido.drawString("Minimarte Barrio Nuevo.       NIT: 1234567898-9");
+            contenido.endText();
+
+            contenido.beginText();
+            contenido.setFont(font, 16);
+            contenido.moveTextPositionByAmount(30, 680);
+            contenido.drawString("Calle Falsa 1 2 3");
+            contenido.endText();
+
+            contenido.beginText();
+            contenido.setFont(fontNormal, 11);
+            contenido.moveTextPositionByAmount(30, 650);
+            contenido.drawString("Fecha:" + facturaActual.getFecha());
+            contenido.endText();
+
+            contenido.beginText();
+            contenido.setFont(fontNormal, 11);
+            contenido.moveTextPositionByAmount(30, 635);
+            contenido.drawString("Nombre: " + cliente.getNombre());
+            contenido.endText();
+
+            contenido.beginText();
+            contenido.setFont(fontNormal, 11);
+            contenido.moveTextPositionByAmount(30, 620);
+            contenido.drawString("Dirección: " + cliente.getDireccion());
+            contenido.endText();
+
+            contenido.beginText();
+            contenido.setFont(fontNormal, 12);
+            contenido.moveTextPositionByAmount(200, 590);
+            contenido.drawString("DETALLE DE LA FACTURA");
+            contenido.endText();
+
+            //Dibujar lineas
+            contenido.drawLine(30, 600, 500, 600);
+            contenido.drawLine(30, 585, 500, 585);
+
+            //Dibujar tabla de productos
+            ControladorFactura_Productos controladorFactura_Productos = new ControladorFactura_Productos();
+            ArrayList<Factura_Productos> listaProductosFactura = controladorFactura_Productos.getTodosFactura_Productos(" where factura_id=" + facturaID);
+
+            contenido.drawLine(30, 570, 500, 570);
+
+            contenido.beginText();
+            contenido.setFont(fontNormal, 12);
+            contenido.moveTextPositionByAmount(60, 560);
+            contenido.drawString("Producto");
+            contenido.endText();
+            contenido.drawLine(30, 550, 30, 570);
+            contenido.drawLine(200, 550, 200, 570);
+
+            contenido.beginText();
+            contenido.setFont(fontNormal, 12);
+            contenido.moveTextPositionByAmount(220, 560);
+            contenido.drawString("Valor unitario");
+            contenido.endText();
+            contenido.drawLine(300, 550, 300, 570);
+
+            contenido.beginText();
+            contenido.setFont(fontNormal, 12);
+            contenido.moveTextPositionByAmount(320, 560);
+            contenido.drawString("Unidades");
+            contenido.endText();
+            contenido.drawLine(380, 550, 380, 570);
+
+            contenido.beginText();
+            contenido.setFont(fontNormal, 12);
+            contenido.moveTextPositionByAmount(400, 560);
+            contenido.drawString("Valor total");
+            contenido.endText();
+            contenido.drawLine(500, 550, 500, 570);
+            contenido.drawLine(500, 550, 500, 570);
+
+            contenido.drawLine(30, 550, 500, 550);
+
+            int altura = 550;
+            ControladorProducto controladorProducto = new ControladorProducto();
+
+            /*
+             * Caben en la pagina
+             * Primera pagina 14
+             * Seguientes paginas 21
+             * Footer cuenta como 3 mas
+             */
+            int indiceProductos = 0;
+            double totalEspaciosNecesarios = listaProductosFactura.size() + 3 + 1;
+            double totalPaginas = 1;
+
+            if (Math.floor(totalEspaciosNecesarios / 17) == 0) {
+                totalPaginas = 1;
+            } else {
+                totalEspaciosNecesarios -= 17;
+                totalPaginas += (int) Math.ceil(totalEspaciosNecesarios / 21);
+            }
+
+            //Primer pagina
+            for (int i = 0; i < listaProductosFactura.size() && altura >= 30; i++) {
+                //Imprime por paginas
+                Factura_Productos facturaProducto = listaProductosFactura.get(i);
+                Productos productoActual = controladorProducto.getProducto(" where producto_id=" + facturaProducto.getProducto_id()).get(0);
+
+                String nombreProducto = productoActual.getNombre();
+
+                if (nombreProducto.length() > 25) {
+                    nombreProducto = nombreProducto.substring(0, 26);
+                }
+
+                String valorUnitario = String.valueOf(productoActual.getPrecio());
+                String unidades = String.valueOf(facturaProducto.getUnidades());
+                String valorTotal = String.valueOf(productoActual.getPrecio() * facturaProducto.getUnidades());
+
+                contenido.beginText();
+                contenido.setFont(fontNormal, 12);
+                contenido.moveTextPositionByAmount(40, altura - 15);
+                contenido.drawString(String.valueOf(i + 1));
+                contenido.endText();
+                contenido.drawLine(30, altura, 30, altura - 30);
+                contenido.drawLine(200, altura, 200, altura - 30);
+
+                contenido.beginText();
+                contenido.setFont(fontNormal, 12);
+                contenido.moveTextPositionByAmount(70, altura - 15);
+                contenido.drawString(nombreProducto);
+                contenido.endText();
+                contenido.drawLine(70, altura, 70, altura - 30);
+                contenido.drawLine(200, altura, 200, altura - 30);
+
+                contenido.beginText();
+                contenido.setFont(fontNormal, 12);
+                contenido.moveTextPositionByAmount(220, altura - 15);
+                contenido.drawString(valorUnitario);
+                contenido.endText();
+                contenido.drawLine(300, altura, 300, altura - 30);
+
+                contenido.beginText();
+                contenido.setFont(fontNormal, 12);
+                contenido.moveTextPositionByAmount(320, altura - 15);
+                contenido.drawString(unidades);
+                contenido.endText();
+                contenido.drawLine(380, altura, 380, altura - 30);
+
+                contenido.beginText();
+                contenido.setFont(fontNormal, 12);
+                contenido.moveTextPositionByAmount(400, altura - 15);
+                contenido.drawString(valorTotal);
+                contenido.endText();
+                contenido.drawLine(500, altura, 500, altura - 30);
+                //Linea inferior
+                contenido.drawLine(30, altura - 30, 500, altura - 30);
+                altura -= 30;
+                indiceProductos = i + 1;
+            }
+            //Escribir footer si paginas es igual a 1
+            if (totalPaginas == 1) {
+                Double valor = facturaActual.getValor();
+                Double iva = Math.ceil(valor * 0.16);
+                Double subtotal = Math.floor(valor * 0.84);
+                contenido.beginText();
+                contenido.setFont(fontNormal, 12);
+                contenido.moveTextPositionByAmount(320, altura - 15);
+                contenido.drawString("Subtotal");
+                contenido.endText();
+                contenido.drawLine(380, altura, 380, altura - 30);
+
+                contenido.beginText();
+                contenido.setFont(fontNormal, 12);
+                contenido.moveTextPositionByAmount(400, altura - 15);
+                contenido.drawString(String.valueOf(subtotal));
+                contenido.endText();
+                contenido.drawLine(500, altura, 500, altura - 30);
+
+                //Linea inferior
+                contenido.drawLine(320, altura, 320, altura - 30);
+                contenido.drawLine(320, altura - 30, 500, altura - 30);
+
+                altura -= 30;
+                contenido.beginText();
+                contenido.setFont(fontNormal, 12);
+                contenido.moveTextPositionByAmount(320, altura - 15);
+                contenido.drawString("IVA (16%)");
+                contenido.endText();
+                contenido.drawLine(380, altura, 380, altura - 30);
+
+                contenido.beginText();
+                contenido.setFont(fontNormal, 12);
+                contenido.moveTextPositionByAmount(400, altura - 15);
+                contenido.drawString(String.valueOf(iva));
+                contenido.endText();
+                contenido.drawLine(500, altura, 500, altura - 30);
+                //Linea inferior
+                contenido.drawLine(320, altura, 320, altura - 30);
+                contenido.drawLine(320, altura - 30, 500, altura - 30);
+                altura -= 30;
+
+                contenido.beginText();
+                contenido.setFont(fontNormal, 12);
+                contenido.moveTextPositionByAmount(320, altura - 15);
+                contenido.drawString("Total");
+                contenido.endText();
+                contenido.drawLine(380, altura, 380, altura - 30);
+
+                contenido.beginText();
+                contenido.setFont(font, 12);
+                contenido.moveTextPositionByAmount(400, altura - 15);
+                contenido.drawString(String.valueOf(valor));
+                contenido.endText();
+                contenido.drawLine(500, altura, 500, altura - 30);
+                //Linea inferior
+                contenido.drawLine(320, altura - 30, 500, altura - 30);
+                contenido.drawLine(320, altura, 320, altura - 30);
+
+            }
+
+            //Siguientes paginas
+            for (int j = 1; j < totalPaginas; j++) {
+                altura = 650;
+                PDPage paginaSiguiente = new PDPage();
+                document.addPage(paginaSiguiente);
+
+                PDPageContentStream contenidoSiguiente = new PDPageContentStream(document, paginaSiguiente);
+                //Escribir paginas
+                for (int i = indiceProductos; i < listaProductosFactura.size() && altura >= 30; i++) {
+                    //Imprime por paginas
+                    Factura_Productos facturaProducto = listaProductosFactura.get(i);
+                    Productos productoActual = controladorProducto.getProducto(" where producto_id=" + facturaProducto.getProducto_id()).get(0);
+
+                    String nombreProducto = productoActual.getNombre();
+
+                    if (nombreProducto.length() > 25) {
+                        nombreProducto = nombreProducto.substring(0, 26);
+                    }
+
+                    String valorUnitario = String.valueOf(productoActual.getPrecio());
+                    String unidades = String.valueOf(facturaProducto.getUnidades());
+                    String valorTotal = String.valueOf(productoActual.getPrecio() * facturaProducto.getUnidades());
+
+                    contenidoSiguiente.beginText();
+                    contenidoSiguiente.setFont(fontNormal, 12);
+                    contenidoSiguiente.moveTextPositionByAmount(40, altura - 15);
+                    contenidoSiguiente.drawString(String.valueOf(i + 1));
+                    contenidoSiguiente.endText();
+                    contenidoSiguiente.drawLine(30, altura, 30, altura - 30);
+                    contenidoSiguiente.drawLine(200, altura, 200, altura - 30);
+
+                    contenidoSiguiente.beginText();
+                    contenidoSiguiente.setFont(fontNormal, 12);
+                    contenidoSiguiente.moveTextPositionByAmount(70, altura - 15);
+                    contenidoSiguiente.drawString(nombreProducto);
+                    contenidoSiguiente.endText();
+                    contenidoSiguiente.drawLine(70, altura, 70, altura - 30);
+                    contenidoSiguiente.drawLine(200, altura, 200, altura - 30);
+
+                    contenidoSiguiente.beginText();
+                    contenidoSiguiente.setFont(fontNormal, 12);
+                    contenidoSiguiente.moveTextPositionByAmount(320, altura - 15);
+                    contenidoSiguiente.drawString(unidades);
+                    contenidoSiguiente.endText();
+                    contenidoSiguiente.drawLine(380, altura, 380, altura - 30);
+
+                    contenidoSiguiente.beginText();
+                    contenidoSiguiente.setFont(font, 12);
+                    contenidoSiguiente.moveTextPositionByAmount(400, altura - 15);
+                    contenidoSiguiente.drawString(valorTotal);
+                    contenidoSiguiente.endText();
+                    contenidoSiguiente.drawLine(500, altura, 500, altura - 30);
+                    //Linea inferior
+                    contenidoSiguiente.drawLine(30, altura - 30, 500, altura - 30);
+                    indiceProductos = i + 1;
+                    altura -= 30;
+                }
+                //Si no cabe mas cierre el flujo.
+                if (indiceProductos < listaProductosFactura.size()) {
+                    contenidoSiguiente.close();
+                }
+                //En ultima pagina escribir footer
+                if (j == totalPaginas - 1 && altura >= 40) {
+                    Double valor = facturaActual.getValor();
+                    Double iva = Math.ceil(valor * 0.16);
+                    Double subtotal = Math.floor(valor * 0.84);
+
+                    contenidoSiguiente.beginText();
+                    contenidoSiguiente.setFont(fontNormal, 12);
+                    contenidoSiguiente.moveTextPositionByAmount(320, altura - 15);
+                    contenidoSiguiente.drawString("Subtotal");
+                    contenidoSiguiente.endText();
+                    contenidoSiguiente.drawLine(380, altura, 380, altura - 30);
+
+                    contenidoSiguiente.beginText();
+                    contenidoSiguiente.setFont(fontNormal, 12);
+                    contenidoSiguiente.moveTextPositionByAmount(400, altura - 15);
+                    contenidoSiguiente.drawString(String.valueOf(subtotal));
+                    contenidoSiguiente.endText();
+                    contenidoSiguiente.drawLine(500, altura, 500, altura - 30);
+
+                    //Linea inferior
+                    contenidoSiguiente.drawLine(320, altura, 320, altura - 30);
+                    contenidoSiguiente.drawLine(320, altura - 30, 500, altura - 30);
+
+                    altura -= 30;
+                    contenidoSiguiente.beginText();
+                    contenidoSiguiente.setFont(fontNormal, 12);
+                    contenidoSiguiente.moveTextPositionByAmount(320, altura - 15);
+                    contenidoSiguiente.drawString("IVA (16%)");
+                    contenidoSiguiente.endText();
+                    contenidoSiguiente.drawLine(380, altura, 380, altura - 30);
+
+                    contenidoSiguiente.beginText();
+                    contenidoSiguiente.setFont(fontNormal, 12);
+                    contenidoSiguiente.moveTextPositionByAmount(400, altura - 15);
+                    contenidoSiguiente.drawString(String.valueOf(iva));
+                    contenidoSiguiente.endText();
+                    contenidoSiguiente.drawLine(500, altura, 500, altura - 30);
+                    //Linea inferior
+                    contenidoSiguiente.drawLine(320, altura, 320, altura - 30);
+                    contenidoSiguiente.drawLine(320, altura - 30, 500, altura - 30);
+                    altura -= 30;
+
+                    contenidoSiguiente.beginText();
+                    contenidoSiguiente.setFont(fontNormal, 12);
+                    contenidoSiguiente.moveTextPositionByAmount(320, altura - 15);
+                    contenidoSiguiente.drawString("Total");
+                    contenidoSiguiente.endText();
+                    contenidoSiguiente.drawLine(380, altura, 380, altura - 30);
+
+                    contenidoSiguiente.beginText();
+                    contenidoSiguiente.setFont(fontNormal, 12);
+                    contenidoSiguiente.moveTextPositionByAmount(400, altura - 15);
+                    contenidoSiguiente.drawString(String.valueOf(valor));
+                    contenidoSiguiente.endText();
+                    contenidoSiguiente.drawLine(500, altura, 500, altura - 30);
+                    //Linea inferior
+                    contenidoSiguiente.drawLine(320, altura - 30, 500, altura - 30);
+                    contenidoSiguiente.drawLine(320, altura, 320, altura - 30);
+
+                    contenidoSiguiente.close();
+                } else {
+                    contenidoSiguiente.close();
+                }
+
+                System.out.println("Pagina numero: " + j + " De  " + totalPaginas);
+
+            }
+
+            contenido.close();
+            return document;
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al crear la factura ", "Error", JOptionPane.ERROR_MESSAGE);
+            return null;
+        }
+
+    }
 
     private void BotonBuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonBuscarClienteActionPerformed
         // TODO add your handling code here:
@@ -2886,13 +3468,51 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private void TablaDeBuscarFacturaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaDeBuscarFacturaMouseClicked
         int fila = TablaDeBuscarFactura.getSelectedRow();
         int identificacion = (int) TablaDeBuscarFactura.getValueAt(fila, 1);
-        int confirmacion = JOptionPane.showConfirmDialog(this, "Quieres eliminar la factura " + identificacion + " factura?");
-        if (confirmacion == JOptionPane.YES_OPTION) {
-            ControladorFactura controladorFactura = new ControladorFactura();
-            controladorFactura.deleteFactura(" where factura_id = " + identificacion);
-            jButton5ActionPerformed(null);
+
+        Object opciones[] = {"Imprimir", "Guardar", " Eliminar", "Cancelar"};
+
+        int opcion = JOptionPane.showOptionDialog(this, "¿Que operación desea realizar con la factura  " + identificacion + "?", "Mensaje del sistema", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, opciones, null);
+
+        switch (opcion) {
+            case 0:
+                imprimirFactura(identificacion);
+                break;
+            case 1:
+                PDDocument documento = crearFactura(identificacion);
+                JFileChooser fc = new JFileChooser();
+                FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivo PDF", "pdf", "text");
+                fc.setFileFilter(filter);
+                fc.showSaveDialog(this);
+                if (fc.getSelectedFile() != null) {
+                    File selectedFile = fc.getSelectedFile();
+                    try {
+
+                        documento.save(selectedFile + ".pdf");
+                        JOptionPane.showMessageDialog(this, "El archivo ha sido guardado en disco");
+
+                    } catch (Exception ex) {
+                        JOptionPane.showMessageDialog(this,
+                                "EL Archivo no se puede leer!");
+                    }
+                    break;
+                }
+
+            case 2:
+                int confirmacion = JOptionPane.showConfirmDialog(this, "Quieres eliminar la factura " + identificacion + " factura?");
+
+                if (confirmacion == JOptionPane.YES_OPTION) {
+                    ControladorFactura controladorFactura = new ControladorFactura();
+                    controladorFactura.deleteFactura(" where factura_id = " + identificacion);
+                    jButton5ActionPerformed(null);
+                }
+                break;
+            case 3:
+                break;
+            default:
+                break;
+
         }
-        System.out.println(identificacion);
+
     }//GEN-LAST:event_TablaDeBuscarFacturaMouseClicked
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -3219,7 +3839,10 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                     Calendar fechaInicialRango = new GregorianCalendar(anioInicial, mesInicial, diaInicial);
                     Calendar fechaFinalRango = new GregorianCalendar(anioFinal, mesFinal, diaFinal);
 
-                    if (fechaDeLaBD.compareTo(fechaInicialRango) <= 0 && fechaDeLaBD.compareTo(fechaFinalRango) >= 0) {
+                    System.out.println(fechaDeLaBD.getTime());
+                    System.out.println(fechaInicialRango.getTime());
+                    System.out.println(fechaFinalRango.getTime());
+                    if (fechaDeLaBD.compareTo(fechaInicialRango) >= 0 && fechaDeLaBD.compareTo(fechaFinalRango) <= 0) {
                         fechasFlujos.add(fechaDeLaBD);
                         modeloTabla.addRow(fila);
                     }
@@ -3372,12 +3995,11 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         ArrayList<Usuarios> listaUsuarios = controladorUsuarios.obtenerTodosUsuarios();
 
         DefaultTableModel modeloTabla = (DefaultTableModel) tablaUsuariosDelSistema.getModel();
-        
-        for(int i=0; i<modeloTabla.getRowCount();i++)
-        {
-             modeloTabla.removeRow(i);
+
+        for (int i = 0; i < modeloTabla.getRowCount(); i++) {
+            modeloTabla.removeRow(i);
         }
-       modeloTabla.setRowCount(0);
+        modeloTabla.setRowCount(0);
 
         for (int i = 0; i < listaUsuarios.size(); i++) {
             Usuarios usuarioActual = listaUsuarios.get(i);
@@ -3411,12 +4033,17 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             ControladorUsuarios controladorUsuarios = new ControladorUsuarios();
 
             if (controladorUsuarios.obtenerUsuario(nombreUsuario) == null) {
-                
+
                 String estado = "e";
-                
-                if(!checkBoxEstadoNuevoUsuario.isSelected()) estado = "i";
-                
-                controladorUsuarios.CrearUsuario(nombreUsuario, passwordUsuario,estado);
+
+                if (!checkBoxEstadoNuevoUsuario.isSelected()) {
+                    estado = "i";
+                }
+
+                controladorUsuarios.CrearUsuario(nombreUsuario, passwordUsuario, estado);
+                nombreNuevoUsuario.setText("");
+                passwordNuevoUsuario.setText("");
+
                 JOptionPane.showMessageDialog(this, "Se ha creado el usuario existosamente");
             } else {
                 JOptionPane.showMessageDialog(this, "El login de usuario ya existe en el sistema");
@@ -3582,6 +4209,39 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_tablaUsuariosDelSistemaMouseClicked
+
+    private void botonEstablecerMontoFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEstablecerMontoFacturaActionPerformed
+        // TODO add your handling code here:
+        int seleccion = JOptionPane.showConfirmDialog(this, "Al establecer un monto de factura, no se considerarán los productos en ella \n ¿Desea continuar?", "Mensaje del sistema", JOptionPane.YES_NO_OPTION);
+        if (seleccion == 0) {
+
+            try {
+                double monto = Double.parseDouble(valorMontoFactura.getText());
+
+                if (monto <= 0.0) {
+                    throw new Exception();
+
+                }
+                valorActualFactura.setText(valorMontoFactura.getText());
+
+                DefaultTableModel modeloTabla = (DefaultTableModel) TablaDeFacturaProducto.getModel();
+
+                //Borrar filas
+                for (int i = 0; i < modeloTabla.getRowCount(); i++) {
+                    modeloTabla.removeRow(i);
+                }
+                modeloTabla.setRowCount(0);
+
+                TablaDeFacturaProducto.setModel(modeloTabla);
+                botonAgregarProducto.setEnabled(false);
+
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "El valor debe ser numérico positivo", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            }
+
+        }
+
+    }//GEN-LAST:event_botonEstablecerMontoFacturaActionPerformed
     /*
      * Cambiar nombre de usuario
      */
@@ -3634,6 +4294,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton BotonBuscarCliente;
     private javax.swing.JButton BotonBuscarClienteSaldo;
     private javax.swing.JTextField DireccionNuevoCliente;
+    private javax.swing.JTextField IdentificacionClienteBuscarFactura;
     private javax.swing.JLabel JTextFieldnombreDeUsuario;
     private javax.swing.JTextField ReporteDiarioAbono;
     private javax.swing.JTextField ReporteDiarioDeuda;
@@ -3645,6 +4306,9 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JTable TablaDeSaldoClientes;
     private javax.swing.JTextField abonoClente;
     private javax.swing.JButton botonAgregarNuevoCliente;
+    private javax.swing.JButton botonAgregarProducto;
+    private javax.swing.JButton botonBuscarClienteCrearFactura;
+    private javax.swing.JButton botonEstablecerMontoFactura;
     private javax.swing.JButton botonGenerarReporteCliente;
     private javax.swing.JButton botonGuardarFactura;
     private javax.swing.JButton botonRegistrarAbono;
@@ -3659,8 +4323,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JTextField identificacionNuevoCliente;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
@@ -3729,6 +4391,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel16;
     private javax.swing.JPanel jPanel17;
     private javax.swing.JPanel jPanel18;
+    private javax.swing.JPanel jPanel19;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel20;
     private javax.swing.JPanel jPanel21;
@@ -3752,8 +4415,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JTabbedPane jTabbedPane5;
     private javax.swing.JTabbedPane jTabbedPane6;
     private javax.swing.JTabbedPane jTabbedPane7;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextFieldIdentificacionClienteReporte;
     private javax.swing.JTextField jTextField_BuscarFactura_Cliente;
@@ -3774,6 +4435,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JTextField mostrarIdentificacionCliente;
     private javax.swing.JTextField nombreClienteBusqueda;
     private javax.swing.JTextField nombreClienteBusquedaSaldo;
+    private javax.swing.JTextField nombreClienteCrearFactura;
     private javax.swing.JTextField nombreClienteReporteCliente;
     private javax.swing.JTextField nombreNuevoCliente;
     private javax.swing.JTextField nombreNuevoUsuario;
@@ -3785,5 +4447,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel textoTotalDebe;
     private javax.swing.JComboBox tipoIdentificacionCliente;
     private javax.swing.JLabel valorActualFactura;
+    private javax.swing.JLabel valorActualPrestamo;
+    private javax.swing.JTextField valorMontoFactura;
     // End of variables declaration//GEN-END:variables
 }

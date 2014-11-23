@@ -10,7 +10,6 @@ package logica;
  * @author Joshua
  */
 import java.sql.*;
-import javax.swing.JOptionPane;
 
 public class Connect {
 
@@ -21,10 +20,11 @@ public class Connect {
             String sDriverName = "org.sqlite.JDBC";
             Class.forName(sDriverName);
             Connection conn = DriverManager.getConnection("jdbc:sqlite:database1.sqlite");
-            JOptionPane.showMessageDialog(null, "Connect");
+            //JOptionPane.showMessageDialog(null, "Connect");
             return conn;
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
+            //JOptionPane.showMessageDialog(null, e);
+            System.out.println(e.toString());
         }
         return null;
     }
