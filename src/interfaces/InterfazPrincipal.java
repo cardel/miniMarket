@@ -3975,7 +3975,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             ReporteFlujosCliente reporteFlujosCliente = new ReporteFlujosCliente();
-                            reporteFlujosCliente.guardarDocumentoDialogo(dialogoEditar, listaIDFlujos, Integer.parseInt(jTextFieldIdentificacionClienteReporte.getText()));
+                            reporteFlujosCliente.guardarDocumentoDialogo(dialogoEditar, listaIDFlujos, Integer.parseInt(jTextFieldIdentificacionClienteReporte.getText()),clienteReporteClienteFechaInicial.getSelectedDate(),clienteReporteClienteFechaFinal.getSelectedDate());
 
                         }
                     });
@@ -3989,7 +3989,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             ReporteFlujosCliente reporteFlujosCliente = new ReporteFlujosCliente();
-                            reporteFlujosCliente.imprimirFlujo(listaIDFlujos, Integer.parseInt(jTextFieldIdentificacionClienteReporte.getText()));
+                            reporteFlujosCliente.imprimirFlujo(listaIDFlujos, Integer.parseInt(jTextFieldIdentificacionClienteReporte.getText()),clienteReporteClienteFechaInicial.getSelectedDate(),clienteReporteClienteFechaFinal.getSelectedDate());
 
                         }
                     });

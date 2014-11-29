@@ -10,6 +10,7 @@ import controladores.ControladorFlujoFactura;
 import entidades.Cliente;
 import entidades.Flujo_Factura;
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -33,8 +34,8 @@ public class ReporteFlujosCliente {
 
     }
 
-    public void guardarDocumentoDialogo(JDialog dialogo, ArrayList<Integer> flujosID, int cliente_id) {
-        PDDocument documento = crearInformeMovimientosCliente(flujosID, cliente_id);
+    public void guardarDocumentoDialogo(JDialog dialogo, ArrayList<Integer> flujosID, int cliente_id, Calendar fechaInicial, Calendar fechaFinal) {
+        PDDocument documento = crearInformeMovimientosCliente(flujosID, cliente_id, fechaInicial, fechaFinal);
         JFileChooser fc = new JFileChooser();
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivo PDF", "pdf", "text");
 
@@ -55,9 +56,9 @@ public class ReporteFlujosCliente {
 
     }
 
-    public void imprimirFlujo(ArrayList<Integer> flujosID, int cliente_id) {
+    public void imprimirFlujo(ArrayList<Integer> flujosID, int cliente_id, Calendar fechaInicial, Calendar fechaFinal) {
         try {
-            PDDocument document = crearInformeMovimientosCliente(flujosID, cliente_id);
+            PDDocument document = crearInformeMovimientosCliente(flujosID, cliente_id, fechaInicial, fechaFinal);
             document.print();
             document.close();
 
@@ -67,7 +68,7 @@ public class ReporteFlujosCliente {
 
     }
 
-    private PDDocument crearInformeMovimientosCliente(ArrayList<Integer> flujosID, int cliente_id) {
+    private PDDocument crearInformeMovimientosCliente(ArrayList<Integer> flujosID, int cliente_id, Calendar fechaInicial, Calendar fechaFinal) {
 
         try {
 
@@ -130,8 +131,13 @@ public class ReporteFlujosCliente {
 
             contenido.beginText();
             contenido.setFont(fontNormal, 12);
-            contenido.moveTextPositionByAmount(200, 590);
-            contenido.drawString("DETALLE DE LOS MOVIMIENTOS");
+            contenido.moveTextPositionByAmount(110, 590);
+
+            SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+            String formattedInicial = formato.format(fechaInicial.getTime());
+            String formattedFinal = formato.format(fechaFinal.getTime());
+            
+            contenido.drawString("DETALLE DE LOS MOVIMIENTOS entre: " + formattedInicial + " y "+formattedFinal);
             contenido.endText();
 
             //Dibujar lineas
