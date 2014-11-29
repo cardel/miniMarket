@@ -32,7 +32,7 @@ public class ControladorFlujoFactura {
         ArrayList<String[]> resultSet = sqlManager.select_query(selection, selection_type, table, restriction);
         String [] result = resultSet.get(0);
         
-        Flujo_Factura flujo_factura = new Flujo_Factura(Integer.parseInt(result[0]),Integer.parseInt(result[1]),result[2].charAt(0),result[3],Double.parseDouble(result[4]));
+        Flujo_Factura flujo_factura = new Flujo_Factura(Integer.parseInt(result[0]),Integer.parseInt(result[1]),result[2],result[3],Double.parseDouble(result[4]));
         
         return flujo_factura;
     }

@@ -14,7 +14,7 @@ import javax.xml.crypto.Data;
 public class Flujo_Factura {
     private int flujo_Factura_id;
     private int factura_id;
-    char tipo_flujo;
+    String tipo_flujo;
     String fecha;
     double valor;
 
@@ -22,7 +22,7 @@ public class Flujo_Factura {
         this.flujo_Factura_id = flujo_Factura_id;
     }
 
-    public Flujo_Factura(int flujo_Factura_id, int factura_id, char tipo_flujo, String fecha, double valor) {
+    public Flujo_Factura(int flujo_Factura_id, int factura_id, String tipo_flujo, String fecha, double valor) {
         this.flujo_Factura_id = flujo_Factura_id;
         this.factura_id = factura_id;
         this.tipo_flujo = tipo_flujo;
@@ -46,11 +46,11 @@ public class Flujo_Factura {
         this.factura_id = factura_id;
     }
 
-    public char getTipo_flujo() {
+    public String getTipo_flujo() {
         return tipo_flujo;
     }
 
-    public void setTipo_flujo(char tipo_flujo) {
+    public void setTipo_flujo(String tipo_flujo) {
         this.tipo_flujo = tipo_flujo;
     }
 

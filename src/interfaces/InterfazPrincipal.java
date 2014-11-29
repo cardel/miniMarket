@@ -16,6 +16,7 @@ import entidades.Factura;
 import entidades.Factura_Productos;
 import entidades.Productos;
 import entidades.Usuarios;
+import generarPDF.ReporteFlujosCliente;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -3590,15 +3591,13 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             int mesInicial = fechaReporteDiario.getSelectedDate().get(Calendar.MONTH) + 1;
             int diaInicial = fechaReporteDiario.getSelectedDate().get(Calendar.DAY_OF_MONTH);
             Calendar fechaInicialRango = new GregorianCalendar(anioInicial, mesInicial, diaInicial);
-            
+
             //fechaReporteDiarioHasta
-            
             int anioFinal = fechaReporteDiarioHasta.getSelectedDate().get(Calendar.YEAR);
             int mesFinal = fechaReporteDiarioHasta.getSelectedDate().get(Calendar.MONTH) + 1;
             int diaFinal = fechaReporteDiarioHasta.getSelectedDate().get(Calendar.DAY_OF_MONTH);
             Calendar fechaFinalRango = new GregorianCalendar(anioFinal, mesFinal, diaFinal);
-            
-            
+
             System.out.println("antes");
             System.out.println("Va a comparar" + fechaDeLaBD.toString());
 
@@ -3763,7 +3762,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             if (clienteReporteClienteFechaFinal.getSelectedDate().getTime().compareTo(clienteReporteClienteFechaInicial.getSelectedDate().getTime()) < 0) {
                 JOptionPane.showMessageDialog(this, "La fecha final debe ser posterior al dia de inicio");
             } else {
-
+                final ArrayList<Integer> listaIDFlujos = new ArrayList<>();
                 final JDialog dialogoEditar = new JDialog();
                 dialogoEditar.setTitle("Reporte cliente");
                 dialogoEditar.setSize(350, 610);
@@ -3841,10 +3840,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                     Calendar fechaInicialRango = new GregorianCalendar(anioInicial, mesInicial, diaInicial);
                     Calendar fechaFinalRango = new GregorianCalendar(anioFinal, mesFinal, diaFinal);
 
-                    System.out.println(fechaDeLaBD.getTime());
-                    System.out.println(fechaInicialRango.getTime());
-                    System.out.println(fechaFinalRango.getTime());
-                    if (fechaDeLaBD.compareTo(fechaInicialRango) >= 0 && fechaDeLaBD.compareTo(fechaFinalRango) <= 0) {
+                    if (fechaDeLaBD.compareTo(fechaInicialRango) <= 0 && fechaDeLaBD.compareTo(fechaFinalRango) >= 0) {
                         fechasFlujos.add(fechaDeLaBD);
                         modeloTabla.addRow(fila);
                     }
@@ -3872,10 +3868,10 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                     Map listaAbonos = new HashMap();
 
                     for (int i = 0; i < modeloTabla.getRowCount(); i++) {
+                        listaIDFlujos.add(Integer.parseInt(flujosCliente.get(i)[0]));
 
                         if (modeloTabla.getValueAt(i, 1).equals("abono")) {
                             Calendar fechaFlujo = fechasFlujos.get(i);
-
                             double valor = Double.parseDouble(String.valueOf(modeloTabla.getValueAt(i, 3)));
 
                             int anoDato = fechaFlujo.get(Calendar.YEAR);
@@ -3936,6 +3932,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                     axis.setDateFormatOverride(new SimpleDateFormat("dd-MM-yyyy"));
                     axis.setAutoTickUnitSelection(false);
                     axis.setVerticalTickLabels(true);
+
                     axis.setTickLabelFont(font);
                     axis.setLabelFont(font);
 
@@ -3959,7 +3956,8 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                     c.gridx = 0;
                     c.gridy = 3;
                     c.gridwidth = 1;
-                    c.insets = new Insets(10, 0, 0, 0);
+                    c.anchor = GridBagConstraints.WEST;
+                    c.insets = new Insets(10, 30, 0, 0);
 
                     JButton botonCerrar = new JButton("Cerrar");
                     botonCerrar.addActionListener(new ActionListener() {
@@ -3971,7 +3969,35 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                     });
                     panelDialogo.add(botonCerrar, c);
 
+                    JButton botonGenerarPDF = new JButton("Guardar archivo");
+                    botonGenerarPDF.addActionListener(new ActionListener() {
+
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            ReporteFlujosCliente reporteFlujosCliente = new ReporteFlujosCliente();
+                            reporteFlujosCliente.guardarDocumentoDialogo(dialogoEditar, listaIDFlujos, Integer.parseInt(jTextFieldIdentificacionClienteReporte.getText()));
+
+                        }
+                    });
+                    c.insets = new Insets(10, 100, 0, 0);
+
+                    panelDialogo.add(botonGenerarPDF, c);
+
+                    JButton botonImprimir = new JButton("Imprimir");
+                    botonImprimir.addActionListener(new ActionListener() {
+
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            ReporteFlujosCliente reporteFlujosCliente = new ReporteFlujosCliente();
+                            reporteFlujosCliente.imprimirFlujo(listaIDFlujos, Integer.parseInt(jTextFieldIdentificacionClienteReporte.getText()));
+
+                        }
+                    });
+                    c.insets = new Insets(10, 230, 0, 0);
+
+                    panelDialogo.add(botonImprimir, c);
                     dialogoEditar.add(panelDialogo);
+
                     dialogoEditar.setVisible(true);
 
                 } else {
