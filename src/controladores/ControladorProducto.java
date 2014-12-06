@@ -25,8 +25,8 @@ public class ControladorProducto {
     
     public ArrayList<Productos> getProducto(String restriction)
     {
-        String [] selection = {"producto_id","nombre","descripcion","unidades","precio"};
-        String [] selection_type = {"int","varchar","varchar","int","double"};
+        String [] selection = {"producto_id","nombre","descripcion","unidades","precio","codigoBarras"};
+        String [] selection_type = {"int","varchar","varchar","int","double","varchar"};
         String table = "Producto";
         
         ArrayList<String[]> resultSet = sqlManager.select_query(selection, selection_type, table, restriction);
@@ -41,7 +41,8 @@ public class ControladorProducto {
             String descripcion = resultado[2];
             int unidades = Integer.parseInt(resultado[3]);
             double precio = Double.parseDouble(resultado[4]);
-            Productos producto = new Productos(producto_id, nombre, descripcion, unidades, precio);
+            String codigoBarras = resultado[5];
+            Productos producto = new Productos(producto_id, nombre, descripcion, unidades, precio,codigoBarras);
             listaDeProductos.add(producto);
 
         }
@@ -50,8 +51,8 @@ public class ControladorProducto {
     }
      public boolean insertProduct(String [] value)
      {
-        String [] selection = {"nombre","descripcion","unidades","precio"};
-        String [] type_value = {"varchar","varchar","int","double"};
+        String [] selection = {"nombre","descripcion","unidades","precio","codigoBarras"};
+        String [] type_value = {"varchar","varchar","int","double","varchar"};
         String [] table_id = {"producto_id"};
         String [] type_table_id = {"int"};
         sqlManager.insert_query(selection, value,type_value, "Producto" , table_id, type_table_id);

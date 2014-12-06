@@ -6,6 +6,7 @@
 package generarPDF;
 
 import controladores.ControladorCliente;
+import controladores.ControladorConfiguraciones;
 import controladores.ControladorFactura;
 import controladores.ControladorFactura_Productos;
 import controladores.ControladorProducto;
@@ -28,6 +29,26 @@ import org.apache.pdfbox.pdmodel.font.PDType1Font;
  */
 public class GenerarFactura {
 
+    private ControladorConfiguraciones controladorConfiguraciones;
+    String IVA;
+    String informacionLegalFactura;
+    String NITEmpresa;
+    String nombreEmpresa;
+    String direccionEmpresa;
+
+    public GenerarFactura() {
+        controladorConfiguraciones = new ControladorConfiguraciones();
+        String[] datosConfiguracionesFactura = controladorConfiguraciones.obtenerInformacionFactura();
+
+        IVA = datosConfiguracionesFactura[0];
+        informacionLegalFactura = datosConfiguracionesFactura[1];
+        
+        String[] configuracionesGlobales = controladorConfiguraciones.obtenerInformacionLegal();
+        nombreEmpresa = configuracionesGlobales[0];
+        NITEmpresa = configuracionesGlobales[1];
+        direccionEmpresa = configuracionesGlobales[2];
+    }
+
     public void imprimirFactura(int facturaID, JFrame dialogo) {
         try {
             PDDocument document = crearFactura(facturaID, dialogo);
@@ -46,6 +67,7 @@ public class GenerarFactura {
 
             ControladorFactura controladorFactura = new ControladorFactura();
             Factura facturaActual = controladorFactura.getFactura(" where factura_id=" + facturaID).get(0);
+            
 
             ControladorCliente controladorCliente = new ControladorCliente();
             Cliente cliente = controladorCliente.obtenerClientePorID(facturaActual.getCliente_id());
@@ -68,13 +90,13 @@ public class GenerarFactura {
             contenido.beginText();
             contenido.setFont(font, 12);
             contenido.moveTextPositionByAmount(30, 700);
-            contenido.drawString("Minimarket Barrio Nuevo.       NIT: 1234567898-9");
+            contenido.drawString(nombreEmpresa+" NIT: "+NITEmpresa);
             contenido.endText();
 
             contenido.beginText();
             contenido.setFont(font, 12);
             contenido.moveTextPositionByAmount(30, 680);
-            contenido.drawString("Calle Falsa 1 2 3");
+            contenido.drawString(direccionEmpresa);
             contenido.endText();
 
             contenido.beginText();
@@ -150,10 +172,10 @@ public class GenerarFactura {
              * Caben en la pagina
              * Primera pagina 14
              * Seguientes paginas 21
-             * Footer cuenta como 3 mas
+             * Footer cuenta como 5 mas
              */
             int indiceProductos = 0;
-            double totalEspaciosNecesarios = listaProductosFactura.size() + 3 + 1;
+            double totalEspaciosNecesarios = listaProductosFactura.size() + 5 + 1;
             double totalPaginas = 1;
 
             if (Math.floor(totalEspaciosNecesarios / 17) == 0) {
@@ -167,7 +189,7 @@ public class GenerarFactura {
             for (int i = 0; i < listaProductosFactura.size() && altura >= 30; i++) {
                 //Imprime por paginas
                 Factura_Productos facturaProducto = listaProductosFactura.get(i);
-                Productos productoActual = controladorProducto.getProducto(" where producto_id=" + facturaProducto.getProducto_id()).get(i);
+                Productos productoActual = controladorProducto.getProducto(" where producto_id=" + facturaProducto.getProducto_id()).get(0);
 
                 String nombreProducto = productoActual.getNombre();
 
@@ -223,8 +245,8 @@ public class GenerarFactura {
             //Escribir footer si paginas es igual a 1
             if (totalPaginas == 1) {
                 Double valor = facturaActual.getValor();
-                Double iva = Math.ceil(valor * 0.16);
-                Double subtotal = Math.floor(valor * 0.84);
+                Double ivaCalculado = Math.ceil(valor * Double.parseDouble(IVA) / 100);
+                    Double subtotal = Math.floor(valor * (1 - Double.parseDouble(IVA)/100));
                 contenido.beginText();
                 contenido.setFont(fontNormal, 12);
                 contenido.moveTextPositionByAmount(320, altura - 15);
@@ -247,14 +269,14 @@ public class GenerarFactura {
                 contenido.beginText();
                 contenido.setFont(fontNormal, 12);
                 contenido.moveTextPositionByAmount(320, altura - 15);
-                contenido.drawString("IVA (16%)");
+                contenido.drawString("IVA " + IVA + "%");
                 contenido.endText();
                 contenido.drawLine(380, altura, 380, altura - 30);
 
                 contenido.beginText();
                 contenido.setFont(fontNormal, 12);
                 contenido.moveTextPositionByAmount(400, altura - 15);
-                contenido.drawString(String.valueOf(iva));
+                contenido.drawString(String.valueOf(ivaCalculado));
                 contenido.endText();
                 contenido.drawLine(500, altura, 500, altura - 30);
                 //Linea inferior
@@ -279,6 +301,14 @@ public class GenerarFactura {
                 contenido.drawLine(320, altura - 30, 500, altura - 30);
                 contenido.drawLine(320, altura, 320, altura - 30);
 
+                //Informacion legal
+                altura -= 40;
+                contenido.beginText();
+                contenido.setFont(fontNormal, 10);
+                contenido.moveTextPositionByAmount(50, altura);
+                contenido.drawString(informacionLegalFactura);
+                contenido.endText();
+
             }
 
             //Siguientes paginas
@@ -292,7 +322,7 @@ public class GenerarFactura {
                 for (int i = indiceProductos; i < listaProductosFactura.size() && altura >= 30; i++) {
                     //Imprime por paginas
                     Factura_Productos facturaProducto = listaProductosFactura.get(i);
-                    Productos productoActual = controladorProducto.getProducto(" where producto_id=" + facturaProducto.getProducto_id()).get(i);
+                    Productos productoActual = controladorProducto.getProducto(" where producto_id=" + facturaProducto.getProducto_id()).get(0);
 
                     String nombreProducto = productoActual.getNombre();
 
@@ -345,9 +375,9 @@ public class GenerarFactura {
                 //En ultima pagina escribir footer
                 if (j == totalPaginas - 1 && altura >= 40) {
                     Double valor = facturaActual.getValor();
-                    Double iva = Math.ceil(valor * 0.16);
-                    Double subtotal = Math.floor(valor * 0.84);
-
+                    Double ivaCalculado = Math.ceil(valor * Double.parseDouble(IVA) / 100);
+                    Double subtotal = Math.floor(valor * (1 - Double.parseDouble(IVA)/100));
+                    
                     contenidoSiguiente.beginText();
                     contenidoSiguiente.setFont(fontNormal, 12);
                     contenidoSiguiente.moveTextPositionByAmount(320, altura - 15);
@@ -370,14 +400,14 @@ public class GenerarFactura {
                     contenidoSiguiente.beginText();
                     contenidoSiguiente.setFont(fontNormal, 12);
                     contenidoSiguiente.moveTextPositionByAmount(320, altura - 15);
-                    contenidoSiguiente.drawString("IVA (16%)");
+                    contenidoSiguiente.drawString("IVA " + IVA + "%");
                     contenidoSiguiente.endText();
                     contenidoSiguiente.drawLine(380, altura, 380, altura - 30);
 
                     contenidoSiguiente.beginText();
                     contenidoSiguiente.setFont(fontNormal, 12);
                     contenidoSiguiente.moveTextPositionByAmount(400, altura - 15);
-                    contenidoSiguiente.drawString(String.valueOf(iva));
+                    contenidoSiguiente.drawString(String.valueOf(ivaCalculado));
                     contenidoSiguiente.endText();
                     contenidoSiguiente.drawLine(500, altura, 500, altura - 30);
                     //Linea inferior
@@ -402,6 +432,14 @@ public class GenerarFactura {
                     contenidoSiguiente.drawLine(320, altura - 30, 500, altura - 30);
                     contenidoSiguiente.drawLine(320, altura, 320, altura - 30);
 
+                    //Informacion legal
+                    altura -= 40;
+                    contenidoSiguiente.beginText();
+                    contenidoSiguiente.setFont(fontNormal, 10);
+                    contenidoSiguiente.moveTextPositionByAmount(50, altura);
+                    contenidoSiguiente.drawString(informacionLegalFactura);
+                    contenidoSiguiente.endText();
+
                     contenidoSiguiente.close();
                 } else {
                     contenidoSiguiente.close();
@@ -415,7 +453,7 @@ public class GenerarFactura {
             return document;
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(dialogo, "Error al crear la factura ", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(dialogo, "Error al crear la factura\nInformación Técnica\n" + e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
             return null;
         }
 

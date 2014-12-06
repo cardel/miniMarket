@@ -16,20 +16,19 @@ public class Productos {
     private String descripcion;
     private int unidadesDisponibles;
     private double precio;
+    private String codigoBarras;
     
     
-    public Productos(int productoId)
-    {
-        this.productoId=productoId;
-    }
+
     
-    public Productos(int productoId, String nombre, String descripcion, int unidadesDisponibles, double precio)
+    public Productos(int productoId, String nombre, String descripcion, int unidadesDisponibles, double precio,String codigoBarras)
     {
         this.productoId=productoId;
         this.nombre=nombre;
         this.descripcion = descripcion;
         this.unidadesDisponibles=unidadesDisponibles;
         this.precio=precio;
+        this.codigoBarras = codigoBarras;
     }
 
     public int getProductoId() {
@@ -66,6 +65,14 @@ public class Productos {
 
     public void setPrecio(double precio) {
         this.precio = precio;
+    }
+
+    public String getCodigoBarras() {
+        return codigoBarras;
+    }
+
+    public void setCodigoBarras(String codigoBarras) {
+        this.codigoBarras = codigoBarras;
     }
     
     

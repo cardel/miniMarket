@@ -6,6 +6,7 @@
 package interfaces;
 
 import controladores.ControladorCliente;
+import controladores.ControladorConfiguraciones;
 import controladores.ControladorFactura;
 import controladores.ControladorFactura_Productos;
 import controladores.ControladorFlujoFactura;
@@ -13,10 +14,10 @@ import controladores.ControladorProducto;
 import controladores.ControladorUsuarios;
 import entidades.Cliente;
 import entidades.Factura;
-import entidades.Factura_Productos;
 import entidades.Productos;
 import entidades.Usuarios;
 import generarPDF.GenerarFactura;
+import generarPDF.GenerarReporteDiario;
 import generarPDF.ReporteFlujosCliente;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -53,10 +54,6 @@ import javax.swing.ListSelectionModel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.pdmodel.PDPage;
-import org.apache.pdfbox.pdmodel.edit.PDPageContentStream;
-import org.apache.pdfbox.pdmodel.font.PDFont;
-import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -71,7 +68,6 @@ import org.jfree.data.time.Day;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.ui.RectangleInsets;
-import seguridad.GeneradorMD5;
 
 /**
  *
@@ -209,6 +205,8 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         jTextField_Producto_CP_precio = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jLabel_Producto_CP_Mensaje = new javax.swing.JLabel();
+        jLabel62 = new javax.swing.JLabel();
+        jTextField_valorCodigoBarrasNuevoProducto = new javax.swing.JTextField();
         jTabbedPane5 = new javax.swing.JTabbedPane();
         jPanel14 = new javax.swing.JPanel();
         jPanel16 = new javax.swing.JPanel();
@@ -248,26 +246,26 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         passwordNuevoUsuario = new javax.swing.JTextField();
         jLabel50 = new javax.swing.JLabel();
         checkBoxEstadoNuevoUsuario = new javax.swing.JCheckBox();
-        jScrollPane7 = new javax.swing.JScrollPane();
-        tablaUsuariosDelSistema = new javax.swing.JTable();
         jLabel51 = new javax.swing.JLabel();
         jButton8 = new javax.swing.JButton();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        tablaUsuariosDelSistema = new javax.swing.JTable();
         jPanel22 = new javax.swing.JPanel();
         jLabel56 = new javax.swing.JLabel();
         jLabel57 = new javax.swing.JLabel();
         jLabel58 = new javax.swing.JLabel();
         jLabel59 = new javax.swing.JLabel();
-        botonGuardarDatosLegales = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
+        botonGuardarDatosEmpresa = new javax.swing.JButton();
+        valorRazonSocial = new javax.swing.JTextField();
+        valorNIT = new javax.swing.JTextField();
+        valorDireccionEmpresa = new javax.swing.JTextField();
         jLabel60 = new javax.swing.JLabel();
         jLabel55 = new javax.swing.JLabel();
-        jSpinner1 = new javax.swing.JSpinner();
+        valorIVA = new javax.swing.JSpinner();
         jLabel61 = new javax.swing.JLabel();
         jScrollPane8 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
-        jButton3 = new javax.swing.JButton();
+        valorMensajeFinalFactura = new javax.swing.JTextArea();
+        botonGuardarDatosFacturas = new javax.swing.JButton();
         jLabel52 = new javax.swing.JLabel();
         JTextFieldnombreDeUsuario = new javax.swing.JLabel();
 
@@ -1104,11 +1102,11 @@ public class InterfazPrincipal extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Numero", "Identificación", "Nombre", "Descripcion", "Unidades", "Precio"
+                "Numero", "Identificación", "Nombre", "Descripcion", "Unidades", "Precio", "Cod. Barras"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                true, false, false, false, true, true
+                true, false, false, false, true, true, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -1144,7 +1142,8 @@ public class InterfazPrincipal extends javax.swing.JFrame {
 
         jTabbedPane7.addTab("Consultar Producto", jPanel3);
 
-        jLabel14.setText("NUEVO PRODUCTO");
+        jLabel14.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel14.setText("Crear nuevo producto");
 
         jPanel5.setBorder(new javax.swing.border.MatteBorder(null));
 
@@ -1175,6 +1174,8 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             }
         });
 
+        jLabel62.setText("CÓDiGO DE BARRAS");
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -1190,7 +1191,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                             .addComponent(jLabel18))
                         .addGap(23, 23, 23)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField_Producto_CP_nombre)
+                            .addComponent(jTextField_Producto_CP_nombre, javax.swing.GroupLayout.DEFAULT_SIZE, 313, Short.MAX_VALUE)
                             .addComponent(jTextField_Producto_CP_descripcion)
                             .addGroup(jPanel5Layout.createSequentialGroup()
                                 .addComponent(jTextField_Producto_CP_unidades, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1198,9 +1199,14 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                                 .addComponent(sliderNumeroUnidades, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jTextField_Producto_CP_precio)))
                     .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(jLabel_Producto_CP_Mensaje, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jLabel_Producto_CP_Mensaje, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(169, 169, 169))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(jLabel62)
+                        .addGap(28, 28, 28)
+                        .addComponent(jTextField_valorCodigoBarrasNuevoProducto)))
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
@@ -1224,11 +1230,18 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel18)
                     .addComponent(jTextField_Producto_CP_precio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel_Producto_CP_Mensaje, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
-                .addContainerGap())
+                .addGap(18, 18, 18)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel62)
+                    .addComponent(jTextField_valorCodigoBarrasNuevoProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                        .addComponent(jLabel_Producto_CP_Mensaje, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(40, 40, 40))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addGap(23, 23, 23))))
         );
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -1237,10 +1250,12 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(433, Short.MAX_VALUE))
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap(320, Short.MAX_VALUE)
+                .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(257, 257, 257))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1249,7 +1264,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                 .addComponent(jLabel14)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(176, Short.MAX_VALUE))
+                .addContainerGap(105, Short.MAX_VALUE))
         );
 
         jTabbedPane7.addTab("Nuevo Producto", jPanel4);
@@ -1543,40 +1558,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
 
         checkBoxEstadoNuevoUsuario.setSelected(true);
 
-        tablaUsuariosDelSistema.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Nombre", "Fecha de creación", "Habilitado"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        DefaultTableModel modelo = (DefaultTableModel)tablaUsuariosDelSistema.getModel();
-        modelo.setRowCount(0);
-        tablaUsuariosDelSistema.setModel(modelo);
-        tablaUsuariosDelSistema.setColumnSelectionAllowed(true);
-        tablaUsuariosDelSistema.setPreferredSize(new java.awt.Dimension(50, 64));
-        tablaUsuariosDelSistema.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tablaUsuariosDelSistemaMouseClicked(evt);
-            }
-        });
-        jScrollPane7.setViewportView(tablaUsuariosDelSistema);
-        tablaUsuariosDelSistema.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        if (tablaUsuariosDelSistema.getColumnModel().getColumnCount() > 0) {
-            tablaUsuariosDelSistema.getColumnModel().getColumn(0).setResizable(false);
-            tablaUsuariosDelSistema.getColumnModel().getColumn(1).setResizable(false);
-            tablaUsuariosDelSistema.getColumnModel().getColumn(2).setResizable(false);
-        }
-
         jLabel51.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel51.setText("Usuarios registrados en el sistema");
 
@@ -1586,6 +1567,24 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                 jButton8ActionPerformed(evt);
             }
         });
+
+        tablaUsuariosDelSistema.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Nombre", "Fecha de creación", "Habilitado"
+            }
+        ));
+        tablaUsuariosDelSistema.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaUsuariosDelSistemaMouseClicked(evt);
+            }
+        });
+        jScrollPane7.setViewportView(tablaUsuariosDelSistema);
+        if (tablaUsuariosDelSistema.getColumnModel().getColumnCount() > 0) {
+            tablaUsuariosDelSistema.getColumnModel().getColumn(2).setResizable(false);
+        }
 
         javax.swing.GroupLayout jPanel21Layout = new javax.swing.GroupLayout(jPanel21);
         jPanel21.setLayout(jPanel21Layout);
@@ -1610,14 +1609,14 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                                             .addComponent(passwordNuevoUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE))
                                         .addGap(139, 139, 139)
                                         .addComponent(jButton8))))
-                            .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 728, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 723, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel21Layout.createSequentialGroup()
                         .addGap(245, 245, 245)
                         .addComponent(jLabel49))
                     .addGroup(jPanel21Layout.createSequentialGroup()
                         .addGap(307, 307, 307)
                         .addComponent(jLabel51)))
-                .addGap(33, 33, 33))
+                .addContainerGap(38, Short.MAX_VALUE))
         );
         jPanel21Layout.setVerticalGroup(
             jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1644,8 +1643,8 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                 .addGap(13, 13, 13)
                 .addComponent(jLabel51)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         generarTablaUsuarios();
@@ -1661,20 +1660,33 @@ public class InterfazPrincipal extends javax.swing.JFrame {
 
         jLabel59.setText("Dirección empresa");
 
-        botonGuardarDatosLegales.setText("Guardar datos legales");
+        botonGuardarDatosEmpresa.setText("Guardar datos legales");
+        botonGuardarDatosEmpresa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonGuardarDatosEmpresaActionPerformed(evt);
+            }
+        });
 
         jLabel60.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel60.setText("Datos facturas");
 
         jLabel55.setText("Porcentaje IVA");
 
-        jLabel61.setText("Mensajke final factura");
+        valorIVA.setModel(new javax.swing.SpinnerNumberModel(0, 0, 100, 1));
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane8.setViewportView(jTextArea1);
+        jLabel61.setText("Mensaje final factura");
 
-        jButton3.setText("Guardar datos facturas");
+        valorMensajeFinalFactura.setColumns(20);
+        valorMensajeFinalFactura.setLineWrap(true);
+        valorMensajeFinalFactura.setRows(5);
+        jScrollPane8.setViewportView(valorMensajeFinalFactura);
+
+        botonGuardarDatosFacturas.setText("Guardar datos facturas");
+        botonGuardarDatosFacturas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonGuardarDatosFacturasActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel22Layout = new javax.swing.GroupLayout(jPanel22);
         jPanel22.setLayout(jPanel22Layout);
@@ -1693,22 +1705,22 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                                 .addComponent(jLabel59))
                             .addGap(21, 21, 21)
                             .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(valorNIT, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(valorRazonSocial, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(valorDireccionEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGroup(jPanel22Layout.createSequentialGroup()
                             .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel61)
                                 .addComponent(jLabel55))
                             .addGap(18, 18, 18)
                             .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(valorIVA, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(48, 48, 48)
                 .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(botonGuardarDatosLegales)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(97, Short.MAX_VALUE))
+                    .addComponent(botonGuardarDatosEmpresa)
+                    .addComponent(botonGuardarDatosFacturas, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(102, Short.MAX_VALUE))
         );
         jPanel22Layout.setVerticalGroup(
             jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1718,33 +1730,44 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                 .addGap(32, 32, 32)
                 .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel57)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(valorRazonSocial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel22Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel58)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(valorNIT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel22Layout.createSequentialGroup()
                         .addGap(3, 3, 3)
-                        .addComponent(botonGuardarDatosLegales)))
+                        .addComponent(botonGuardarDatosEmpresa)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel59)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(valorDireccionEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(44, 44, 44)
                 .addComponent(jLabel60)
                 .addGap(31, 31, 31)
                 .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel55)
-                    .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(valorIVA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel61)
-                    .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3))
-                .addContainerGap(45, Short.MAX_VALUE))
+                    .addComponent(botonGuardarDatosFacturas)
+                    .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
+
+        ControladorConfiguraciones controladorConfiguraciones = new ControladorConfiguraciones();
+        String [] datosFactura = controladorConfiguraciones.obtenerInformacionFactura();
+        String [] datosGlobales = controladorConfiguraciones.obtenerInformacionLegal();
+
+        valorRazonSocial.setText(datosGlobales[0]);
+        valorNIT.setText(datosGlobales[1]);
+        valorDireccionEmpresa.setText(datosGlobales[2]);
+
+        valorIVA.setValue(Double.parseDouble(datosFactura[0]));
+        valorMensajeFinalFactura.setText(datosFactura[1]);
 
         jTabbedPane6.addTab("Configuraciones globales", jPanel22);
 
@@ -1783,7 +1806,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                             .addComponent(JTextFieldnombreDeUsuario)))
                     .addComponent(jLabel1))
                 .addGap(22, 22, 22)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 458, Short.MAX_VALUE)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 458, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1795,6 +1818,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         String descripcion = jTextField_Producto_CP_descripcion.getText();
         String unidades = jTextField_Producto_CP_unidades.getText();
         String precio = jTextField_Producto_CP_precio.getText();
+        String codigoBarras = jTextField_valorCodigoBarrasNuevoProducto.getText();
         if (nombre.equals("") || descripcion.equals("") || unidades.equals("") || precio.equals("")) {
             jLabel_Producto_CP_Mensaje.setForeground(Color.red);
             jLabel_Producto_CP_Mensaje.setText("No dejar campos vacios");
@@ -1804,14 +1828,20 @@ public class InterfazPrincipal extends javax.swing.JFrame {
 
             } catch (NumberFormatException nfe) {
                 jLabel_Producto_CP_Mensaje.setForeground(Color.red);
-                jLabel_Producto_CP_Mensaje.setText("Precio debe ser un Numero");
+                jLabel_Producto_CP_Mensaje.setText("Precio debe ser un número");
                 return;
             }
             jLabel_Producto_CP_Mensaje.setForeground(Color.blue);
-            jLabel_Producto_CP_Mensaje.setText("CreaciÃ³n exitosa");
-            String[] value = {nombre, descripcion, unidades, precio};
+            jLabel_Producto_CP_Mensaje.setText("");
+            JOptionPane.showMessageDialog(null, "Producto creado con éxito");
+            String[] value = {nombre, descripcion, unidades, precio, codigoBarras};
             ControladorProducto cp = new ControladorProducto();
             cp.insertProduct(value);
+            jTextField_Producto_CP_nombre.setText("");
+            jTextField_Producto_CP_descripcion.setText("");
+            jTextField_Producto_CP_unidades.setText("");
+            jTextField_Producto_CP_precio.setText("");
+            jTextField_valorCodigoBarrasNuevoProducto.setText("");
         }
 
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -1894,20 +1924,21 @@ public class InterfazPrincipal extends javax.swing.JFrame {
 
             for (int i = 0; i < listaDeProductos.size(); i++) {
                 Productos producto = listaDeProductos.get(i);
-                Object[] fila = new Object[6];
+                Object[] fila = new Object[7];
                 fila[0] = (i + 1);
                 fila[1] = producto.getProductoId();
                 fila[2] = producto.getNombre();
                 fila[3] = producto.getDescripcion();
                 fila[4] = producto.getUnidadesDisponibles();
                 fila[5] = producto.getPrecio();
+                fila[6] = producto.getCodigoBarras();
                 modelo.addRow(fila);
 
             }
 
             TablaDeProductos.setModel(modelo);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "La identificación debe ser numérica, por favor ingrese correctamente el dato", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Error al consultar los productos\nInformación técnica\n" + e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
         }
 
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -1961,6 +1992,24 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         valorEditarNombreClienteDialogo.setText(productoActual.getNombre());
         panelDialogo.add(valorEditarNombreClienteDialogo, c);
 
+        final JTextField valorEditarUnidadesProductoDialogo = new JTextField();
+        valorEditarUnidadesProductoDialogo.setText(String.valueOf(productoActual.getUnidadesDisponibles()));
+        panelDialogo.add(valorEditarUnidadesProductoDialogo, c);
+
+        c.gridx = 2;
+        c.gridy = 1;
+        c.gridwidth = 1;
+        c.ipadx = 40;
+        c.insets = new Insets(0, 15, 10, 0);
+        JLabel editarTelefonoClienteDialogo = new JLabel("Precio");
+        panelDialogo.add(editarTelefonoClienteDialogo, c);
+
+        c.gridx = 3;
+        c.gridy = 1;
+        c.gridwidth = 1;
+        c.ipadx = 100;
+        c.insets = new Insets(0, 0, 10, 0);
+
         c.gridx = 0;
         c.gridy = 2;
         c.gridwidth = 1;
@@ -1991,26 +2040,28 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         c.gridwidth = 1;
         c.ipadx = 100;
         c.insets = new Insets(0, 15, 10, 15);
-        final JTextField valorEditarUnidadesProductoDialogo = new JTextField();
-        valorEditarUnidadesProductoDialogo.setText(String.valueOf(productoActual.getUnidadesDisponibles()));
-        panelDialogo.add(valorEditarUnidadesProductoDialogo, c);
 
-        c.gridx = 2;
-        c.gridy = 1;
-        c.gridwidth = 1;
-        c.ipadx = 40;
-        c.insets = new Insets(0, 15, 10, 0);
-        JLabel editarTelefonoClienteDialogo = new JLabel("Precio");
-        panelDialogo.add(editarTelefonoClienteDialogo, c);
-
-        c.gridx = 3;
-        c.gridy = 1;
-        c.gridwidth = 1;
-        c.ipadx = 100;
-        c.insets = new Insets(0, 0, 10, 0);
         final JTextField valorEditarPrecioProductoDialogo = new JTextField();
         valorEditarPrecioProductoDialogo.setText(productoActual.getPrecio() + "");
         panelDialogo.add(valorEditarPrecioProductoDialogo, c);
+
+        c.gridx = 0;
+        c.gridy = 3;
+        c.gridwidth = 1;
+        c.ipadx = 40;
+        c.insets = new Insets(0, 5, 10, 0);
+        JLabel editarCodigoBarrasProyecto = new JLabel("Código de barras:");
+        panelDialogo.add(editarCodigoBarrasProyecto, c);
+
+        c.gridx = 1;
+        c.gridy = 3;
+        c.gridwidth = 1;
+        c.ipadx = 100;
+        c.insets = new Insets(0, 15, 10, 15);
+
+        final JTextField valorCodigoDeBarras = new JTextField();
+        valorCodigoDeBarras.setText(productoActual.getCodigoBarras());
+        panelDialogo.add(valorCodigoDeBarras, c);
 
         c.gridx = 0;
         c.gridy = 4;
@@ -2046,9 +2097,9 @@ public class InterfazPrincipal extends javax.swing.JFrame {
 
                 try {
 
-                    String[] selection = {"nombre", "descripcion", "unidades", "precio"};
-                    String[] value = {valorEditarNombreClienteDialogo.getText(), valorEditarDescripcionProductoDialogo.getText(), valorEditarUnidadesProductoDialogo.getText(), valorEditarPrecioProductoDialogo.getText()};
-                    String[] type_value = {"varchar", "varchar", "int", "double"};
+                    String[] selection = {"nombre", "descripcion", "unidades", "precio", "codigoBarras"};
+                    String[] value = {valorEditarNombreClienteDialogo.getText(), valorEditarDescripcionProductoDialogo.getText(), valorEditarUnidadesProductoDialogo.getText(), valorEditarPrecioProductoDialogo.getText(), valorCodigoDeBarras.getText()};
+                    String[] type_value = {"varchar", "varchar", "int", "double", "varchar"};
                     String restriction = " where producto_id = " + identificacion;
                     controladorP.updateProduct(selection, value, type_value, restriction);
                     JOptionPane.showMessageDialog(dialogoEditar, "Se ha editado el producto éxitosamente");
@@ -2436,14 +2487,14 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             double monto = 0d;
             try {
                 double pago = Double.parseDouble((String) JOptionPane.showInputDialog("Ingrese por favor el monto pagado por el cliente"));
-                while (pago <= 0.0) {
+                while (pago < 0.0) {
                     pago = Double.parseDouble((String) JOptionPane.showInputDialog("El pago debe ser positivo \nIngrese por favor el monto pagado por el cliente"));
 
                 }
 
                 double prestamo = Double.parseDouble(valorActualPrestamo.getText());
                 double montoFactura = Double.parseDouble(valorActualFactura.getText());
-                while (montoFactura - pago < 0.0) {
+                while (prestamo - pago < 0.0) {
                     pago = Double.parseDouble((String) JOptionPane.showInputDialog("El pago no debe ser superior al monto de la factura \nIngrese por favor el monto pagado por el cliente"));
 
                 }
@@ -2539,10 +2590,10 @@ public class InterfazPrincipal extends javax.swing.JFrame {
 
                 switch (opcion) {
                     case 1:
-                        generarFactura.imprimirFactura(Integer.parseInt(facturaActual.get(0)[0]),this);
+                        generarFactura.imprimirFactura(Integer.parseInt(facturaActual.get(0)[0]), this);
                         break;
                     case 2:
-                        PDDocument documento = generarFactura.crearFactura(Integer.parseInt(facturaActual.get(0)[0]),this);
+                        PDDocument documento = generarFactura.crearFactura(Integer.parseInt(facturaActual.get(0)[0]), this);
                         JFileChooser fc = new JFileChooser();
                         FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivo PDF", "pdf", "text");
                         fc.setFileFilter(filter);
@@ -3194,10 +3245,10 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         GenerarFactura generarFactura = new GenerarFactura();
         switch (opcion) {
             case 0:
-                generarFactura.imprimirFactura(identificacion,this);
+                generarFactura.imprimirFactura(identificacion, this);
                 break;
             case 1:
-                PDDocument documento = generarFactura.crearFactura(identificacion,this);
+                PDDocument documento = generarFactura.crearFactura(identificacion, this);
                 JFileChooser fc = new JFileChooser();
                 FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivo PDF", "pdf", "text");
                 fc.setFileFilter(filter);
@@ -3211,7 +3262,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
 
                     } catch (Exception ex) {
                         JOptionPane.showMessageDialog(this,
-                                "EL Archivo no se puede leer!");
+                                "El Archivo no se puede leer!\nInformación técnica\n" + ex.toString());
                     }
                     break;
                 }
@@ -3222,7 +3273,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                 if (confirmacion == JOptionPane.YES_OPTION) {
                     ControladorFactura controladorFactura = new ControladorFactura();
                     controladorFactura.deleteFactura(" where factura_id = " + identificacion);
-                    jButton5ActionPerformed(null);
                 }
                 break;
             case 3:
@@ -3314,13 +3364,11 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             int diaFinal = fechaReporteDiarioHasta.getSelectedDate().get(Calendar.DAY_OF_MONTH);
             Calendar fechaFinalRango = new GregorianCalendar(anioFinal, mesFinal, diaFinal);
 
-            System.out.println("antes");
-            System.out.println("Va a comparar" + fechaDeLaBD.toString());
-
-            System.out.println(" con " + fechaInicialRango.toString());
-
+            //System.out.println("antes");
+            //System.out.println("Va a comparar" + fechaDeLaBD.toString());
+            //System.out.println(" con " + fechaInicialRango.toString());
             if (fechaDeLaBD.compareTo(fechaInicialRango) >= 0 && fechaDeLaBD.compareTo(fechaFinalRango) <= 0) {
-                System.out.println("Entra");
+                //System.out.println("Entra");
                 Object[] row = new Object[5];
                 row[0] = (contador);
                 contador++;
@@ -3346,6 +3394,36 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         ReporteDiarioAbono.setText(abono + "");
         ReporteDiarioDeuda.setText(deuda + "");
         TablaDeReporteDiario.setModel(modelo);
+        Object opciones[] = {"Cerrar","Imprimir","Guardar en disco"};
+        int opcion = JOptionPane.showOptionDialog(this, "Se ha generado el diario solicitado\n¿Que desea hacer?", "Elija una opción", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, opciones, null);
+        GenerarReporteDiario generarReporteDiario = new GenerarReporteDiario();
+        switch (opcion) {
+            case 1:
+                generarReporteDiario.imprimiDiario(fechaReporteDiario.getSelectedDate(),fechaReporteDiarioHasta.getSelectedDate(), modelo,this);
+                break;
+            case 2:
+                PDDocument documento = generarReporteDiario.crearDiario(fechaReporteDiario.getSelectedDate(),fechaReporteDiarioHasta.getSelectedDate(), modelo,this);
+                JFileChooser fc = new JFileChooser();
+                FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivo PDF", "pdf", "text");
+                fc.setFileFilter(filter);
+                fc.showSaveDialog(this);
+                if (fc.getSelectedFile() != null) {
+                    File selectedFile = fc.getSelectedFile();
+                    try {
+
+                        documento.save(selectedFile + ".pdf");
+                        JOptionPane.showMessageDialog(this, "El archivo ha sido guardado en disco");
+
+                    } catch (Exception ex) {
+                        JOptionPane.showMessageDialog(this,
+                                "EL Archivo no se puede leer!");
+                    }
+                }
+                break;
+
+            default:
+                break;
+        }
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
@@ -3691,7 +3769,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             ReporteFlujosCliente reporteFlujosCliente = new ReporteFlujosCliente();
-                            reporteFlujosCliente.guardarDocumentoDialogo(dialogoEditar, listaIDFlujos, Integer.parseInt(jTextFieldIdentificacionClienteReporte.getText()),clienteReporteClienteFechaInicial.getSelectedDate(),clienteReporteClienteFechaFinal.getSelectedDate());
+                            reporteFlujosCliente.guardarDocumentoDialogo(dialogoEditar, listaIDFlujos, Integer.parseInt(jTextFieldIdentificacionClienteReporte.getText()), clienteReporteClienteFechaInicial.getSelectedDate(), clienteReporteClienteFechaFinal.getSelectedDate());
 
                         }
                     });
@@ -3705,7 +3783,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             ReporteFlujosCliente reporteFlujosCliente = new ReporteFlujosCliente();
-                            reporteFlujosCliente.imprimirFlujo(listaIDFlujos, Integer.parseInt(jTextFieldIdentificacionClienteReporte.getText()),clienteReporteClienteFechaInicial.getSelectedDate(),clienteReporteClienteFechaFinal.getSelectedDate());
+                            reporteFlujosCliente.imprimirFlujo(listaIDFlujos, Integer.parseInt(jTextFieldIdentificacionClienteReporte.getText()), clienteReporteClienteFechaInicial.getSelectedDate(), clienteReporteClienteFechaFinal.getSelectedDate());
 
                         }
                     });
@@ -3787,7 +3865,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                 controladorUsuarios.CrearUsuario(nombreUsuario, passwordUsuario, estado);
                 nombreNuevoUsuario.setText("");
                 passwordNuevoUsuario.setText("");
-
                 JOptionPane.showMessageDialog(this, "Se ha creado el usuario existosamente");
             } else {
                 JOptionPane.showMessageDialog(this, "El login de usuario ya existe en el sistema");
@@ -3798,161 +3875,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
 
         }
     }//GEN-LAST:event_jButton8ActionPerformed
-
-    private void tablaUsuariosDelSistemaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaUsuariosDelSistemaMouseClicked
-        // TODO add your handling code here:
-        String opcionHabilitar = "Habilitar";
-
-        String nombreUsuario = String.valueOf(tablaUsuariosDelSistema.getValueAt(tablaUsuariosDelSistema.getSelectedRow(), 0));
-        String estado = String.valueOf(tablaUsuariosDelSistema.getValueAt(tablaUsuariosDelSistema.getSelectedRow(), 2));
-
-        if (estado.equals("Habilitado")) {
-            opcionHabilitar = "Deshabilitar";
-        }
-        Object[] opciones = {"Cancelar", "Editar", opcionHabilitar};
-        final ControladorUsuarios controladorUsuarios = new ControladorUsuarios();
-        final Usuarios usuarioSelecionado = controladorUsuarios.obtenerUsuario(nombreUsuario);
-
-        if (nombreUsuario.equals("admin") || nombreUsuario.equals(JTextFieldnombreDeUsuario.getText())) {
-            JOptionPane.showMessageDialog(this, "No se puede editarse a si mismo o el usuario administrador del sistema", "Mensaje del sistema", JOptionPane.WARNING_MESSAGE);
-        } else {
-            int opcionElegida = JOptionPane.showOptionDialog(this, "Por favor elija una opción", "Editar cliente", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, opciones, null);
-
-            switch (opcionElegida) {
-                case 1:
-                    final JDialog dialogoEditar = new JDialog(this);
-
-                    dialogoEditar.setTitle("Editar usuario");
-                    dialogoEditar.setSize(400, 310);
-                    dialogoEditar.setResizable(false);
-
-                    JPanel panelDialogo = new JPanel();
-
-                    panelDialogo.setLayout(new GridBagLayout());
-
-                    GridBagConstraints c = new GridBagConstraints();
-                    c.fill = GridBagConstraints.HORIZONTAL;
-
-                    JLabel editarTextoPrincipalDialogo = new JLabel("Editar clientes");
-                    c.gridx = 0;
-                    c.gridy = 0;
-                    c.gridwidth = 2;
-                    c.insets = new Insets(15, 10, 40, 0);
-                    c.ipadx = 0;
-                    Font textoGrande = new Font("Arial", 1, 18);
-                    editarTextoPrincipalDialogo.setFont(textoGrande);
-                    panelDialogo.add(editarTextoPrincipalDialogo, c);
-
-                    c.insets = new Insets(0, 5, 10, 0);
-                    c.gridx = 0;
-                    c.gridy = 1;
-                    c.gridwidth = 1;
-                    c.ipadx = 0;
-                    JLabel editarNombreClienteDialogo = new JLabel("Login:");
-                    panelDialogo.add(editarNombreClienteDialogo, c);
-
-                    final JTextField valorEditarNombreClienteDialogo = new JTextField();
-                    c.gridx = 1;
-                    c.gridy = 1;
-                    c.gridwidth = 1;
-                    c.ipadx = 0;
-                    c.insets = new Insets(0, 5, 10, 0);
-                    valorEditarNombreClienteDialogo.setText(usuarioSelecionado.getLogin());
-                    panelDialogo.add(valorEditarNombreClienteDialogo, c);
-
-                    c.gridx = 0;
-                    c.gridy = 2;
-                    c.gridwidth = 1;
-                    c.ipadx = 0;
-                    c.insets = new Insets(0, 5, 10, 0);
-                    JLabel editarPasswordClienteDialogo = new JLabel("Contraseña:");
-                    panelDialogo.add(editarPasswordClienteDialogo, c);
-
-                    final JTextField valoreditarPasswordClienteDialogo = new JTextField();
-                    c.gridx = 1;
-                    c.gridy = 2;
-                    c.gridwidth = 1;
-                    c.ipadx = 0;
-                    c.insets = new Insets(0, 5, 10, 0);
-                    panelDialogo.add(valoreditarPasswordClienteDialogo, c);
-
-                    c.gridx = 0;
-                    c.gridy = 3;
-                    c.gridwidth = 2;
-                    c.ipadx = 0;
-                    c.insets = new Insets(0, 5, 10, 0);
-                    JLabel mensajeEditarPassword = new JLabel("Si no desea editar la contraseña deje este espacio en blanco:");
-                    panelDialogo.add(mensajeEditarPassword, c);
-
-                    c.gridx = 0;
-                    c.gridy = 4;
-                    c.gridwidth = 1;
-                    c.ipadx = 0;
-                    c.insets = new Insets(0, 15, 10, 15);
-
-                    JButton botonGuardarClienteDialogo = new JButton("Guardar");
-                    panelDialogo.add(botonGuardarClienteDialogo, c);
-
-                    c.gridx = 1;
-                    c.gridy = 4;
-                    c.gridwidth = 1;
-                    c.insets = new Insets(0, 15, 10, 15);
-                    c.ipadx = 0;
-
-                    JButton botonCerrarClienteDialogo = new JButton("Cancelar");
-                    panelDialogo.add(botonCerrarClienteDialogo, c);
-
-                    botonCerrarClienteDialogo.addActionListener(new ActionListener() {
-
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            dialogoEditar.dispose();
-                        }
-                    });
-
-                    botonGuardarClienteDialogo.addActionListener(new ActionListener() {
-
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            GeneradorMD5 generadorMD5 = new GeneradorMD5();
-                            String password = generadorMD5.getMD5(valoreditarPasswordClienteDialogo.getText());
-
-                            String nombreUsuario = valorEditarNombreClienteDialogo.getText();
-
-                            usuarioSelecionado.setLogin(nombreUsuario);
-
-                            if (!valoreditarPasswordClienteDialogo.getText().equals("")) {
-                                usuarioSelecionado.setPassword(password);
-                            }
-
-                            controladorUsuarios.modificarUsuario(usuarioSelecionado.getUser_id(), usuarioSelecionado.getLogin(), usuarioSelecionado.getPassword());
-                            JOptionPane.showMessageDialog(dialogoEditar, "Se ha modificado el usuario con éxito", "Mensaje del sistema", JOptionPane.INFORMATION_MESSAGE);
-                            generarTablaUsuarios();
-                            dialogoEditar.dispose();
-
-                        }
-                    });
-
-                    dialogoEditar.add(panelDialogo);
-                    dialogoEditar.setVisible(true);
-
-                    break;
-                case 2:
-
-                    if (estado.equals("Habilitado")) {
-                        usuarioSelecionado.setStatus('i');
-                    } else {
-                        usuarioSelecionado.setStatus('e');
-                    }
-                    controladorUsuarios.modificarEstadoUsuario(usuarioSelecionado);
-                    JOptionPane.showMessageDialog(this, "Se ha cambiado el estado del usuario", "Mensaje del sistema", JOptionPane.INFORMATION_MESSAGE);
-                    generarTablaUsuarios();
-                    break;
-                default:
-                    break;
-            }
-        }
-    }//GEN-LAST:event_tablaUsuariosDelSistemaMouseClicked
 
     private void botonEstablecerMontoFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEstablecerMontoFacturaActionPerformed
         // TODO add your handling code here:
@@ -3986,6 +3908,155 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_botonEstablecerMontoFacturaActionPerformed
+
+    private void botonGuardarDatosEmpresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonGuardarDatosEmpresaActionPerformed
+        // TODO add your handling code here:
+        String razonSocial = valorRazonSocial.getText();
+        //Esto para insertar comillas en sql
+        String razonSocialFiltrado = razonSocial.replace("'", "''");
+        String NITEmpresa = valorNIT.getText();
+        String direccionEmpresa = valorDireccionEmpresa.getText();
+
+        ControladorConfiguraciones controladorConfiguraciones = new ControladorConfiguraciones();
+        controladorConfiguraciones.cambiarInformacionLegal(razonSocialFiltrado, NITEmpresa, direccionEmpresa);
+        JOptionPane.showMessageDialog(this, "Información legal cambiada con éxito");
+    }//GEN-LAST:event_botonGuardarDatosEmpresaActionPerformed
+
+    private void botonGuardarDatosFacturasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonGuardarDatosFacturasActionPerformed
+        // TODO add your handling code here:
+        String IVA = String.valueOf(valorIVA.getValue());
+        String mensajeLegal = valorMensajeFinalFactura.getText();
+        String mensajeLegalFiltrado = mensajeLegal.replace("'", "''");
+
+        ControladorConfiguraciones controladorConfiguraciones = new ControladorConfiguraciones();
+        controladorConfiguraciones.cambiarInformacioNFactura(IVA, mensajeLegalFiltrado);
+        JOptionPane.showMessageDialog(this, "Información de factura cambiada con éxito");
+
+    }//GEN-LAST:event_botonGuardarDatosFacturasActionPerformed
+
+    private void tablaUsuariosDelSistemaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaUsuariosDelSistemaMouseClicked
+        // TODO add your handling code here:
+        String opcionHabilitar = "Habilitar";
+        String nombreUsuario = String.valueOf(tablaUsuariosDelSistema.getValueAt(tablaUsuariosDelSistema.getSelectedRow(), 0));
+        String estado = String.valueOf(tablaUsuariosDelSistema.getValueAt(tablaUsuariosDelSistema.getSelectedRow(), 2));
+        if (estado.equals("Habilitado")) {
+            opcionHabilitar = "Deshabilitar";
+        }
+        Object[] opciones = {"Cancelar", "Editar", opcionHabilitar};
+        final ControladorUsuarios controladorUsuarios = new ControladorUsuarios();
+        final Usuarios usuarioSelecionado = controladorUsuarios.obtenerUsuario(nombreUsuario);
+        if (nombreUsuario.equals("admin") || nombreUsuario.equals(JTextFieldnombreDeUsuario.getText())) {
+            JOptionPane.showMessageDialog(this, "No se puede editarse a si mismo o el usuario administrador del sistema", "Mensaje del sistema", JOptionPane.WARNING_MESSAGE);
+        } else {
+            int opcionElegida = JOptionPane.showOptionDialog(this, "Por favor elija una opción", "Editar cliente", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, opciones, null);
+            switch (opcionElegida) {
+                case 1:
+                    final JDialog dialogoEditar = new JDialog(this);
+                    dialogoEditar.setTitle("Editar usuario");
+                    dialogoEditar.setSize(400, 310);
+                    dialogoEditar.setResizable(false);
+                    JPanel panelDialogo = new JPanel();
+                    panelDialogo.setLayout(new GridBagLayout());
+                    GridBagConstraints c = new GridBagConstraints();
+                    c.fill = GridBagConstraints.HORIZONTAL;
+                    JLabel editarTextoPrincipalDialogo = new JLabel("Editar clientes");
+                    c.gridx = 0;
+                    c.gridy = 0;
+                    c.gridwidth = 2;
+                    c.insets = new Insets(15, 10, 40, 0);
+                    c.ipadx = 0;
+                    Font textoGrande = new Font("Arial", 1, 18);
+                    editarTextoPrincipalDialogo.setFont(textoGrande);
+                    panelDialogo.add(editarTextoPrincipalDialogo, c);
+                    c.insets = new Insets(0, 5, 10, 0);
+                    c.gridx = 0;
+                    c.gridy = 1;
+                    c.gridwidth = 1;
+                    c.ipadx = 0;
+                    JLabel editarNombreClienteDialogo = new JLabel("Login:");
+                    panelDialogo.add(editarNombreClienteDialogo, c);
+                    final JTextField valorEditarNombreClienteDialogo = new JTextField();
+                    c.gridx = 1;
+                    c.gridy = 1;
+                    c.gridwidth = 1;
+                    c.ipadx = 0;
+                    c.insets = new Insets(0, 5, 10, 0);
+                    valorEditarNombreClienteDialogo.setText(usuarioSelecionado.getLogin());
+                    panelDialogo.add(valorEditarNombreClienteDialogo, c);
+                    c.gridx = 0;
+                    c.gridy = 2;
+                    c.gridwidth = 1;
+                    c.ipadx = 0;
+                    c.insets = new Insets(0, 5, 10, 0);
+                    JLabel editarPasswordClienteDialogo = new JLabel("Contraseña:");
+                    panelDialogo.add(editarPasswordClienteDialogo, c);
+                    final JTextField valoreditarPasswordClienteDialogo = new JTextField();
+                    c.gridx = 1;
+                    c.gridy = 2;
+                    c.gridwidth = 1;
+                    c.ipadx = 0;
+                    c.insets = new Insets(0, 5, 10, 0);
+                    panelDialogo.add(valoreditarPasswordClienteDialogo, c);
+                    c.gridx = 0;
+                    c.gridy = 3;
+                    c.gridwidth = 2;
+                    c.ipadx = 0;
+                    c.insets = new Insets(0, 5, 10, 0);
+                    JLabel mensajeEditarPassword = new JLabel("Si no desea editar la contraseña deje este espacio en blanco:");
+                    panelDialogo.add(mensajeEditarPassword, c);
+                    c.gridx = 0;
+                    c.gridy = 4;
+                    c.gridwidth = 1;
+                    c.ipadx = 0;
+                    c.insets = new Insets(0, 15, 10, 15);
+                    JButton botonGuardarClienteDialogo = new JButton("Guardar");
+                    panelDialogo.add(botonGuardarClienteDialogo, c);
+                    c.gridx = 1;
+                    c.gridy = 4;
+                    c.gridwidth = 1;
+                    c.insets = new Insets(0, 15, 10, 15);
+                    c.ipadx = 0;
+                    JButton botonCerrarClienteDialogo = new JButton("Cancelar");
+                    panelDialogo.add(botonCerrarClienteDialogo, c);
+                    botonCerrarClienteDialogo.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            dialogoEditar.dispose();
+                        }
+                    });
+                    botonGuardarClienteDialogo.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            String nombreUsuario = valorEditarNombreClienteDialogo.getText();
+                            usuarioSelecionado.setLogin(nombreUsuario);
+                            if (!valoreditarPasswordClienteDialogo.getText().equals("")) {
+                                usuarioSelecionado.setPassword(valoreditarPasswordClienteDialogo.getText());
+                            }
+                            controladorUsuarios.modificarUsuario(usuarioSelecionado.getUser_id(), usuarioSelecionado.getLogin(), usuarioSelecionado.getPassword());
+                            JOptionPane.showMessageDialog(dialogoEditar, "Se ha modificado el usuario con éxito", "Mensaje del sistema", JOptionPane.INFORMATION_MESSAGE);
+                            generarTablaUsuarios();
+                            dialogoEditar.dispose();
+                        }
+                    });
+                    dialogoEditar.add(panelDialogo);
+                    dialogoEditar.setVisible(true);
+                    break;
+                case 2:
+                    if (estado.equals("Habilitado")) {
+                        usuarioSelecionado.setStatus('i');
+                    } else {
+                        usuarioSelecionado.setStatus('e');
+                    }
+                    controladorUsuarios.modificarEstadoUsuario(usuarioSelecionado);
+                    JOptionPane.showMessageDialog(this, "Se ha cambiado el estado del usuario", "Mensaje del sistema", JOptionPane.INFORMATION_MESSAGE);
+                    generarTablaUsuarios();
+                    break;
+                default:
+                    break;
+            }
+        }        // TODO add your handling code here:
+
+    }//GEN-LAST:event_tablaUsuariosDelSistemaMouseClicked
     /*
      * Cambiar nombre de usuario
      */
@@ -4054,7 +4125,8 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton botonBuscarClienteCrearFactura;
     private javax.swing.JButton botonEstablecerMontoFactura;
     private javax.swing.JButton botonGenerarReporteCliente;
-    private javax.swing.JButton botonGuardarDatosLegales;
+    private javax.swing.JButton botonGuardarDatosEmpresa;
+    private javax.swing.JButton botonGuardarDatosFacturas;
     private javax.swing.JButton botonGuardarFactura;
     private javax.swing.JButton botonRegistrarAbono;
     private javax.swing.JTextField celularNuevoCliente;
@@ -4068,7 +4140,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JTextField identificacionNuevoCliente;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
@@ -4131,6 +4202,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel60;
     private javax.swing.JLabel jLabel61;
+    private javax.swing.JLabel jLabel62;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
@@ -4165,17 +4237,12 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane jScrollPane8;
-    private javax.swing.JSpinner jSpinner1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JTabbedPane jTabbedPane3;
     private javax.swing.JTabbedPane jTabbedPane5;
     private javax.swing.JTabbedPane jTabbedPane6;
     private javax.swing.JTabbedPane jTabbedPane7;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextFieldIdentificacionClienteReporte;
     private javax.swing.JTextField jTextField_BuscarFactura_Cliente;
@@ -4190,6 +4257,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField_Producto_Con_Descripcion;
     private javax.swing.JTextField jTextField_Producto_Con_Nombre;
     private javax.swing.JTextField jTextField_Producto_Con_Unidades;
+    private javax.swing.JTextField jTextField_valorCodigoBarrasNuevoProducto;
     private java.awt.Label label1;
     private javax.swing.JLabel mensajesBusquedaClientesFactura;
     private javax.swing.JTextField montoPrestamoNuevoCliente;
@@ -4209,6 +4277,11 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JComboBox tipoIdentificacionCliente;
     private javax.swing.JLabel valorActualFactura;
     private javax.swing.JLabel valorActualPrestamo;
+    private javax.swing.JTextField valorDireccionEmpresa;
+    private javax.swing.JSpinner valorIVA;
+    private javax.swing.JTextArea valorMensajeFinalFactura;
     private javax.swing.JTextField valorMontoFactura;
+    private javax.swing.JTextField valorNIT;
+    private javax.swing.JTextField valorRazonSocial;
     // End of variables declaration//GEN-END:variables
 }

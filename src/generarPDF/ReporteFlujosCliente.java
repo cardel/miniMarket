@@ -136,8 +136,8 @@ public class ReporteFlujosCliente {
             SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
             String formattedInicial = formato.format(fechaInicial.getTime());
             String formattedFinal = formato.format(fechaFinal.getTime());
-            
-            contenido.drawString("DETALLE DE LOS MOVIMIENTOS entre: " + formattedInicial + " y "+formattedFinal);
+
+            contenido.drawString("DETALLE DE LOS MOVIMIENTOS entre: " + formattedInicial + " y " + formattedFinal);
             contenido.endText();
 
             //Dibujar lineas
@@ -268,12 +268,12 @@ public class ReporteFlujosCliente {
             }
             //Escribir footer si paginas es igual a 1
             if (totalPaginas == 1) {
-                Double valor = deudas - abonos;
+                Double valor = abonos - deudas;
 
                 contenido.beginText();
                 contenido.setFont(fontNormal, 12);
                 contenido.moveTextPositionByAmount(300, altura - 15);
-                contenido.drawString("Total abonos");
+                contenido.drawString("Abonado por el cliente");
                 contenido.endText();
                 contenido.drawLine(380, altura, 380, altura - 30);
 
@@ -292,7 +292,7 @@ public class ReporteFlujosCliente {
                 contenido.beginText();
                 contenido.setFont(fontNormal, 12);
                 contenido.moveTextPositionByAmount(300, altura - 15);
-                contenido.drawString("Total deuda");
+                contenido.drawString("Prestado al cliente");
                 contenido.endText();
                 contenido.drawLine(380, altura, 380, altura - 30);
 
@@ -310,7 +310,7 @@ public class ReporteFlujosCliente {
                 contenido.beginText();
                 contenido.setFont(fontNormal, 12);
                 contenido.moveTextPositionByAmount(300, altura - 15);
-                contenido.drawString("Total debido");
+                contenido.drawString("Total flujos");
                 contenido.endText();
                 contenido.drawLine(380, altura, 380, altura - 30);
 
@@ -352,44 +352,44 @@ public class ReporteFlujosCliente {
                     fechaFlujo = fechaFlujo.substring(0, 10);
                     String valorTotal = String.valueOf(flujoFactura.getValor());
 
-                    contenido.beginText();
-                    contenido.setFont(fontNormal, 12);
-                    contenido.moveTextPositionByAmount(40, altura - 15);
-                    contenido.drawString(String.valueOf(i + 1));
-                    contenido.endText();
-                    contenido.drawLine(30, altura, 30, altura - 30);
-                    contenido.drawLine(200, altura, 200, altura - 30);
+                    contenidoSiguiente.beginText();
+                    contenidoSiguiente.setFont(fontNormal, 12);
+                    contenidoSiguiente.moveTextPositionByAmount(40, altura - 15);
+                    contenidoSiguiente.drawString(String.valueOf(i + 1));
+                    contenidoSiguiente.endText();
+                    contenidoSiguiente.drawLine(30, altura, 30, altura - 30);
+                    contenidoSiguiente.drawLine(200, altura, 200, altura - 30);
 
-                    contenido.beginText();
-                    contenido.setFont(fontNormal, 12);
-                    contenido.moveTextPositionByAmount(70, altura - 15);
-                    contenido.drawString(facturaID);
-                    contenido.endText();
-                    contenido.drawLine(70, altura, 70, altura - 30);
-                    contenido.drawLine(200, altura, 200, altura - 30);
+                    contenidoSiguiente.beginText();
+                    contenidoSiguiente.setFont(fontNormal, 12);
+                    contenidoSiguiente.moveTextPositionByAmount(70, altura - 15);
+                    contenidoSiguiente.drawString(facturaID);
+                    contenidoSiguiente.endText();
+                    contenidoSiguiente.drawLine(70, altura, 70, altura - 30);
+                    contenidoSiguiente.drawLine(200, altura, 200, altura - 30);
 
-                    contenido.beginText();
-                    contenido.setFont(fontNormal, 12);
-                    contenido.moveTextPositionByAmount(220, altura - 15);
-                    contenido.drawString(tipoFlujo);
-                    contenido.endText();
-                    contenido.drawLine(300, altura, 300, altura - 30);
+                    contenidoSiguiente.beginText();
+                    contenidoSiguiente.setFont(fontNormal, 12);
+                    contenidoSiguiente.moveTextPositionByAmount(220, altura - 15);
+                    contenidoSiguiente.drawString(tipoFlujo);
+                    contenidoSiguiente.endText();
+                    contenidoSiguiente.drawLine(300, altura, 300, altura - 30);
 
-                    contenido.beginText();
-                    contenido.setFont(fontNormal, 12);
-                    contenido.moveTextPositionByAmount(310, altura - 15);
-                    contenido.drawString(fechaFlujo);
-                    contenido.endText();
-                    contenido.drawLine(380, altura, 380, altura - 30);
+                    contenidoSiguiente.beginText();
+                    contenidoSiguiente.setFont(fontNormal, 12);
+                    contenidoSiguiente.moveTextPositionByAmount(310, altura - 15);
+                    contenidoSiguiente.drawString(fechaFlujo);
+                    contenidoSiguiente.endText();
+                    contenidoSiguiente.drawLine(380, altura, 380, altura - 30);
 
-                    contenido.beginText();
-                    contenido.setFont(fontNormal, 12);
-                    contenido.moveTextPositionByAmount(400, altura - 15);
-                    contenido.drawString(valorTotal);
-                    contenido.endText();
-                    contenido.drawLine(500, altura, 500, altura - 30);
+                    contenidoSiguiente.beginText();
+                    contenidoSiguiente.setFont(fontNormal, 12);
+                    contenidoSiguiente.moveTextPositionByAmount(400, altura - 15);
+                    contenidoSiguiente.drawString(valorTotal);
+                    contenidoSiguiente.endText();
+                    contenidoSiguiente.drawLine(500, altura, 500, altura - 30);
                     //Linea inferior
-                    contenido.drawLine(30, altura - 30, 500, altura - 30);
+                    contenidoSiguiente.drawLine(30, altura - 30, 500, altura - 30);
                     altura -= 30;
                     indiceProductos = i + 1;
                 }
@@ -399,61 +399,61 @@ public class ReporteFlujosCliente {
                 }
                 //En ultima pagina escribir footer
                 if (j == totalPaginas - 1 && altura >= 40) {
-                    Double valor = deudas - abonos;
+                    Double valor = abonos - deudas;
 
-                    contenido.beginText();
-                    contenido.setFont(fontNormal, 12);
-                    contenido.moveTextPositionByAmount(300, altura - 15);
-                    contenido.drawString("Total abonos");
-                    contenido.endText();
-                    contenido.drawLine(380, altura, 380, altura - 30);
+                    contenidoSiguiente.beginText();
+                    contenidoSiguiente.setFont(fontNormal, 12);
+                    contenidoSiguiente.moveTextPositionByAmount(300, altura - 15);
+                    contenidoSiguiente.drawString("Abonado por el cliente");
+                    contenidoSiguiente.endText();
+                    contenidoSiguiente.drawLine(380, altura, 380, altura - 30);
 
-                    contenido.beginText();
-                    contenido.setFont(fontNormal, 12);
-                    contenido.moveTextPositionByAmount(400, altura - 15);
-                    contenido.drawString(String.valueOf(abonos));
-                    contenido.endText();
-                    contenido.drawLine(500, altura, 500, altura - 30);
+                    contenidoSiguiente.beginText();
+                    contenidoSiguiente.setFont(fontNormal, 12);
+                    contenidoSiguiente.moveTextPositionByAmount(400, altura - 15);
+                    contenidoSiguiente.drawString(String.valueOf(abonos));
+                    contenidoSiguiente.endText();
+                    contenidoSiguiente.drawLine(500, altura, 500, altura - 30);
 
                     //Linea inferior
-                    contenido.drawLine(300, altura, 300, altura - 30);
-                    contenido.drawLine(300, altura - 30, 500, altura - 30);
+                    contenidoSiguiente.drawLine(300, altura, 300, altura - 30);
+                    contenidoSiguiente.drawLine(300, altura - 30, 500, altura - 30);
 
                     altura -= 30;
-                    contenido.beginText();
-                    contenido.setFont(fontNormal, 12);
-                    contenido.moveTextPositionByAmount(300, altura - 15);
-                    contenido.drawString("Total deuda");
-                    contenido.endText();
-                    contenido.drawLine(380, altura, 380, altura - 30);
+                    contenidoSiguiente.beginText();
+                    contenidoSiguiente.setFont(fontNormal, 12);
+                    contenidoSiguiente.moveTextPositionByAmount(300, altura - 15);
+                    contenidoSiguiente.drawString("Prestado al cliente");
+                    contenidoSiguiente.endText();
+                    contenidoSiguiente.drawLine(380, altura, 380, altura - 30);
 
-                    contenido.beginText();
-                    contenido.setFont(fontNormal, 12);
-                    contenido.moveTextPositionByAmount(400, altura - 15);
-                    contenido.drawString(String.valueOf(deudas));
-                    contenido.endText();
-                    contenido.drawLine(500, altura, 500, altura - 30);
+                    contenidoSiguiente.beginText();
+                    contenidoSiguiente.setFont(fontNormal, 12);
+                    contenidoSiguiente.moveTextPositionByAmount(400, altura - 15);
+                    contenidoSiguiente.drawString(String.valueOf(deudas));
+                    contenidoSiguiente.endText();
+                    contenidoSiguiente.drawLine(500, altura, 500, altura - 30);
                     //Linea inferior
-                    contenido.drawLine(300, altura, 300, altura - 30);
-                    contenido.drawLine(300, altura - 30, 500, altura - 30);
+                    contenidoSiguiente.drawLine(300, altura, 300, altura - 30);
+                    contenidoSiguiente.drawLine(300, altura - 30, 500, altura - 30);
                     altura -= 30;
 
-                    contenido.beginText();
-                    contenido.setFont(fontNormal, 12);
-                    contenido.moveTextPositionByAmount(300, altura - 15);
-                    contenido.drawString("Total debido");
-                    contenido.endText();
-                    contenido.drawLine(380, altura, 380, altura - 30);
+                    contenidoSiguiente.beginText();
+                    contenidoSiguiente.setFont(fontNormal, 12);
+                    contenidoSiguiente.moveTextPositionByAmount(300, altura - 15);
+                    contenidoSiguiente.drawString("Total flujo");
+                    contenidoSiguiente.endText();
+                    contenidoSiguiente.drawLine(380, altura, 380, altura - 30);
 
-                    contenido.beginText();
-                    contenido.setFont(font, 12);
-                    contenido.moveTextPositionByAmount(400, altura - 15);
-                    contenido.drawString(String.valueOf(valor));
-                    contenido.endText();
-                    contenido.drawLine(500, altura, 500, altura - 30);
+                    contenidoSiguiente.beginText();
+                    contenidoSiguiente.setFont(font, 12);
+                    contenidoSiguiente.moveTextPositionByAmount(400, altura - 15);
+                    contenidoSiguiente.drawString(String.valueOf(valor));
+                    contenidoSiguiente.endText();
+                    contenidoSiguiente.drawLine(500, altura, 500, altura - 30);
                     //Linea inferior
-                    contenido.drawLine(300, altura - 30, 500, altura - 30);
-                    contenido.drawLine(300, altura, 300, altura - 30);
+                    contenidoSiguiente.drawLine(300, altura - 30, 500, altura - 30);
+                    contenidoSiguiente.drawLine(300, altura, 300, altura - 30);
 
                     contenidoSiguiente.close();
                 } else {

@@ -182,7 +182,7 @@ public class InicioAplicacion extends javax.swing.JFrame {
             }
             else
             {
-                JOptionPane.showMessageDialog(this, "El nombre de usuario o contraseña con incorrectos, intente de nuevo");
+                JOptionPane.showMessageDialog(this, "El nombre de usuario o contraseña con incorrectos\nEs posible que usted tenga el acceso restringido al sistema, intente de nuevo");
                 passwordValue.setText("");
             }      
         
