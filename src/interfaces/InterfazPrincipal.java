@@ -16,6 +16,7 @@ import entidades.Factura;
 import entidades.Factura_Productos;
 import entidades.Productos;
 import entidades.Usuarios;
+import generarPDF.GenerarFactura;
 import generarPDF.ReporteFlujosCliente;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -251,6 +252,22 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         tablaUsuariosDelSistema = new javax.swing.JTable();
         jLabel51 = new javax.swing.JLabel();
         jButton8 = new javax.swing.JButton();
+        jPanel22 = new javax.swing.JPanel();
+        jLabel56 = new javax.swing.JLabel();
+        jLabel57 = new javax.swing.JLabel();
+        jLabel58 = new javax.swing.JLabel();
+        jLabel59 = new javax.swing.JLabel();
+        botonGuardarDatosLegales = new javax.swing.JButton();
+        jTextField1 = new javax.swing.JTextField();
+        jTextField2 = new javax.swing.JTextField();
+        jTextField3 = new javax.swing.JTextField();
+        jLabel60 = new javax.swing.JLabel();
+        jLabel55 = new javax.swing.JLabel();
+        jSpinner1 = new javax.swing.JSpinner();
+        jLabel61 = new javax.swing.JLabel();
+        jScrollPane8 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
+        jButton3 = new javax.swing.JButton();
         jLabel52 = new javax.swing.JLabel();
         JTextFieldnombreDeUsuario = new javax.swing.JLabel();
 
@@ -1635,6 +1652,102 @@ public class InterfazPrincipal extends javax.swing.JFrame {
 
         jTabbedPane6.addTab("Administrar usuarios", jPanel21);
 
+        jLabel56.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel56.setText("Datos legales empresa");
+
+        jLabel57.setText("Razón social");
+
+        jLabel58.setText("NIT");
+
+        jLabel59.setText("Dirección empresa");
+
+        botonGuardarDatosLegales.setText("Guardar datos legales");
+
+        jLabel60.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel60.setText("Datos facturas");
+
+        jLabel55.setText("Porcentaje IVA");
+
+        jLabel61.setText("Mensajke final factura");
+
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane8.setViewportView(jTextArea1);
+
+        jButton3.setText("Guardar datos facturas");
+
+        javax.swing.GroupLayout jPanel22Layout = new javax.swing.GroupLayout(jPanel22);
+        jPanel22.setLayout(jPanel22Layout);
+        jPanel22Layout.setHorizontalGroup(
+            jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel22Layout.createSequentialGroup()
+                .addGap(56, 56, 56)
+                .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel56)
+                    .addComponent(jLabel60)
+                    .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel22Layout.createSequentialGroup()
+                            .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel57)
+                                .addComponent(jLabel58)
+                                .addComponent(jLabel59))
+                            .addGap(21, 21, 21)
+                            .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel22Layout.createSequentialGroup()
+                            .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel61)
+                                .addComponent(jLabel55))
+                            .addGap(18, 18, 18)
+                            .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGap(48, 48, 48)
+                .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(botonGuardarDatosLegales)
+                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(97, Short.MAX_VALUE))
+        );
+        jPanel22Layout.setVerticalGroup(
+            jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel22Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel56)
+                .addGap(32, 32, 32)
+                .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel57)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel22Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel58)
+                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel22Layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(botonGuardarDatosLegales)))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel59)
+                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(44, 44, 44)
+                .addComponent(jLabel60)
+                .addGap(31, 31, 31)
+                .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel55)
+                    .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel61)
+                    .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton3))
+                .addContainerGap(45, Short.MAX_VALUE))
+        );
+
+        jTabbedPane6.addTab("Configuraciones globales", jPanel22);
+
         jTabbedPane1.addTab("Administración", jTabbedPane6);
 
         jLabel52.setText("Bienvenido:");
@@ -2421,15 +2534,15 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                 TablaDeFacturaProducto.setModel(modeloTabla);
 
                 Object opciones[] = {"Cerrar", "Imprimir", "Guardar en disco"};
-
+                GenerarFactura generarFactura = new GenerarFactura();
                 int opcion = JOptionPane.showOptionDialog(this, "Se ha guardado la factura con éxito\n¿Que desea hacer?", "Elija una opción", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, opciones, null);
 
                 switch (opcion) {
                     case 1:
-                        imprimirFactura(Integer.parseInt(facturaActual.get(0)[0]));
+                        generarFactura.imprimirFactura(Integer.parseInt(facturaActual.get(0)[0]),this);
                         break;
                     case 2:
-                        PDDocument documento = crearFactura(Integer.parseInt(facturaActual.get(0)[0]));
+                        PDDocument documento = generarFactura.crearFactura(Integer.parseInt(facturaActual.get(0)[0]),this);
                         JFileChooser fc = new JFileChooser();
                         FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivo PDF", "pdf", "text");
                         fc.setFileFilter(filter);
@@ -2470,403 +2583,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_botonGuardarFacturaActionPerformed
-
-    /*
-     * Operaciones con pdf
-     */
-    void imprimirFactura(int facturaID
-    ) {
-        try {
-            PDDocument document = crearFactura(facturaID);
-            document.print();
-            document.close();
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al crear la factura", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-
-    }
-
-    PDDocument crearFactura(int facturaID) {
-
-        try {
-
-            ControladorFactura controladorFactura = new ControladorFactura();
-            Factura facturaActual = controladorFactura.getFactura(" where factura_id=" + facturaID).get(0);
-
-            ControladorCliente controladorCliente = new ControladorCliente();
-            Cliente cliente = controladorCliente.obtenerClientePorID(facturaActual.getCliente_id());
-            PDDocument document = new PDDocument();
-
-            PDPage pagina1 = new PDPage();
-            document.addPage(pagina1);
-
-            PDFont font = PDType1Font.HELVETICA_BOLD;
-            PDFont fontNormal = PDType1Font.HELVETICA;
-
-            PDPageContentStream contenido = new PDPageContentStream(document, pagina1);
-
-            contenido.beginText();
-            contenido.setFont(font, 16);
-            contenido.moveTextPositionByAmount(30, 730);
-            contenido.drawString("Factura #" + facturaActual.getFactura_id());
-            contenido.endText();
-
-            contenido.beginText();
-            contenido.setFont(font, 12);
-            contenido.moveTextPositionByAmount(30, 700);
-            contenido.drawString("Minimarket Barrio Nuevo.       NIT: 1234567898-9");
-            contenido.endText();
-
-            contenido.beginText();
-            contenido.setFont(font, 12);
-            contenido.moveTextPositionByAmount(30, 680);
-            contenido.drawString("Calle Falsa 1 2 3");
-            contenido.endText();
-
-            contenido.beginText();
-            contenido.setFont(fontNormal, 11);
-            contenido.moveTextPositionByAmount(30, 650);
-            contenido.drawString("Fecha:" + facturaActual.getFecha());
-            contenido.endText();
-
-            contenido.beginText();
-            contenido.setFont(fontNormal, 11);
-            contenido.moveTextPositionByAmount(30, 635);
-            contenido.drawString("Nombre: " + cliente.getNombre());
-            contenido.endText();
-
-            contenido.beginText();
-            contenido.setFont(fontNormal, 11);
-            contenido.moveTextPositionByAmount(30, 620);
-            contenido.drawString("Dirección: " + cliente.getDireccion());
-            contenido.endText();
-
-            contenido.beginText();
-            contenido.setFont(fontNormal, 12);
-            contenido.moveTextPositionByAmount(200, 590);
-            contenido.drawString("DETALLE DE LA FACTURA");
-            contenido.endText();
-
-            //Dibujar lineas
-            contenido.drawLine(30, 600, 500, 600);
-            contenido.drawLine(30, 585, 500, 585);
-
-            //Dibujar tabla de productos
-            ControladorFactura_Productos controladorFactura_Productos = new ControladorFactura_Productos();
-            ArrayList<Factura_Productos> listaProductosFactura = controladorFactura_Productos.getTodosFactura_Productos(" where factura_id=" + facturaID);
-
-            contenido.drawLine(30, 570, 500, 570);
-
-            contenido.beginText();
-            contenido.setFont(fontNormal, 12);
-            contenido.moveTextPositionByAmount(60, 560);
-            contenido.drawString("Producto");
-            contenido.endText();
-            contenido.drawLine(30, 550, 30, 570);
-            contenido.drawLine(200, 550, 200, 570);
-
-            contenido.beginText();
-            contenido.setFont(fontNormal, 12);
-            contenido.moveTextPositionByAmount(220, 560);
-            contenido.drawString("Valor unitario");
-            contenido.endText();
-            contenido.drawLine(300, 550, 300, 570);
-
-            contenido.beginText();
-            contenido.setFont(fontNormal, 12);
-            contenido.moveTextPositionByAmount(320, 560);
-            contenido.drawString("Unidades");
-            contenido.endText();
-            contenido.drawLine(380, 550, 380, 570);
-
-            contenido.beginText();
-            contenido.setFont(fontNormal, 12);
-            contenido.moveTextPositionByAmount(400, 560);
-            contenido.drawString("Valor total");
-            contenido.endText();
-            contenido.drawLine(500, 550, 500, 570);
-            contenido.drawLine(500, 550, 500, 570);
-
-            contenido.drawLine(30, 550, 500, 550);
-
-            int altura = 550;
-            ControladorProducto controladorProducto = new ControladorProducto();
-
-            /*
-             * Caben en la pagina
-             * Primera pagina 14
-             * Seguientes paginas 21
-             * Footer cuenta como 3 mas
-             */
-            int indiceProductos = 0;
-            double totalEspaciosNecesarios = listaProductosFactura.size() + 3 + 1;
-            double totalPaginas = 1;
-
-            if (Math.floor(totalEspaciosNecesarios / 17) == 0) {
-                totalPaginas = 1;
-            } else {
-                totalEspaciosNecesarios -= 17;
-                totalPaginas += (int) Math.ceil(totalEspaciosNecesarios / 21);
-            }
-
-            //Primer pagina
-            for (int i = 0; i < listaProductosFactura.size() && altura >= 30; i++) {
-                //Imprime por paginas
-                Factura_Productos facturaProducto = listaProductosFactura.get(i);
-                Productos productoActual = controladorProducto.getProducto(" where producto_id=" + facturaProducto.getProducto_id()).get(0);
-
-                String nombreProducto = productoActual.getNombre();
-
-                if (nombreProducto.length() > 25) {
-                    nombreProducto = nombreProducto.substring(0, 26);
-                }
-
-                String valorUnitario = String.valueOf(productoActual.getPrecio());
-                String unidades = String.valueOf(facturaProducto.getUnidades());
-                String valorTotal = String.valueOf(productoActual.getPrecio() * facturaProducto.getUnidades());
-
-                contenido.beginText();
-                contenido.setFont(fontNormal, 12);
-                contenido.moveTextPositionByAmount(40, altura - 15);
-                contenido.drawString(String.valueOf(i + 1));
-                contenido.endText();
-                contenido.drawLine(30, altura, 30, altura - 30);
-                contenido.drawLine(200, altura, 200, altura - 30);
-
-                contenido.beginText();
-                contenido.setFont(fontNormal, 12);
-                contenido.moveTextPositionByAmount(70, altura - 15);
-                contenido.drawString(nombreProducto);
-                contenido.endText();
-                contenido.drawLine(70, altura, 70, altura - 30);
-                contenido.drawLine(200, altura, 200, altura - 30);
-
-                contenido.beginText();
-                contenido.setFont(fontNormal, 12);
-                contenido.moveTextPositionByAmount(220, altura - 15);
-                contenido.drawString(valorUnitario);
-                contenido.endText();
-                contenido.drawLine(300, altura, 300, altura - 30);
-
-                contenido.beginText();
-                contenido.setFont(fontNormal, 12);
-                contenido.moveTextPositionByAmount(320, altura - 15);
-                contenido.drawString(unidades);
-                contenido.endText();
-                contenido.drawLine(380, altura, 380, altura - 30);
-
-                contenido.beginText();
-                contenido.setFont(fontNormal, 12);
-                contenido.moveTextPositionByAmount(400, altura - 15);
-                contenido.drawString(valorTotal);
-                contenido.endText();
-                contenido.drawLine(500, altura, 500, altura - 30);
-                //Linea inferior
-                contenido.drawLine(30, altura - 30, 500, altura - 30);
-                altura -= 30;
-                indiceProductos = i + 1;
-            }
-            //Escribir footer si paginas es igual a 1
-            if (totalPaginas == 1) {
-                Double valor = facturaActual.getValor();
-                Double iva = Math.ceil(valor * 0.16);
-                Double subtotal = Math.floor(valor * 0.84);
-                contenido.beginText();
-                contenido.setFont(fontNormal, 12);
-                contenido.moveTextPositionByAmount(320, altura - 15);
-                contenido.drawString("Subtotal");
-                contenido.endText();
-                contenido.drawLine(380, altura, 380, altura - 30);
-
-                contenido.beginText();
-                contenido.setFont(fontNormal, 12);
-                contenido.moveTextPositionByAmount(400, altura - 15);
-                contenido.drawString(String.valueOf(subtotal));
-                contenido.endText();
-                contenido.drawLine(500, altura, 500, altura - 30);
-
-                //Linea inferior
-                contenido.drawLine(320, altura, 320, altura - 30);
-                contenido.drawLine(320, altura - 30, 500, altura - 30);
-
-                altura -= 30;
-                contenido.beginText();
-                contenido.setFont(fontNormal, 12);
-                contenido.moveTextPositionByAmount(320, altura - 15);
-                contenido.drawString("IVA (16%)");
-                contenido.endText();
-                contenido.drawLine(380, altura, 380, altura - 30);
-
-                contenido.beginText();
-                contenido.setFont(fontNormal, 12);
-                contenido.moveTextPositionByAmount(400, altura - 15);
-                contenido.drawString(String.valueOf(iva));
-                contenido.endText();
-                contenido.drawLine(500, altura, 500, altura - 30);
-                //Linea inferior
-                contenido.drawLine(320, altura, 320, altura - 30);
-                contenido.drawLine(320, altura - 30, 500, altura - 30);
-                altura -= 30;
-
-                contenido.beginText();
-                contenido.setFont(fontNormal, 12);
-                contenido.moveTextPositionByAmount(320, altura - 15);
-                contenido.drawString("Total");
-                contenido.endText();
-                contenido.drawLine(380, altura, 380, altura - 30);
-
-                contenido.beginText();
-                contenido.setFont(font, 12);
-                contenido.moveTextPositionByAmount(400, altura - 15);
-                contenido.drawString(String.valueOf(valor));
-                contenido.endText();
-                contenido.drawLine(500, altura, 500, altura - 30);
-                //Linea inferior
-                contenido.drawLine(320, altura - 30, 500, altura - 30);
-                contenido.drawLine(320, altura, 320, altura - 30);
-
-            }
-
-            //Siguientes paginas
-            for (int j = 1; j < totalPaginas; j++) {
-                altura = 650;
-                PDPage paginaSiguiente = new PDPage();
-                document.addPage(paginaSiguiente);
-
-                PDPageContentStream contenidoSiguiente = new PDPageContentStream(document, paginaSiguiente);
-                //Escribir paginas
-                for (int i = indiceProductos; i < listaProductosFactura.size() && altura >= 30; i++) {
-                    //Imprime por paginas
-                    Factura_Productos facturaProducto = listaProductosFactura.get(i);
-                    Productos productoActual = controladorProducto.getProducto(" where producto_id=" + facturaProducto.getProducto_id()).get(0);
-
-                    String nombreProducto = productoActual.getNombre();
-
-                    if (nombreProducto.length() > 25) {
-                        nombreProducto = nombreProducto.substring(0, 26);
-                    }
-
-                    String valorUnitario = String.valueOf(productoActual.getPrecio());
-                    String unidades = String.valueOf(facturaProducto.getUnidades());
-                    String valorTotal = String.valueOf(productoActual.getPrecio() * facturaProducto.getUnidades());
-
-                    contenidoSiguiente.beginText();
-                    contenidoSiguiente.setFont(fontNormal, 12);
-                    contenidoSiguiente.moveTextPositionByAmount(40, altura - 15);
-                    contenidoSiguiente.drawString(String.valueOf(i + 1));
-                    contenidoSiguiente.endText();
-                    contenidoSiguiente.drawLine(30, altura, 30, altura - 30);
-                    contenidoSiguiente.drawLine(200, altura, 200, altura - 30);
-
-                    contenidoSiguiente.beginText();
-                    contenidoSiguiente.setFont(fontNormal, 12);
-                    contenidoSiguiente.moveTextPositionByAmount(70, altura - 15);
-                    contenidoSiguiente.drawString(nombreProducto);
-                    contenidoSiguiente.endText();
-                    contenidoSiguiente.drawLine(70, altura, 70, altura - 30);
-                    contenidoSiguiente.drawLine(200, altura, 200, altura - 30);
-
-                    contenidoSiguiente.beginText();
-                    contenidoSiguiente.setFont(fontNormal, 12);
-                    contenidoSiguiente.moveTextPositionByAmount(320, altura - 15);
-                    contenidoSiguiente.drawString(unidades);
-                    contenidoSiguiente.endText();
-                    contenidoSiguiente.drawLine(380, altura, 380, altura - 30);
-
-                    contenidoSiguiente.beginText();
-                    contenidoSiguiente.setFont(font, 12);
-                    contenidoSiguiente.moveTextPositionByAmount(400, altura - 15);
-                    contenidoSiguiente.drawString(valorTotal);
-                    contenidoSiguiente.endText();
-                    contenidoSiguiente.drawLine(500, altura, 500, altura - 30);
-                    //Linea inferior
-                    contenidoSiguiente.drawLine(30, altura - 30, 500, altura - 30);
-                    indiceProductos = i + 1;
-                    altura -= 30;
-                }
-                //Si no cabe mas cierre el flujo.
-                if (indiceProductos < listaProductosFactura.size()) {
-                    contenidoSiguiente.close();
-                }
-                //En ultima pagina escribir footer
-                if (j == totalPaginas - 1 && altura >= 40) {
-                    Double valor = facturaActual.getValor();
-                    Double iva = Math.ceil(valor * 0.16);
-                    Double subtotal = Math.floor(valor * 0.84);
-
-                    contenidoSiguiente.beginText();
-                    contenidoSiguiente.setFont(fontNormal, 12);
-                    contenidoSiguiente.moveTextPositionByAmount(320, altura - 15);
-                    contenidoSiguiente.drawString("Subtotal");
-                    contenidoSiguiente.endText();
-                    contenidoSiguiente.drawLine(380, altura, 380, altura - 30);
-
-                    contenidoSiguiente.beginText();
-                    contenidoSiguiente.setFont(fontNormal, 12);
-                    contenidoSiguiente.moveTextPositionByAmount(400, altura - 15);
-                    contenidoSiguiente.drawString(String.valueOf(subtotal));
-                    contenidoSiguiente.endText();
-                    contenidoSiguiente.drawLine(500, altura, 500, altura - 30);
-
-                    //Linea inferior
-                    contenidoSiguiente.drawLine(320, altura, 320, altura - 30);
-                    contenidoSiguiente.drawLine(320, altura - 30, 500, altura - 30);
-
-                    altura -= 30;
-                    contenidoSiguiente.beginText();
-                    contenidoSiguiente.setFont(fontNormal, 12);
-                    contenidoSiguiente.moveTextPositionByAmount(320, altura - 15);
-                    contenidoSiguiente.drawString("IVA (16%)");
-                    contenidoSiguiente.endText();
-                    contenidoSiguiente.drawLine(380, altura, 380, altura - 30);
-
-                    contenidoSiguiente.beginText();
-                    contenidoSiguiente.setFont(fontNormal, 12);
-                    contenidoSiguiente.moveTextPositionByAmount(400, altura - 15);
-                    contenidoSiguiente.drawString(String.valueOf(iva));
-                    contenidoSiguiente.endText();
-                    contenidoSiguiente.drawLine(500, altura, 500, altura - 30);
-                    //Linea inferior
-                    contenidoSiguiente.drawLine(320, altura, 320, altura - 30);
-                    contenidoSiguiente.drawLine(320, altura - 30, 500, altura - 30);
-                    altura -= 30;
-
-                    contenidoSiguiente.beginText();
-                    contenidoSiguiente.setFont(fontNormal, 12);
-                    contenidoSiguiente.moveTextPositionByAmount(320, altura - 15);
-                    contenidoSiguiente.drawString("Total");
-                    contenidoSiguiente.endText();
-                    contenidoSiguiente.drawLine(380, altura, 380, altura - 30);
-
-                    contenidoSiguiente.beginText();
-                    contenidoSiguiente.setFont(fontNormal, 12);
-                    contenidoSiguiente.moveTextPositionByAmount(400, altura - 15);
-                    contenidoSiguiente.drawString(String.valueOf(valor));
-                    contenidoSiguiente.endText();
-                    contenidoSiguiente.drawLine(500, altura, 500, altura - 30);
-                    //Linea inferior
-                    contenidoSiguiente.drawLine(320, altura - 30, 500, altura - 30);
-                    contenidoSiguiente.drawLine(320, altura, 320, altura - 30);
-
-                    contenidoSiguiente.close();
-                } else {
-                    contenidoSiguiente.close();
-                }
-
-                System.out.println("Pagina numero: " + j + " De  " + totalPaginas);
-
-            }
-
-            contenido.close();
-            return document;
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al crear la factura ", "Error", JOptionPane.ERROR_MESSAGE);
-            return null;
-        }
-
-    }
 
     private void BotonBuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonBuscarClienteActionPerformed
         // TODO add your handling code here:
@@ -3475,13 +3191,13 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         Object opciones[] = {"Imprimir", "Guardar", " Eliminar", "Cancelar"};
 
         int opcion = JOptionPane.showOptionDialog(this, "¿Que operación desea realizar con la factura  " + identificacion + "?", "Mensaje del sistema", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, opciones, null);
-
+        GenerarFactura generarFactura = new GenerarFactura();
         switch (opcion) {
             case 0:
-                imprimirFactura(identificacion);
+                generarFactura.imprimirFactura(identificacion,this);
                 break;
             case 1:
-                PDDocument documento = crearFactura(identificacion);
+                PDDocument documento = generarFactura.crearFactura(identificacion,this);
                 JFileChooser fc = new JFileChooser();
                 FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivo PDF", "pdf", "text");
                 fc.setFileFilter(filter);
@@ -4338,6 +4054,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton botonBuscarClienteCrearFactura;
     private javax.swing.JButton botonEstablecerMontoFactura;
     private javax.swing.JButton botonGenerarReporteCliente;
+    private javax.swing.JButton botonGuardarDatosLegales;
     private javax.swing.JButton botonGuardarFactura;
     private javax.swing.JButton botonRegistrarAbono;
     private javax.swing.JTextField celularNuevoCliente;
@@ -4351,6 +4068,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JTextField identificacionNuevoCliente;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
@@ -4405,7 +4123,14 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel52;
     private javax.swing.JLabel jLabel53;
     private javax.swing.JLabel jLabel54;
+    private javax.swing.JLabel jLabel55;
+    private javax.swing.JLabel jLabel56;
+    private javax.swing.JLabel jLabel57;
+    private javax.swing.JLabel jLabel58;
+    private javax.swing.JLabel jLabel59;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel60;
+    private javax.swing.JLabel jLabel61;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
@@ -4424,6 +4149,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel20;
     private javax.swing.JPanel jPanel21;
+    private javax.swing.JPanel jPanel22;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
@@ -4438,12 +4164,18 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
+    private javax.swing.JScrollPane jScrollPane8;
+    private javax.swing.JSpinner jSpinner1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JTabbedPane jTabbedPane3;
     private javax.swing.JTabbedPane jTabbedPane5;
     private javax.swing.JTabbedPane jTabbedPane6;
     private javax.swing.JTabbedPane jTabbedPane7;
+    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextFieldIdentificacionClienteReporte;
     private javax.swing.JTextField jTextField_BuscarFactura_Cliente;
