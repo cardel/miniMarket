@@ -19,6 +19,7 @@ import entidades.Cliente;
 import controladores.ControladorCompraProveedor;
 import controladores.ControladorFlujoCompras;
 import entidades.Factura;
+import entidades.Flujo_Compra;
 import entidades.Productos;
 import entidades.Proveedores;
 import entidades.Usuarios;
@@ -249,16 +250,18 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         jPanel24 = new javax.swing.JPanel();
         jLabel64 = new javax.swing.JLabel();
         jLabel65 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        jTextFieldNombreSaldoProveedores = new javax.swing.JTextField();
+        mostrarIDProveedor = new javax.swing.JTextField();
         jButton9 = new javax.swing.JButton();
         jLabel66 = new javax.swing.JLabel();
-        jLabel67 = new javax.swing.JLabel();
+        deudaActualProveedor = new javax.swing.JLabel();
         jLabel68 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        jTextFieldAbonoProveedor = new javax.swing.JTextField();
         jButton10 = new javax.swing.JButton();
         jScrollPane10 = new javax.swing.JScrollPane();
-        TablaDeSaldoClientes1 = new javax.swing.JTable();
+        TablaDeSaldoProveedor = new javax.swing.JTable();
+        jLabel77 = new javax.swing.JLabel();
+        textoNombreProveedor = new javax.swing.JLabel();
         jTabbedPane5 = new javax.swing.JTabbedPane();
         jPanel14 = new javax.swing.JPanel();
         jPanel16 = new javax.swing.JPanel();
@@ -954,11 +957,11 @@ public class InterfazPrincipal extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Factura ID", "Tipo flujo", "Fecha", "Valor"
+                "Factura ID", "Fecha", "Tipo de Movimiento", "Valor"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, true, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -1478,7 +1481,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                         .addComponent(jButton13)
                         .addGap(46, 46, 46)
                         .addComponent(jLabel76)))
-                .addContainerGap(88, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel31Layout.setVerticalGroup(
             jPanel31Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1659,20 +1662,30 @@ public class InterfazPrincipal extends javax.swing.JFrame {
 
         jLabel65.setText("Nombre");
 
-        jTextField2.setEnabled(false);
+        mostrarIDProveedor.setEnabled(false);
 
         jButton9.setText("Buscar");
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
+            }
+        });
 
         jLabel66.setText("La tiende tiene un saldo de ");
 
-        jLabel67.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel67.setText("0.0");
+        deudaActualProveedor.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        deudaActualProveedor.setText("0.0");
 
         jLabel68.setText("Abono");
 
         jButton10.setText("Registrar Abono");
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton10ActionPerformed(evt);
+            }
+        });
 
-        TablaDeSaldoClientes1.setModel(new javax.swing.table.DefaultTableModel(
+        TablaDeSaldoProveedor.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -1688,12 +1701,16 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        TablaDeSaldoClientes1.addMouseListener(new java.awt.event.MouseAdapter() {
+        TablaDeSaldoProveedor.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                TablaDeSaldoClientes1MouseClicked(evt);
+                TablaDeSaldoProveedorMouseClicked(evt);
             }
         });
-        jScrollPane10.setViewportView(TablaDeSaldoClientes1);
+        jScrollPane10.setViewportView(TablaDeSaldoProveedor);
+
+        jLabel77.setText("Pagos de");
+
+        textoNombreProveedor.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
 
         javax.swing.GroupLayout jPanel24Layout = new javax.swing.GroupLayout(jPanel24);
         jPanel24.setLayout(jPanel24Layout);
@@ -1713,25 +1730,31 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                                     .addGroup(jPanel24Layout.createSequentialGroup()
                                         .addComponent(jLabel68)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jTextField3))
+                                        .addComponent(jTextFieldAbonoProveedor))
                                     .addGroup(jPanel24Layout.createSequentialGroup()
-                                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(mostrarIDProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(jButton9))
                                     .addGroup(jPanel24Layout.createSequentialGroup()
                                         .addComponent(jLabel65)
                                         .addGap(18, 18, 18)
-                                        .addComponent(jTextField1)))
+                                        .addComponent(jTextFieldNombreSaldoProveedores)))
                                 .addGroup(jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel24Layout.createSequentialGroup()
-                                        .addGap(93, 93, 93)
-                                        .addComponent(jLabel66)
                                         .addGap(18, 18, 18)
-                                        .addComponent(jLabel67))
+                                        .addComponent(jButton10))
                                     .addGroup(jPanel24Layout.createSequentialGroup()
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jButton10)))))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addGap(93, 93, 93)
+                                        .addGroup(jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(jPanel24Layout.createSequentialGroup()
+                                                .addComponent(jLabel77)
+                                                .addGap(34, 34, 34)
+                                                .addComponent(textoNombreProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(jPanel24Layout.createSequentialGroup()
+                                                .addComponent(jLabel66)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(deudaActualProveedor)))))))))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
         jPanel24Layout.setVerticalGroup(
             jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1741,17 +1764,19 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel65)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldNombreSaldoProveedores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel66)
-                    .addComponent(jLabel67))
+                    .addComponent(deudaActualProveedor))
                 .addGap(26, 26, 26)
                 .addGroup(jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton9))
+                    .addComponent(mostrarIDProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton9)
+                    .addComponent(jLabel77)
+                    .addComponent(textoNombreProveedor))
                 .addGap(26, 26, 26)
                 .addGroup(jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel68)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldAbonoProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton10))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -4607,9 +4632,9 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         //TablaDeProveedores
     }//GEN-LAST:event_jButton4ActionPerformed
 
-    private void TablaDeSaldoClientes1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaDeSaldoClientes1MouseClicked
+    private void TablaDeSaldoProveedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaDeSaldoProveedorMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_TablaDeSaldoClientes1MouseClicked
+    }//GEN-LAST:event_TablaDeSaldoProveedorMouseClicked
 
     private void tablaMostrarComprasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaMostrarComprasMouseClicked
         // TODO add your handling code here:
@@ -4750,6 +4775,319 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         }
         tablaMostrarCompras.setModel(modeloTabla);
     }//GEN-LAST:event_jButton13ActionPerformed
+
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        // TODO add your handling code here:
+        String nombre = jTextFieldNombreSaldoProveedores.getText();
+        ControladorProveedores controladorProveedores = new ControladorProveedores();
+        ArrayList<Proveedores> listaProveedores = controladorProveedores.obtenerProveedores("", nombre);
+                
+        final JDialog dialogoEditar = new JDialog(this);
+
+        dialogoEditar.setTitle("Buscar proveedores");
+        dialogoEditar.setSize(500, 300);
+        dialogoEditar.setResizable(false);
+
+        JPanel panelDialogo = new JPanel();
+
+        panelDialogo.setLayout(new GridBagLayout());
+
+        GridBagConstraints c = new GridBagConstraints();
+        c.fill = GridBagConstraints.HORIZONTAL;
+
+        JLabel ediitarTextoPrincipalDialogo = new JLabel("Buscar Proveedores");
+        c.gridx = 0;
+        c.gridy = 0;
+        c.gridwidth = 3;
+        c.insets = new Insets(10, 60, 10, 10);
+        Font textoGrande = new Font("Arial", 1, 16);
+        ediitarTextoPrincipalDialogo.setFont(textoGrande);
+        panelDialogo.add(ediitarTextoPrincipalDialogo, c);
+
+        c.gridx = 0;
+        c.gridy = 1;
+        c.gridwidth = 3;
+        c.insets = new Insets(10, 10, 10, 10);
+        final JTable tablaDialogo = new JTable();
+        DefaultTableModel modeloTabla = new DefaultTableModel() {
+
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                //all cells false
+                return false;
+            }
+        };;
+        modeloTabla.addColumn("ID");
+        modeloTabla.addColumn("Identificación");
+        modeloTabla.addColumn("Nombre");
+
+        //LLenar tabla
+        for (int i = 0; i < listaProveedores.size(); i++) {
+            Object[] data = {"1", "2" , "3"};
+            data[0] = listaProveedores.get(i).getID() ;
+            data[1] = listaProveedores.get(i).getIdentificacion();
+            data[2] = listaProveedores.get(i).getNombre();
+            System.out.println("Nombre!!" + data[2]);
+            modeloTabla.addRow(data);
+        }
+
+        tablaDialogo.setModel(modeloTabla);
+        tablaDialogo.getColumn("ID").setMinWidth(70);
+        tablaDialogo.getColumn("Identificación").setMinWidth(60);
+        tablaDialogo.getColumn("Nombre").setMinWidth(150);
+        tablaDialogo.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        JScrollPane scroll = new JScrollPane(tablaDialogo);
+        scroll.setPreferredSize(new Dimension(220, 150));
+
+        panelDialogo.add(scroll, c);
+
+        c.insets = new Insets(0, 0, 0, 10);
+        c.gridx = 0;
+        c.gridy = 2;
+        c.gridwidth = 1;
+        JButton botonGuardarClienteDialogo = new JButton("Elegir");
+        panelDialogo.add(botonGuardarClienteDialogo, c);
+
+        c.gridx = 1;
+        c.gridy = 2;
+        c.gridwidth = 1;
+        JButton botonCerrarClienteDialogo = new JButton("Cancelar");
+        panelDialogo.add(botonCerrarClienteDialogo, c);
+
+        dialogoEditar.add(panelDialogo);
+        dialogoEditar.setVisible(true);
+        
+         botonCerrarClienteDialogo.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dialogoEditar.dispose();
+            }
+        });
+
+        botonGuardarClienteDialogo.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int row = tablaDialogo.getSelectedRow();
+                if (row == -1) {
+                    JOptionPane.showMessageDialog(dialogoEditar, "Por favor seleccione una fila");
+
+                } else {
+                    Object identificacionCliente = tablaDialogo.getValueAt(row, 0);
+                    Object idCliente = tablaDialogo.getValueAt(row, 1);
+                    mostrarIDProveedor.setText(String.valueOf(idCliente));
+                    String nombreClientePago = String.valueOf(tablaDialogo.getValueAt(row, 2));
+
+                    //Limitar a 15 caracteres
+                    if (nombreClientePago.length() >= 15) {
+                        nombreClientePago = nombreClientePago.substring(0, 12);
+
+                    }
+                    textoNombreProveedor.setText(nombreClientePago);
+
+                    DefaultTableModel modeloClientes = (DefaultTableModel) TablaDeSaldoProveedor.getModel();
+                    for (int i = 0; i < modeloClientes.getRowCount(); i++) {
+                        modeloClientes.removeRow(i);
+                    }
+
+                    modeloClientes.setRowCount(0);
+                    ControladorFlujoCompras controladorFlujoCompra = new ControladorFlujoCompras();
+
+                    //SELECT * FROM Flujo_Factura where factura_id in (select factura_id from Factura where cliente_id = 1130614506);
+                    ArrayList<Flujo_Compra> flujosProveedor = controladorFlujoCompra.obtenerFlujosCompras(" where ID_CompraProveedor in (select ID_CompraProveedor from Compra_Proveedores where IDProveedor = " + String.valueOf(identificacionCliente) + ") order by ID_CompraProveedor");
+                    double pago = 0.0;
+
+                    for (int i = 0; i < flujosProveedor.size(); i++) {
+                        Flujo_Compra datos = flujosProveedor.get(i);
+                        Object[] rowData = {datos.getID_CompraProveedor(), datos.getTipo_flujo() , datos.getFecha() , datos.getMonto() };
+
+                        if (datos.getTipo_flujo().equals("deuda")) {
+                            pago += Double.parseDouble(datos.getMonto()+"" );
+                        } else {
+                            pago -= Double.parseDouble(datos.getMonto()+"");
+                        }
+
+                        modeloClientes.addRow(rowData);
+                    }
+
+                    TablaDeSaldoProveedor.setModel(modeloClientes);
+                    deudaActualProveedor.setText(String.valueOf(pago));
+                    dialogoEditar.dispose();
+
+                    //Mostrar en table de clientes los datos
+                    botonRegistrarAbono.setEnabled(true);
+                }
+
+            }
+            
+         });
+        
+    }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+        // TODO add your handling code here:
+        
+        try {
+
+            String identificacionCliente = mostrarIdentificacionCliente.getText();
+            Double abono = Double.parseDouble(jTextFieldAbonoProveedor.getText());
+
+            if (abono <= 0.0) {
+                throw new Exception();
+            }
+
+            ControladorFlujoCompras controladorFlujoFactura = new ControladorFlujoCompras();
+            ControladorCompraProveedor controladorCompraProveedor = new ControladorCompraProveedor();
+
+            Calendar calendario = Calendar.getInstance();
+            String dia = Integer.toString(calendario.get(Calendar.DATE));
+            String mes = Integer.toString(calendario.get(Calendar.MONTH));
+            String annio = Integer.toString(calendario.get(Calendar.YEAR));
+            Date date = new Date();
+            DateFormat hourFormat = new SimpleDateFormat("HH:mm:ss");
+            String hora = hourFormat.format(date);
+
+            String fecha = annio + "-" + mes + "-" + dia + " " + hora;
+            /*
+             * -----------------Tomar el abono y los pagos-----------------
+             * Procedimiento
+             * 1 Tomar flujos de deuda de cada factura con estado fiado
+             * 2 Tomar abonos de abono de cada factura con estado fiado
+             * 3 Calcular la resta de estos dos para deteminar lo que se debe por factura
+             * 4 Cancelar con el flujo la factura y si lo debido es 0 colocar estado pagado
+             * 5 Mostrar una información en un JOptionPane y recalcular la deuda
+             * 
+             */
+            DefaultTableModel modeloClientes = (DefaultTableModel) TablaDeSaldoProveedor.getModel();
+            ArrayList<String> codigoFactura = new ArrayList<>();
+            ArrayList<Double> totalDebe = new ArrayList<>();
+
+            JTextArea area = new JTextArea(10, 30);
+            String informe = "\t Registro flujo pago del abono \n\n";
+            informe += "Factura \t Pago \t ¿Queda pagada? \n\n";
+
+            int numeroRegistros = -1;
+            for (int i = 0; i < modeloClientes.getRowCount(); i++) {
+                //System.out.println("Entro al for " + i);
+                //Se necesita 0: Factura ID, 1 Tipo, 3 Valor
+                // Codigofactura contiene los cogidos de las facturas
+                // totalDebe contiene lo que debe de las facturas, la posicion coincide con la lista CodigoFactura
+                String factura_id = String.valueOf(modeloClientes.getValueAt(i, 0));
+                String tipo_flujo = String.valueOf(modeloClientes.getValueAt(i, 1));
+                Double valor = Double.parseDouble(String.valueOf(modeloClientes.getValueAt(i, 3)));
+                if (codigoFactura.contains(factura_id)) {
+
+                    if (tipo_flujo.equals("abono")) {
+                        totalDebe.set(numeroRegistros, totalDebe.get(numeroRegistros) - valor);
+                    } else {
+                        totalDebe.set(numeroRegistros, totalDebe.get(numeroRegistros) + valor);
+                    }
+                } else {
+                    numeroRegistros++;
+                    codigoFactura.add(factura_id);
+                    if (tipo_flujo.equals("abono")) {
+                        totalDebe.add(-valor);
+                    } else {
+                        totalDebe.add(valor);
+                    }
+                }
+
+            }
+            //System.out.println(Arrays.toString(codigoFactura.toArray()));
+            //System.out.println(Arrays.toString(totalDebe.toArray()));
+
+            for (int i = 0; i < totalDebe.size(); i++) {
+                //Tomar flujos
+                if (abono > 0.0) {
+                    Double pago = totalDebe.get(i) - abono;
+
+                    //Pago igual a 0 significa que se pagó la factura
+                    if (pago == 0) {
+                        //Registrar flujo
+                        //String[] value = {codigoFactura.get(i), "abono", fecha, String.valueOf(abono)};
+                        //String [] selection = {"factura_id","tipo_flujo","fecha","valor"};
+                        controladorFlujoFactura.registrarFlujoAbono(codigoFactura.get(i), String.valueOf(abono));
+
+                        //controladorFactura.cambiarEstadoFactura(codigoFactura.get(i), "pagada");
+                        informe += codigoFactura.get(i) + "\t" + String.valueOf(abono) + "\tSI\n";
+                        //Romper el for
+                        break;
+                    } else {
+
+                        //Pago mayor que 0, es decir se queda debiendo
+                        if (pago > 0) {
+
+                            //Registrar flujo
+                            //String[] value = {codigoFactura.get(i), "abono", fecha, String.valueOf(abono)};
+                            //String [] selection = {"factura_id","tipo_flujo","fecha","valor"};
+                            controladorFlujoFactura.registrarFlujoAbono(codigoFactura.get(i), String.valueOf(abono));
+                            //Como el abono ahora es menor que 0 debe romperse el for
+                            informe += codigoFactura.get(i) + "\t" + String.valueOf(abono) + "\tNO\n";
+
+                            break;
+
+                        } else {
+                            //Caso final pago menor 0, es decir el abono paga la factura pero queda disponible para otras facturas
+                            //Registrar flujo
+                            //String[] value = {codigoFactura.get(i), "abono", fecha, String.valueOf(totalDebe.get(i))};
+                            //String [] selection = {"factura_id","tipo_flujo","fecha","valor"};
+                            controladorFlujoFactura.registrarFlujoAbono(codigoFactura.get(i), String.valueOf(abono));
+
+                            //controladorFactura.cambiarEstadoFactura(codigoFactura.get(i), "pagada");
+
+                            //Ajustamos ahora el abono restando lo que debe la factura
+                            informe += codigoFactura.get(i) + "\t" + String.valueOf(abono) + "\tSI\n";
+                            abono -= totalDebe.get(i);
+                        }
+
+                    }
+                } else {
+                    //Romper el for
+                    break;
+                }
+
+            }
+
+            //Reordenar y volver a consultar
+            for (int i = 0; i < modeloClientes.getRowCount(); i++) {
+                modeloClientes.removeRow(i);
+            }
+
+            modeloClientes.setRowCount(0);
+
+            //SELECT * FROM Flujo_Factura where factura_id in (select factura_id from Factura where cliente_id = 1130614506);
+            ArrayList<Flujo_Compra> flujosProveedor = controladorFlujoFactura.obtenerFlujosCompras(" where ID_CompraProveedor in (select ID_CompraProveedor from Compra_Proveedores where IDProveedor = " + String.valueOf(identificacionCliente) + ") order by ID_CompraProveedor");
+            double pago = 0.0;
+
+            for (int i = 0; i < flujosProveedor.size(); i++) {
+                        Flujo_Compra datos = flujosProveedor.get(i);
+                        Object[] rowData = {datos.getID_CompraProveedor(), datos.getTipo_flujo() , datos.getFecha() , datos.getMonto() };
+
+                        if (datos.getTipo_flujo().equals("deuda")) {
+                            pago += Double.parseDouble(datos.getMonto()+"" );
+                        } else {
+                            pago -= Double.parseDouble(datos.getMonto()+"");
+                        }
+
+                        modeloClientes.addRow(rowData);
+                    }
+
+                    TablaDeSaldoProveedor.setModel(modeloClientes);
+                    textoTotalDebe.setText(String.valueOf(pago));                    
+
+                    //Mostrar en table de clientes los datos
+                    botonRegistrarAbono.setEnabled(true);
+                    
+            area.setText(informe);
+            JScrollPane panelInformePago = new JScrollPane(area);
+            JOptionPane.showMessageDialog(this, panelInformePago);
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Debe ingresar un valor numérico mayor que 0 en el abono ");
+        }
+        
+    }//GEN-LAST:event_jButton10ActionPerformed
     /*
      * Cambiar nombre de usuario
      */
@@ -4813,7 +5151,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JTable TablaDeProveedores;
     private javax.swing.JTable TablaDeReporteDiario;
     private javax.swing.JTable TablaDeSaldoClientes;
-    private javax.swing.JTable TablaDeSaldoClientes1;
+    private javax.swing.JTable TablaDeSaldoProveedor;
     private javax.swing.JTextField abonoClente;
     private javax.swing.JButton botonAgregarNuevoCliente;
     private javax.swing.JButton botonAgregarProducto;
@@ -4834,6 +5172,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JCheckBox checkBoxEstadoNuevoUsuario;
     private datechooser.beans.DateChooserCombo clienteReporteClienteFechaFinal;
     private datechooser.beans.DateChooserCombo clienteReporteClienteFechaInicial;
+    private javax.swing.JLabel deudaActualProveedor;
     private datechooser.beans.DateChooserCombo fechaReporteDiario;
     private datechooser.beans.DateChooserCombo fechaReporteDiarioHasta;
     private javax.swing.JTextField identificacionClienteBusqueda;
@@ -4914,7 +5253,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel64;
     private javax.swing.JLabel jLabel65;
     private javax.swing.JLabel jLabel66;
-    private javax.swing.JLabel jLabel67;
     private javax.swing.JLabel jLabel68;
     private javax.swing.JLabel jLabel69;
     private javax.swing.JLabel jLabel7;
@@ -4925,6 +5263,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel74;
     private javax.swing.JLabel jLabel75;
     private javax.swing.JLabel jLabel76;
+    private javax.swing.JLabel jLabel77;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabel_Producto_CP_Mensaje;
@@ -4978,13 +5317,12 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JTabbedPane jTabbedPane6;
     private javax.swing.JTabbedPane jTabbedPane7;
     private javax.swing.JTabbedPane jTabbedPane8;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField jTextFieldAbonoProveedor;
     private javax.swing.JTextField jTextFieldIdentificacionClienteReporte;
     private javax.swing.JTextField jTextFieldNitProveedores;
     private javax.swing.JTextField jTextFieldNombreProveedores;
+    private javax.swing.JTextField jTextFieldNombreSaldoProveedores;
     private javax.swing.JTextField jTextField_BuscarFactura_Cliente;
     private javax.swing.JTextField jTextField_BuscarFactura_ID;
     private javax.swing.JTextField jTextField_Factura_Cliente_Id;
@@ -5001,6 +5339,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private java.awt.Label label1;
     private javax.swing.JLabel mensajesBusquedaClientesFactura;
     private javax.swing.JTextField montoPrestamoNuevoCliente;
+    private javax.swing.JTextField mostrarIDProveedor;
     private javax.swing.JTextField mostrarIdentificacionCliente;
     private javax.swing.JTextField nombreClienteBusqueda;
     private javax.swing.JTextField nombreClienteBusquedaSaldo;
@@ -5013,6 +5352,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JTable tablaMostrarCompras;
     private javax.swing.JTable tablaUsuariosDelSistema;
     private javax.swing.JTextField telefonoNuevoCliente;
+    private javax.swing.JLabel textoNombreProveedor;
     private javax.swing.JLabel textoPersonaSaldo;
     private javax.swing.JLabel textoTotalDebe;
     private javax.swing.JLabel valorActualFactura;

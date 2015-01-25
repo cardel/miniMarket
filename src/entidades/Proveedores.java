@@ -15,10 +15,11 @@ public class Proveedores {
     private String nombre;
     private int ID;
     
-    public Proveedores(String identificacion, String nombre)
+    public Proveedores(String identificacion, String nombre , int ID)
     {
         this.identificacion = identificacion;
         this.nombre = nombre;
+        this.ID = ID;
     }
 
     /**

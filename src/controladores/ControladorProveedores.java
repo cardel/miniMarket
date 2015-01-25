@@ -49,7 +49,7 @@ public class ControladorProveedores {
             String ident = resultado[0];            
             String nombre = resultado[1]; 
             String ID = resultado[2];
-            Proveedores proveedor = new Proveedores(ident, nombre);
+            Proveedores proveedor = new Proveedores(ident, nombre , Integer.parseInt(ID));
             proveedor.setID(Integer.parseInt(ID));
             listaDeProveedores.add(proveedor);
 
