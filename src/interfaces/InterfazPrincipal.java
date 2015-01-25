@@ -2494,7 +2494,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
 
                 double prestamo = Double.parseDouble(valorActualPrestamo.getText());
                 double montoFactura = Double.parseDouble(valorActualFactura.getText());
-                while (prestamo - pago < 0.0) {
+                while (montoFactura - pago < 0.0) {
                     pago = Double.parseDouble((String) JOptionPane.showInputDialog("El pago no debe ser superior al monto de la factura \nIngrese por favor el monto pagado por el cliente"));
 
                 }
