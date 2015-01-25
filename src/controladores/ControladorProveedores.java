@@ -22,8 +22,8 @@ public class ControladorProveedores {
     }
     
     public ArrayList<Proveedores> obtenerProveedores(String Identificacion , String nombreIn) {
-        String selection[] = {"Identificacion", "nombre"};
-        String selection_type[] = {"varchar", "varchar"};
+        String selection[] = {"Identificacion", "nombre","ID"};
+        String selection_type[] = {"varchar", "varchar","int"};
         String table = "Proveedores";
 
         boolean nombreVacio = !nombreIn.equals("");
@@ -47,8 +47,10 @@ public class ControladorProveedores {
         for (int i = 0; i < resultadoSet.size(); i++) {
             String[] resultado = resultadoSet.get(i);
             String ident = resultado[0];            
-            String nombre = resultado[1];            
+            String nombre = resultado[1]; 
+            String ID = resultado[2];
             Proveedores proveedor = new Proveedores(ident, nombre);
+            proveedor.setID(Integer.parseInt(ID));
             listaDeProveedores.add(proveedor);
 
         }

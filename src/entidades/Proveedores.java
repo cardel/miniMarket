@@ -13,6 +13,7 @@ public class Proveedores {
     
     private String identificacion;
     private String nombre;
+    private int ID;
     
     public Proveedores(String identificacion, String nombre)
     {
@@ -46,6 +47,14 @@ public class Proveedores {
      */
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
     }
     
     
