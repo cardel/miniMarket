@@ -4618,15 +4618,24 @@ public class InterfazPrincipal extends javax.swing.JFrame {
 
         Object opciones[] = {"Editar", "Eliminar"};
         ControladorCompraProveedor controladorCompraProveedor = new ControladorCompraProveedor();
+        ControladorFlujoCompras controladorFlujoCompras = new ControladorFlujoCompras();
 
         int opcion = JOptionPane.showOptionDialog(this, "¿Que operación desea realizar con la compra número " + identificacion + "?", "Mensaje del sistema", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, opciones, null);
         switch (opcion) {
             case 0:
-                String valor = JOptionPane.showInputDialog("Desea cambiar el monto de la factura\nEl monto actual es: " + tablaMostrarCompras.getValueAt(fila, 3));
+                String valor = JOptionPane.showInputDialog("Desea cambiar el monto de la compra\nEl monto actual es: " + tablaMostrarCompras.getValueAt(fila, 3));
                 Double.parseDouble(valor);
 
                 controladorCompraProveedor.editarCompraProveedor(String.valueOf(identificacion), valor);
+                
+
+                //Editar flujos
+                //Registrar nueva deuda
+                controladorFlujoCompras.registrarFlujoDeuda(String.valueOf(identificacion), valor);
+                controladorFlujoCompras.registrarFlujoAbono(String.valueOf(identificacion), String.valueOf( tablaMostrarCompras.getValueAt(fila, 3)));
+                
                 tablaMostrarCompras.setValueAt(valor, fila, 3);
+
                 try {
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(this, "El monto debe ser numérico", "Error", JOptionPane.ERROR_MESSAGE);
@@ -4640,6 +4649,9 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                     DefaultTableModel modeloTabla = (DefaultTableModel) tablaMostrarCompras.getModel();
                     modeloTabla.removeRow(fila);
                     tablaMostrarCompras.setModel(modeloTabla);
+
+                    //Eliminar flujo
+                    controladorFlujoCompras.borrarFlujosDeUnaCompraPorIDDeCompra(String.valueOf(identificacion));
                 }
                 break;
             default:
@@ -4671,18 +4683,16 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             Double.parseDouble(IDProveedor);
             Double valorCompra = Double.parseDouble(montoCompra);
             Double valorPagado = Double.parseDouble(pago);
-            
-            while(valorPagado>valorCompra||valorPagado<0)
-            {
+
+            while (valorPagado > valorCompra || valorPagado < 0) {
                 pago = JOptionPane.showInputDialog("El monto a pagar no puede ser mayor que el valor de la compra ni menor a 0\nPor favor ingrese el monto a pagar");
                 valorPagado = Double.parseDouble(pago);
             }
-            
+
             ControladorCompraProveedor controladorCompraProveedor = new ControladorCompraProveedor();
             int IDCompra = controladorCompraProveedor.crearNuevaCompra(IDProveedor, montoCompra);
-            
+
             //Registrar flujo
-            
             ControladorFlujoCompras controladorFlujoCompra = new ControladorFlujoCompras();
             controladorFlujoCompra.registrarFlujoAbono(IDProveedor, pago);
             controladorFlujoCompra.registrarFlujoDeuda(IDProveedor, montoCompra);

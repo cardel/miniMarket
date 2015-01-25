@@ -97,4 +97,10 @@ public class ControladorFlujoCompras {
         String[] type_table_id = {"int"};
         sqlManager.insert_query(selection, value, type_value, "Flujo_Compra", table_id, type_table_id);
     }
+
+
+    public void borrarFlujosDeUnaCompraPorIDDeCompra(String ID_Compra_Proveedor) {
+        String condition = " where ID_CompraProveedor=" + ID_Compra_Proveedor;
+        sqlManager.delete_query("Flujo_Compra", condition);
+    }
 }
