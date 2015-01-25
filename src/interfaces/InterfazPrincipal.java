@@ -624,7 +624,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Numero", "Factura", "Cliente", "Fecha", "Estado", "Valor"
+                "Numero", "Factura", "Fecha", "Cliente", "Estado", "Valor"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -2148,16 +2148,14 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             col.add("1");
             col.add("2");
             col.add("3");
-            col.add("4");
-            col.add("5");
+            col.add("4");            
             Vector row = new Vector();
 
             for (int i = 0; i < listaClientes.size(); i++) {
                 Cliente cliente = listaClientes.get(i);
                 Vector temp = new Vector();
                 temp.add((i + 1) + "");
-                temp.add(cliente.getNombre());
-                temp.add(cliente.getTipo_cliente_id() + "");
+                temp.add(cliente.getNombre());                
                 temp.add(cliente.getCliente_id() + "");
                 temp.add(cliente.getMonto_prestamo() + "");
                 System.out.println("info" + cliente.getNombre() + "," + cliente.getMonto_prestamo());
@@ -2188,8 +2186,8 @@ public class InterfazPrincipal extends javax.swing.JFrame {
 
                     }
                     nombreClienteCrearFactura.setText(table.getValueAt(table.getSelectedRow(), 1).toString());
-                    IdentificacionClienteBuscarFactura.setText(table.getValueAt(table.getSelectedRow(), 3).toString());
-                    double montoPrestamo = Double.parseDouble(table.getValueAt(table.getSelectedRow(), 4).toString());
+                    IdentificacionClienteBuscarFactura.setText(table.getValueAt(table.getSelectedRow(), 2).toString());
+                    double montoPrestamo = Double.parseDouble(table.getValueAt(table.getSelectedRow(), 3).toString());
                     Double totalDisponible = montoPrestamo - pago;
                     valorActualPrestamo.setText(String.valueOf(totalDisponible));
                     //System.out.println(table.getValueAt(table.getSelectedRow(), 3).toString());

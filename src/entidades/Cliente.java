@@ -10,8 +10,7 @@ package entidades;
  * @author cardel
  */
 public class Cliente {
-    private int cliente_id;
-    private String tipo_cliente_id;
+    private int cliente_id;    
     private String nombre;
     private String numero_telefono;
     private String numero_celular;
@@ -22,9 +21,8 @@ public class Cliente {
         this.cliente_id = cliente_id;
     }
 
-    public Cliente(int cliente_id, String tipo_cliente_id, String nombre, String numero_telefono, String numero_celular, String direccion, double monto_prestamo) {
-        this.cliente_id = cliente_id;
-        this.tipo_cliente_id = tipo_cliente_id;
+    public Cliente(int cliente_id, String nombre, String numero_telefono, String numero_celular, String direccion, double monto_prestamo) {
+        this.cliente_id = cliente_id;        
         this.nombre = nombre;
         this.numero_telefono = numero_telefono;
         this.numero_celular = numero_celular;
@@ -34,15 +32,6 @@ public class Cliente {
 
     public int getCliente_id() {
         return cliente_id;
-    }
-
-
-    public String getTipo_cliente_id() {
-        return tipo_cliente_id;
-    }
-
-    public void setTipo_cliente_id(String tipo_cliente_id) {
-        this.tipo_cliente_id = tipo_cliente_id;
     }
 
     public String getNombre() {

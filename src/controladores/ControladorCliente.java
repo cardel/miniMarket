@@ -40,7 +40,7 @@ public class ControladorCliente {
             String numero_celular = resultado[4];
             String direccion = resultado[5];
             double monto_prestamo = Double.parseDouble(resultado[6]);
-            Cliente cliente = new Cliente(cliente_id, direccion, nombre, numero_telefono, numero_celular, direccion, monto_prestamo);
+            Cliente cliente = new Cliente(cliente_id, nombre, numero_telefono, numero_celular, direccion, monto_prestamo);
             listaDeClientes.add(cliente);
 
         }
@@ -49,8 +49,8 @@ public class ControladorCliente {
     }
 
     public ArrayList<Cliente> obtenerClientes(String nombreIn, int identificacion) {
-        String selection[] = {"cliente_id", "tipo_id_cliente", "nombre", "numero_de_telefono", "numero_celular", "direccion", "monto_prestamo"};
-        String selection_type[] = {"int", "varchar", "varchar", "varchar", "varchar", "varchar", "int"};
+        String selection[] = {"cliente_id", "nombre", "numero_de_telefono", "numero_celular", "direccion", "monto_prestamo"};
+        String selection_type[] = {"int", "varchar", "varchar", "varchar", "varchar", "int"};
         String table = "Cliente";
 
         boolean nombreVacio = !nombreIn.equals("");
@@ -73,14 +73,13 @@ public class ControladorCliente {
 
         for (int i = 0; i < resultadoSet.size(); i++) {
             String[] resultado = resultadoSet.get(i);
-            int cliente_id = Integer.parseInt(resultado[0]);
-            String tipo_cliente_id = resultado[1];
-            String nombre = resultado[2];
-            String numero_telefono = resultado[3];
-            String numero_celular = resultado[4];
-            String direccion = resultado[5];
-            double monto_prestamo = Double.parseDouble(resultado[6]);
-            Cliente cliente = new Cliente(cliente_id, tipo_cliente_id, nombre, numero_telefono, numero_celular, direccion, monto_prestamo);
+            int cliente_id = Integer.parseInt(resultado[0]);            
+            String nombre = resultado[1];
+            String numero_telefono = resultado[2];
+            String numero_celular = resultado[3];
+            String direccion = resultado[4];
+            double monto_prestamo = Double.parseDouble(resultado[5]);
+            Cliente cliente = new Cliente(cliente_id, nombre, numero_telefono, numero_celular, direccion, monto_prestamo);
             listaDeClientes.add(cliente);
 
         }
@@ -103,17 +102,16 @@ public class ControladorCliente {
     }
 
     public boolean editarCliente(Cliente cliente) {
-        int cliente_id = cliente.getCliente_id();
-        String tipo_cliente_id = cliente.getTipo_cliente_id();
+        int cliente_id = cliente.getCliente_id();        
         String nombre = cliente.getNombre();
         String numero_telefono = cliente.getNumero_telefono();
         String numero_celular = cliente.getNumero_celular();
         String direccion = cliente.getDireccion();
         double monto_prestamo = cliente.getMonto_prestamo();
         //cliente_id Es la identificación.
-        String selection[] = {"cliente_id", "tipo_id_cliente", "nombre", "numero_de_telefono", "numero_celular", "direccion", "monto_prestamo"};
-        String value[] = {String.valueOf(cliente_id), tipo_cliente_id, nombre, numero_telefono, numero_celular, direccion, String.valueOf(monto_prestamo)};
-        String type_value[] = {"int", "varchar", "varchar", "varchar", "varchar", "varchar", "int"};
+        String selection[] = {"cliente_id", "nombre", "numero_de_telefono", "numero_celular", "direccion", "monto_prestamo"};
+        String value[] = {String.valueOf(cliente_id), nombre, numero_telefono, numero_celular, direccion, String.valueOf(monto_prestamo)};
+        String type_value[] = {"int", "varchar", "varchar", "varchar", "varchar", "int"};
 
         String table = "Cliente";
         String condition = " where cliente_id=" + cliente_id;
@@ -154,7 +152,7 @@ public class ControladorCliente {
             String numero_celular = resultado[4];
             String direccion = resultado[5];
             double monto_prestamo = Double.parseDouble(resultado[6]);
-            cliente = new Cliente(cliente_id, direccion, nombre, numero_telefono, numero_celular, direccion, monto_prestamo);
+            cliente = new Cliente(cliente_id, nombre, numero_telefono, numero_celular, direccion, monto_prestamo);
 
         }
 
