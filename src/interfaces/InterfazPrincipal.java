@@ -17,6 +17,7 @@ import controladores.ControladorProveedores;
 import controladores.ControladorUsuarios;
 import entidades.Cliente;
 import controladores.ControladorCompraProveedor;
+import controladores.ControladorFlujoCompras;
 import entidades.Factura;
 import entidades.Productos;
 import entidades.Proveedores;
@@ -4623,7 +4624,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             case 0:
                 String valor = JOptionPane.showInputDialog("Desea cambiar el monto de la factura\nEl monto actual es: " + tablaMostrarCompras.getValueAt(fila, 3));
                 Double.parseDouble(valor);
-                
+
                 controladorCompraProveedor.editarCompraProveedor(String.valueOf(identificacion), valor);
                 tablaMostrarCompras.setValueAt(valor, fila, 3);
                 try {
@@ -4664,11 +4665,27 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         String montoCompra = campoMontoCompra.getText();
         String IDProveedor = campoProveedorSeleccionado.getText();
 
+        String pago = JOptionPane.showInputDialog("Por favor ingrese el monto a pagar");
+
         try {
             Double.parseDouble(IDProveedor);
-            Double.parseDouble(montoCompra);
+            Double valorCompra = Double.parseDouble(montoCompra);
+            Double valorPagado = Double.parseDouble(pago);
+            
+            while(valorPagado>valorCompra||valorPagado<0)
+            {
+                pago = JOptionPane.showInputDialog("El monto a pagar no puede ser mayor que el valor de la compra ni menor a 0\nPor favor ingrese el monto a pagar");
+                valorPagado = Double.parseDouble(pago);
+            }
+            
             ControladorCompraProveedor controladorCompraProveedor = new ControladorCompraProveedor();
-            controladorCompraProveedor.crearNuevaCompra(IDProveedor, montoCompra);
+            int IDCompra = controladorCompraProveedor.crearNuevaCompra(IDProveedor, montoCompra);
+            
+            //Registrar flujo
+            
+            ControladorFlujoCompras controladorFlujoCompra = new ControladorFlujoCompras();
+            controladorFlujoCompra.registrarFlujoAbono(IDProveedor, pago);
+            controladorFlujoCompra.registrarFlujoDeuda(IDProveedor, montoCompra);
 
             JOptionPane.showMessageDialog(this, "Compra registrada con éxito", "Mensaje del sistema", JOptionPane.INFORMATION_MESSAGE);
             campoMontoCompra.setText("");

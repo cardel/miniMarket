@@ -21,7 +21,7 @@ public class ControladorCompraProveedor {
         sQLManager = new SQLManager();
     }
 
-    public void crearNuevaCompra(String IDproveedor, String monto) {
+    public int crearNuevaCompra(String IDproveedor, String monto) {
         Calendar calendario = Calendar.getInstance();
         String dia = Integer.toString(calendario.get(Calendar.DATE));
         String mes = Integer.toString(calendario.get(Calendar.MONTH));
@@ -39,7 +39,8 @@ public class ControladorCompraProveedor {
 
         String table_id[] = {"ID_Compra_Proveedor"};
         String type_table_id[] = {"int"};
-        sQLManager.insert_query(selection, value, type_value, table, table_id, type_table_id);
+        ArrayList<String[]> resultado = sQLManager.insert_query(selection, value, type_value, table, table_id, type_table_id);
+        return Integer.parseInt(resultado.get(0)[0]);
     }
 
     public ArrayList<CompraProveedores> obtenerCompraProveedoresPorRestriccion(String restriccion) {
