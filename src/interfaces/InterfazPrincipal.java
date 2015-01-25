@@ -2915,14 +2915,14 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         JLabel editarTextoPrincipalDialogo = new JLabel("Buscar Producto");
         c.gridx = 0;
         c.gridy = 0;
-        c.gridwidth = 4;
+        c.gridwidth = 6;
         c.insets = new Insets(15, 200, 40, 0);
         c.ipadx = 100;
         Font textoGrande = new Font("Arial", 1, 18);
         editarTextoPrincipalDialogo.setFont(textoGrande);
         panelDialogo.add(editarTextoPrincipalDialogo, c);
 
-        Vector col = new Vector();
+        /*Vector col = new Vector();
         col.add("1");
         col.add("2");
         col.add("3");
@@ -2941,9 +2941,54 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             temp.add(producto.getUnidadesDisponibles());
             temp.add(producto.getPrecio());
             row.add(temp);
+        }*/
+        
+        final JTable table = new JTable();
+        DefaultTableModel modeloTabla = new DefaultTableModel() {
+
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                //all cells false
+                return false;
+            }
+        };;
+
+        modeloTabla.addColumn("Numero");
+        modeloTabla.addColumn("Identificación");
+        modeloTabla.addColumn("Nombre");
+        modeloTabla.addColumn("Descripcion");
+        modeloTabla.addColumn("Unidades Disponibles");
+        modeloTabla.addColumn("Precio");
+        
+
+        //LLenar tabla
+        for (int i = 0; i < listaDeProductos.size(); i++) {
+            Object[] data = {"1", "2","3","4","5","6"};
+            data[0] = (i + 1);
+            data[1] = listaDeProductos.get(i).getProductoId() ;
+            data[2] = listaDeProductos.get(i).getNombre();
+            data[3] = listaDeProductos.get(i).getDescripcion();
+            data[4] = listaDeProductos.get(i).getUnidadesDisponibles();
+            data[5] = listaDeProductos.get(i).getPrecio();
+                        
+            modeloTabla.addRow(data);
         }
 
-        final JTable table = new JTable(row, col);       
+        table.setModel(modeloTabla);
+        table.getColumn("Numero").setMinWidth(50);
+        table.getColumn("Identificación").setMinWidth(50);
+        table.getColumn("Nombre").setMinWidth(110);
+        table.getColumn("Descripcion").setMinWidth(110);
+        table.getColumn("Unidades Disponibles").setMinWidth(40);
+        table.getColumn("Precio").setMinWidth(110);
+        
+        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        JScrollPane scroll = new JScrollPane(table);
+        scroll.setPreferredSize(new Dimension(320, 150));
+
+        
+
+        //final JTable table = new JTable(row, col);       
         
 
         table.addMouseListener(new MouseAdapter() {
@@ -2980,9 +3025,18 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         c.gridwidth = 1;
         c.ipadx = 200;
         
+        /*table.setModel(modelo);
+        table.getColumn("Identificación").setMinWidth(110);
+        table.getColumn("Nombre").setMinWidth(110);
+        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         
+        JScrollPane scroll = new JScrollPane(table);
+        scroll.setPreferredSize(new Dimension(800, 500));
+        */
+        panelDialogo.add(scroll, c);
 
-        panelDialogo.add(table, c);
+        //panelDialogo.add(table, c);
+        
         dialogoEditar.add(panelDialogo);
         dialogoEditar.setVisible(true);
 
