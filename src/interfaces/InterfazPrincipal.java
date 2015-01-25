@@ -1821,9 +1821,10 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             cp.insertProduct(value);
             jTextField_Producto_CP_nombre.setText("");
             jTextField_Producto_CP_descripcion.setText("");
-            jTextField_Producto_CP_unidades.setText("");
+            jTextField_Producto_CP_unidades.setText("1");
             jTextField_Producto_CP_precio.setText("");
             jTextField_valorCodigoBarrasNuevoProducto.setText("");
+            sliderNumeroUnidades.setValue(1);
         }
 
     }//GEN-LAST:event_jButton1ActionPerformed
