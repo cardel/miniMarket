@@ -4876,7 +4876,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                 } else {
                     Object identificacionCliente = tablaDialogo.getValueAt(row, 0);
                     Object idCliente = tablaDialogo.getValueAt(row, 1);
-                    mostrarIDProveedor.setText(String.valueOf(idCliente));
+                    mostrarIDProveedor.setText(String.valueOf(identificacionCliente));
                     String nombreClientePago = String.valueOf(tablaDialogo.getValueAt(row, 2));
 
                     //Limitar a 15 caracteres
@@ -4930,7 +4930,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         
         try {
 
-            String identificacionCliente = mostrarIdentificacionCliente.getText();
+            String identificacionCliente = mostrarIDProveedor.getText();
             Double abono = Double.parseDouble(jTextFieldAbonoProveedor.getText());
 
             if (abono <= 0.0) {
