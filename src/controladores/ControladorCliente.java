@@ -122,16 +122,16 @@ public class ControladorCliente {
 
     }
 
-    public boolean agregarCliente(int cliente_id, String tipo_cliente_id, String nombre, String numero_telefono, String numero_celular, String direccion, double monto_prestamo) {
+    public boolean agregarCliente( String nombre, String numero_telefono, String numero_celular, String direccion, double monto_prestamo) {
         //cliente_id Es la identificación.
-        String selection[] = {"cliente_id", "tipo_id_cliente", "nombre", "numero_de_telefono", "numero_celular", "direccion", "monto_prestamo"};
-        String value[] = {String.valueOf(cliente_id), tipo_cliente_id, nombre, numero_telefono, numero_celular, direccion, String.valueOf(monto_prestamo)};
-        String type_value[] = {"int", "varchar", "varchar", "varchar", "varchar", "varchar", "int"};
+        String selection[] = { "nombre", "numero_de_telefono", "numero_celular", "direccion", "monto_prestamo"};
+        String value[] = {  nombre, numero_telefono, numero_celular, direccion, String.valueOf(monto_prestamo)};
+        String type_value[] = {"varchar", "varchar", "varchar", "varchar", "int"};
 
         String table = "Cliente";
-        String condition = " where cliente_id=" + cliente_id;
-        String table_id[] = {""};
-        String type_table_id[] = {""};
+        //String condition = " where cliente_id=" + cliente_id;
+        String table_id[] = {"cliente_id"};
+        String type_table_id[] = {"int"};
         sQLManager.insert_query(selection, value, type_value, table, table_id, type_table_id);
         return true;
 
