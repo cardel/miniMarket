@@ -2681,6 +2681,8 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             Font textoGrande = new Font("Arial", 1, 18);
             editarTextoPrincipalDialogo.setFont(textoGrande);
             panelDialogo.add(editarTextoPrincipalDialogo, c);
+            
+            
 
             Vector col = new Vector();
             col.add("1");
@@ -2700,11 +2702,11 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                 row.add(temp);
             }
 
-            final JTable table = new JTable(row, col);
+            final JTable table = new JTable(row, col);                        
 
             table.addMouseListener(new MouseAdapter() {
                 public void mouseClicked(MouseEvent e) {
-                    jTextField_Factura_Cliente_Id.setText(table.getValueAt(table.getSelectedRow(), 3).toString());
+                    jTextField_Factura_Cliente_Id.setText(table.getValueAt(table.getSelectedRow(), 2).toString());
                     String identificacion = table.getValueAt(table.getSelectedRow(), 3).toString();
                     ControladorFlujoFactura controladorFlujoFactura = new ControladorFlujoFactura();
 
@@ -2741,6 +2743,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             c.gridy = 1;
             c.gridwidth = 1;
             c.ipadx = 200;
+            
 
             panelDialogo.add(table, c);
             dialogoEditar.add(panelDialogo);
@@ -2940,7 +2943,8 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             row.add(temp);
         }
 
-        final JTable table = new JTable(row, col);
+        final JTable table = new JTable(row, col);       
+        
 
         table.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
@@ -2975,6 +2979,8 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         c.gridy = 1;
         c.gridwidth = 1;
         c.ipadx = 200;
+        
+        
 
         panelDialogo.add(table, c);
         dialogoEditar.add(panelDialogo);
