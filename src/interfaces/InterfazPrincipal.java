@@ -5064,7 +5064,8 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             }
             //System.out.println(Arrays.toString(codigoFactura.toArray()));
             //System.out.println(Arrays.toString(totalDebe.toArray()));
-
+            System.out.println(totalDebe);
+            
             for (int i = 0; i < totalDebe.size(); i++) {
                 //Tomar flujos
                 if (abono > 0.0) {
@@ -5100,7 +5101,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                             //Registrar flujo
                             //String[] value = {codigoFactura.get(i), "abono", fecha, String.valueOf(totalDebe.get(i))};
                             //String [] selection = {"factura_id","tipo_flujo","fecha","valor"};
-                            controladorFlujoFactura.registrarFlujoAbono(codigoFactura.get(i), String.valueOf(abono));
+                            controladorFlujoFactura.registrarFlujoAbono(codigoFactura.get(i), String.valueOf(totalDebe.get(i)));
 
                             //controladorFactura.cambiarEstadoFactura(codigoFactura.get(i), "pagada");
 
@@ -5142,7 +5143,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                     }
 
                     TablaDeSaldoProveedor.setModel(modeloClientes);
-                    textoTotalDebe.setText(String.valueOf(pago));                    
+                    deudaActualProveedor.setText(String.valueOf(pago));                    
 
                     //Mostrar en table de clientes los datos
                     botonRegistrarAbono.setEnabled(true);
