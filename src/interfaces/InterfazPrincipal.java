@@ -2742,7 +2742,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
 
             table.addMouseListener(new MouseAdapter() {
                 public void mouseClicked(MouseEvent e) {
-                    jTextField_Factura_Cliente_Id.setText(table.getValueAt(table.getSelectedRow(), 2).toString());
+                    jTextField_Factura_Cliente_Id.setText(table.getValueAt(table.getSelectedRow(), 1).toString());
                     String identificacion = table.getValueAt(table.getSelectedRow(), 3).toString();
                     ControladorFlujoFactura controladorFlujoFactura = new ControladorFlujoFactura();
 
@@ -2761,8 +2761,8 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                         }
 
                     }
-                    nombreClienteCrearFactura.setText(table.getValueAt(table.getSelectedRow(), 1).toString());
-                    IdentificacionClienteBuscarFactura.setText(table.getValueAt(table.getSelectedRow(), 2).toString());
+                    nombreClienteCrearFactura.setText(table.getValueAt(table.getSelectedRow(), 2).toString());
+                    IdentificacionClienteBuscarFactura.setText(table.getValueAt(table.getSelectedRow(), 1).toString());
                     double montoPrestamo = Double.parseDouble(table.getValueAt(table.getSelectedRow(), 3).toString());
                     Double totalDisponible = montoPrestamo - pago;
                     valorActualPrestamo.setText(String.valueOf(totalDisponible));
@@ -3127,7 +3127,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                 //String[] selection = {"cliente_id", "fecha", "estado", "identificacionCliente"};
                 Calendar calendario = Calendar.getInstance();
                 String dia = Integer.toString(calendario.get(Calendar.DATE));
-                String mes = Integer.toString(calendario.get(Calendar.MONTH) + 1);
+                String mes = Integer.toString(calendario.get(Calendar.MONTH) ) + 1;
                 String annio = Integer.toString(calendario.get(Calendar.YEAR));
                 Date date = new Date();
                 DateFormat hourFormat = new SimpleDateFormat("HH:mm:ss");
