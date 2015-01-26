@@ -2684,7 +2684,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             
             
 
-            Vector col = new Vector();
+            /*Vector col = new Vector();
             col.add("1");
             col.add("2");
             col.add("3");
@@ -2702,7 +2702,43 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                 row.add(temp);
             }
 
-            final JTable table = new JTable(row, col);                        
+            final JTable table = new JTable(row, col);         */
+            
+            final JTable table = new JTable();
+        DefaultTableModel modeloTabla = new DefaultTableModel() {
+
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                //all cells false
+                return false;
+            }
+        };;
+
+        modeloTabla.addColumn("Numero");
+        modeloTabla.addColumn("Identificación");
+        modeloTabla.addColumn("Nombre");
+        modeloTabla.addColumn("Monto Prestamo");        
+
+        //LLenar tabla
+        for (int i = 0; i < listaClientes.size(); i++) {
+            Object[] data = {"1", "2","3","4"};
+            data[0] = (i + 1);
+            data[1] = listaClientes.get(i).getCliente_id();
+            data[2] = listaClientes.get(i).getNombre();
+            data[3] = listaClientes.get(i).getMonto_prestamo();
+                        
+            modeloTabla.addRow(data);
+        }
+
+        table.setModel(modeloTabla);
+        table.getColumn("Numero").setMinWidth(50);
+        table.getColumn("Identificación").setMinWidth(50);
+        table.getColumn("Nombre").setMinWidth(110);
+        table.getColumn("Monto Prestamo").setMinWidth(110);        
+        
+        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        JScrollPane scroll = new JScrollPane(table);
+        scroll.setPreferredSize(new Dimension(320, 150));
 
             table.addMouseListener(new MouseAdapter() {
                 public void mouseClicked(MouseEvent e) {
@@ -2745,7 +2781,8 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             c.ipadx = 200;
             
 
-            panelDialogo.add(table, c);
+            //panelDialogo.add(table, c);
+            panelDialogo.add(scroll, c);
             dialogoEditar.add(panelDialogo);
             dialogoEditar.setVisible(true);
         } catch (Exception e) {
@@ -2920,28 +2957,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         c.ipadx = 100;
         Font textoGrande = new Font("Arial", 1, 18);
         editarTextoPrincipalDialogo.setFont(textoGrande);
-        panelDialogo.add(editarTextoPrincipalDialogo, c);
-
-        /*Vector col = new Vector();
-        col.add("1");
-        col.add("2");
-        col.add("3");
-        col.add("4");
-        col.add("5");
-        col.add("6");
-        Vector row = new Vector();
-
-        for (int i = 0; i < listaDeProductos.size(); i++) {
-            Productos producto = listaDeProductos.get(i);
-            Vector temp = new Vector();
-            temp.add((i + 1) + "");
-            temp.add(producto.getProductoId());
-            temp.add(producto.getNombre());
-            temp.add(producto.getDescripcion());
-            temp.add(producto.getUnidadesDisponibles());
-            temp.add(producto.getPrecio());
-            row.add(temp);
-        }*/
+        panelDialogo.add(editarTextoPrincipalDialogo, c);        
         
         final JTable table = new JTable();
         DefaultTableModel modeloTabla = new DefaultTableModel() {
@@ -3024,15 +3040,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         c.gridy = 1;
         c.gridwidth = 1;
         c.ipadx = 200;
-        
-        /*table.setModel(modelo);
-        table.getColumn("Identificación").setMinWidth(110);
-        table.getColumn("Nombre").setMinWidth(110);
-        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        
-        JScrollPane scroll = new JScrollPane(table);
-        scroll.setPreferredSize(new Dimension(800, 500));
-        */
+               
         panelDialogo.add(scroll, c);
 
         //panelDialogo.add(table, c);
