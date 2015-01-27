@@ -89,9 +89,9 @@ public class ControladorCliente {
     public boolean editarCliente(int cliente_id, String tipo_cliente_id, String nombre, String numero_telefono, String numero_celular, String direccion, double monto_prestamo) {
 
         //cliente_id Es la identificación.
-        String selection[] = {"cliente_id", "tipo_id_cliente", "nombre", "numero_de_telefono", "numero_celular", "direccion", "monto_prestamo"};
+        String selection[] = {"cliente_id", "nombre", "numero_de_telefono", "numero_celular", "direccion", "monto_prestamo"};
         String value[] = {String.valueOf(cliente_id), tipo_cliente_id, nombre, numero_telefono, numero_celular, direccion, String.valueOf(monto_prestamo)};
-        String type_value[] = {"int", "varchar", "varchar", "varchar", "varchar", "varchar", "int"};
+        String type_value[] = {"int", "varchar", "varchar", "varchar", "varchar", "int"};
 
         String table = "Cliente";
         String condition = " where cliente_id=" + cliente_id;
@@ -135,8 +135,8 @@ public class ControladorCliente {
     }
 
     public Cliente obtenerClientePorID(int cliente_id) {
-        String selection[] = {"cliente_id", "tipo_id_cliente", "nombre", "numero_de_telefono", "numero_celular", "direccion", "monto_prestamo"};
-        String selection_type[] = {"int", "varchar", "varchar", "varchar", "varchar", "varchar", "int"};
+        String selection[] = {"cliente_id", "nombre", "numero_de_telefono", "numero_celular", "direccion", "monto_prestamo"};
+        String selection_type[] = {"int", "varchar", "varchar", "varchar", "varchar", "int"};
         String table = "Cliente";
         String restriction = " where cliente_id="+cliente_id;
         ArrayList<String[]> resultadoSet = sQLManager.select_query(selection, selection_type, table, restriction);
@@ -145,12 +145,11 @@ public class ControladorCliente {
         Cliente cliente = null;
         for (int i = 0; i < resultadoSet.size(); i++) {
             String[] resultado = resultadoSet.get(i);
-            String tipo_cliente_id = resultado[1];
-            String nombre = resultado[2];
-            String numero_telefono = resultado[3];
-            String numero_celular = resultado[4];
-            String direccion = resultado[5];
-            double monto_prestamo = Double.parseDouble(resultado[6]);
+            String nombre = resultado[1];
+            String numero_telefono = resultado[2];
+            String numero_celular = resultado[3];
+            String direccion = resultado[4];
+            double monto_prestamo = Double.parseDouble(resultado[5]);
             cliente = new Cliente(cliente_id, nombre, numero_telefono, numero_celular, direccion, monto_prestamo);
 
         }

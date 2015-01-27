@@ -37,8 +37,10 @@ public class GenerarFactura {
     String direccionEmpresa;
 
     public GenerarFactura() {
+
         controladorConfiguraciones = new ControladorConfiguraciones();
         String[] datosConfiguracionesFactura = controladorConfiguraciones.obtenerInformacionFactura();
+                        System.out.println("llego aqui 1");
 
         IVA = datosConfiguracionesFactura[0];
         informacionLegalFactura = datosConfiguracionesFactura[1];
@@ -47,6 +49,7 @@ public class GenerarFactura {
         nombreEmpresa = configuracionesGlobales[0];
         NITEmpresa = configuracionesGlobales[1];
         direccionEmpresa = configuracionesGlobales[2];
+
     }
 
     public void imprimirFactura(int facturaID, JFrame dialogo) {
@@ -67,10 +70,12 @@ public class GenerarFactura {
 
             ControladorFactura controladorFactura = new ControladorFactura();
             Factura facturaActual = controladorFactura.getFactura(" where factura_id=" + facturaID).get(0);
-            
 
             ControladorCliente controladorCliente = new ControladorCliente();
             Cliente cliente = controladorCliente.obtenerClientePorID(facturaActual.getCliente_id());
+            
+            System.out.println(cliente.getCliente_id());
+            
             PDDocument document = new PDDocument();
 
             PDPage pagina1 = new PDPage();
@@ -84,8 +89,11 @@ public class GenerarFactura {
             contenido.beginText();
             contenido.setFont(font, 16);
             contenido.moveTextPositionByAmount(30, 730);
+                                System.out.println("llego aqui -10");
+
             contenido.drawString("Factura #" + facturaActual.getFactura_id());
             contenido.endText();
+                                System.out.println("llego aqui -11");
 
             contenido.beginText();
             contenido.setFont(font, 12);
@@ -164,9 +172,11 @@ public class GenerarFactura {
             contenido.drawLine(500, 550, 500, 570);
 
             contenido.drawLine(30, 550, 500, 550);
+                                System.out.println("llego aqui 1");
 
             int altura = 550;
             ControladorProducto controladorProducto = new ControladorProducto();
+                                System.out.println("llego aqui 2");
 
             /*
              * Caben en la pagina
@@ -177,6 +187,7 @@ public class GenerarFactura {
             int indiceProductos = 0;
             double totalEspaciosNecesarios = listaProductosFactura.size() + 5 + 1;
             double totalPaginas = 1;
+                                System.out.println("llego aqui 3");
 
             if (Math.floor(totalEspaciosNecesarios / 17) == 0) {
                 totalPaginas = 1;

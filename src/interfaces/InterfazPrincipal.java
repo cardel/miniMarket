@@ -2681,64 +2681,61 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             Font textoGrande = new Font("Arial", 1, 18);
             editarTextoPrincipalDialogo.setFont(textoGrande);
             panelDialogo.add(editarTextoPrincipalDialogo, c);
-            
-            
 
             /*Vector col = new Vector();
-            col.add("1");
-            col.add("2");
-            col.add("3");
-            col.add("4");
-            Vector row = new Vector();
+             col.add("1");
+             col.add("2");
+             col.add("3");
+             col.add("4");
+             Vector row = new Vector();
 
-            for (int i = 0; i < listaClientes.size(); i++) {
-                Cliente cliente = listaClientes.get(i);
-                Vector temp = new Vector();
-                temp.add((i + 1) + "");
-                temp.add(cliente.getNombre());
-                temp.add(cliente.getCliente_id() + "");
-                temp.add(cliente.getMonto_prestamo() + "");
-                System.out.println("info" + cliente.getNombre() + "," + cliente.getMonto_prestamo());
-                row.add(temp);
-            }
+             for (int i = 0; i < listaClientes.size(); i++) {
+             Cliente cliente = listaClientes.get(i);
+             Vector temp = new Vector();
+             temp.add((i + 1) + "");
+             temp.add(cliente.getNombre());
+             temp.add(cliente.getCliente_id() + "");
+             temp.add(cliente.getMonto_prestamo() + "");
+             System.out.println("info" + cliente.getNombre() + "," + cliente.getMonto_prestamo());
+             row.add(temp);
+             }
 
-            final JTable table = new JTable(row, col);         */
-            
+             final JTable table = new JTable(row, col);         */
             final JTable table = new JTable();
-        DefaultTableModel modeloTabla = new DefaultTableModel() {
+            DefaultTableModel modeloTabla = new DefaultTableModel() {
 
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                //all cells false
-                return false;
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    //all cells false
+                    return false;
+                }
+            };;
+
+            modeloTabla.addColumn("Numero");
+            modeloTabla.addColumn("Identificación");
+            modeloTabla.addColumn("Nombre");
+            modeloTabla.addColumn("Monto Prestamo");
+
+            //LLenar tabla
+            for (int i = 0; i < listaClientes.size(); i++) {
+                Object[] data = {"1", "2", "3", "4"};
+                data[0] = (i + 1);
+                data[1] = listaClientes.get(i).getCliente_id();
+                data[2] = listaClientes.get(i).getNombre();
+                data[3] = listaClientes.get(i).getMonto_prestamo();
+
+                modeloTabla.addRow(data);
             }
-        };;
 
-        modeloTabla.addColumn("Numero");
-        modeloTabla.addColumn("Identificación");
-        modeloTabla.addColumn("Nombre");
-        modeloTabla.addColumn("Monto Prestamo");        
+            table.setModel(modeloTabla);
+            table.getColumn("Numero").setMinWidth(50);
+            table.getColumn("Identificación").setMinWidth(50);
+            table.getColumn("Nombre").setMinWidth(110);
+            table.getColumn("Monto Prestamo").setMinWidth(110);
 
-        //LLenar tabla
-        for (int i = 0; i < listaClientes.size(); i++) {
-            Object[] data = {"1", "2","3","4"};
-            data[0] = (i + 1);
-            data[1] = listaClientes.get(i).getCliente_id();
-            data[2] = listaClientes.get(i).getNombre();
-            data[3] = listaClientes.get(i).getMonto_prestamo();
-                        
-            modeloTabla.addRow(data);
-        }
-
-        table.setModel(modeloTabla);
-        table.getColumn("Numero").setMinWidth(50);
-        table.getColumn("Identificación").setMinWidth(50);
-        table.getColumn("Nombre").setMinWidth(110);
-        table.getColumn("Monto Prestamo").setMinWidth(110);        
-        
-        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        JScrollPane scroll = new JScrollPane(table);
-        scroll.setPreferredSize(new Dimension(320, 150));
+            table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            JScrollPane scroll = new JScrollPane(table);
+            scroll.setPreferredSize(new Dimension(320, 150));
 
             table.addMouseListener(new MouseAdapter() {
                 public void mouseClicked(MouseEvent e) {
@@ -2779,7 +2776,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             c.gridy = 1;
             c.gridwidth = 1;
             c.ipadx = 200;
-            
 
             //panelDialogo.add(table, c);
             panelDialogo.add(scroll, c);
@@ -2957,8 +2953,8 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         c.ipadx = 100;
         Font textoGrande = new Font("Arial", 1, 18);
         editarTextoPrincipalDialogo.setFont(textoGrande);
-        panelDialogo.add(editarTextoPrincipalDialogo, c);        
-        
+        panelDialogo.add(editarTextoPrincipalDialogo, c);
+
         final JTable table = new JTable();
         DefaultTableModel modeloTabla = new DefaultTableModel() {
 
@@ -2975,18 +2971,17 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         modeloTabla.addColumn("Descripcion");
         modeloTabla.addColumn("Unidades Disponibles");
         modeloTabla.addColumn("Precio");
-        
 
         //LLenar tabla
         for (int i = 0; i < listaDeProductos.size(); i++) {
-            Object[] data = {"1", "2","3","4","5","6"};
+            Object[] data = {"1", "2", "3", "4", "5", "6"};
             data[0] = (i + 1);
-            data[1] = listaDeProductos.get(i).getProductoId() ;
+            data[1] = listaDeProductos.get(i).getProductoId();
             data[2] = listaDeProductos.get(i).getNombre();
             data[3] = listaDeProductos.get(i).getDescripcion();
             data[4] = listaDeProductos.get(i).getUnidadesDisponibles();
             data[5] = listaDeProductos.get(i).getPrecio();
-                        
+
             modeloTabla.addRow(data);
         }
 
@@ -2997,16 +2992,12 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         table.getColumn("Descripcion").setMinWidth(110);
         table.getColumn("Unidades Disponibles").setMinWidth(40);
         table.getColumn("Precio").setMinWidth(110);
-        
+
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         JScrollPane scroll = new JScrollPane(table);
         scroll.setPreferredSize(new Dimension(320, 150));
 
-        
-
         //final JTable table = new JTable(row, col);       
-        
-
         table.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 //jTextField_Factura_Cliente_Id.setText(table.getValueAt(table.getSelectedRow(), 1).toString());
@@ -3040,11 +3031,10 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         c.gridy = 1;
         c.gridwidth = 1;
         c.ipadx = 200;
-               
+
         panelDialogo.add(scroll, c);
 
         //panelDialogo.add(table, c);
-        
         dialogoEditar.add(panelDialogo);
         dialogoEditar.setVisible(true);
 
@@ -3127,7 +3117,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                 //String[] selection = {"cliente_id", "fecha", "estado", "identificacionCliente"};
                 Calendar calendario = Calendar.getInstance();
                 String dia = Integer.toString(calendario.get(Calendar.DATE));
-                String mes = Integer.toString(calendario.get(Calendar.MONTH) ) + 1;
+                String mes = Integer.toString(calendario.get(Calendar.MONTH)) + 1;
                 String annio = Integer.toString(calendario.get(Calendar.YEAR));
                 Date date = new Date();
                 DateFormat hourFormat = new SimpleDateFormat("HH:mm:ss");
@@ -3730,6 +3720,16 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             }
             //System.out.println(Arrays.toString(codigoFactura.toArray()));
             //System.out.println(Arrays.toString(totalDebe.toArray()));
+            Double debeTotal = 0d;
+            for (int i = 0; i < totalDebe.size(); i++) {
+                debeTotal += totalDebe.get(i);
+
+            }
+
+            if (debeTotal < abono) {
+                JOptionPane.showMessageDialog(this, "El monto es superior a lo que debe el cliente, por favor indique otro monto", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
 
             for (int i = 0; i < totalDebe.size(); i++) {
                 //Tomar flujos
@@ -4720,13 +4720,12 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                 Double.parseDouble(valor);
 
                 controladorCompraProveedor.editarCompraProveedor(String.valueOf(identificacion), valor);
-                
 
                 //Editar flujos
                 //Registrar nueva deuda
                 controladorFlujoCompras.registrarFlujoDeuda(String.valueOf(identificacion), valor);
-                controladorFlujoCompras.registrarFlujoAbono(String.valueOf(identificacion), String.valueOf( tablaMostrarCompras.getValueAt(fila, 3)));
-                
+                controladorFlujoCompras.registrarFlujoAbono(String.valueOf(identificacion), String.valueOf(tablaMostrarCompras.getValueAt(fila, 3)));
+
                 tablaMostrarCompras.setValueAt(valor, fila, 3);
 
                 try {
@@ -4849,7 +4848,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         String nombre = jTextFieldNombreSaldoProveedores.getText();
         ControladorProveedores controladorProveedores = new ControladorProveedores();
         ArrayList<Proveedores> listaProveedores = controladorProveedores.obtenerProveedores("", nombre);
-                
+
         final JDialog dialogoEditar = new JDialog(this);
 
         dialogoEditar.setTitle("Buscar proveedores");
@@ -4891,8 +4890,8 @@ public class InterfazPrincipal extends javax.swing.JFrame {
 
         //LLenar tabla
         for (int i = 0; i < listaProveedores.size(); i++) {
-            Object[] data = {"1", "2" , "3"};
-            data[0] = listaProveedores.get(i).getID() ;
+            Object[] data = {"1", "2", "3"};
+            data[0] = listaProveedores.get(i).getID();
             data[1] = listaProveedores.get(i).getIdentificacion();
             data[2] = listaProveedores.get(i).getNombre();
             System.out.println("Nombre!!" + data[2]);
@@ -4924,8 +4923,8 @@ public class InterfazPrincipal extends javax.swing.JFrame {
 
         dialogoEditar.add(panelDialogo);
         dialogoEditar.setVisible(true);
-        
-         botonCerrarClienteDialogo.addActionListener(new ActionListener() {
+
+        botonCerrarClienteDialogo.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -4968,12 +4967,12 @@ public class InterfazPrincipal extends javax.swing.JFrame {
 
                     for (int i = 0; i < flujosProveedor.size(); i++) {
                         Flujo_Compra datos = flujosProveedor.get(i);
-                        Object[] rowData = {datos.getID_CompraProveedor(), datos.getTipo_flujo() , datos.getFecha() , datos.getMonto() };
+                        Object[] rowData = {datos.getID_CompraProveedor(), datos.getTipo_flujo(), datos.getFecha(), datos.getMonto()};
 
                         if (datos.getTipo_flujo().equals("deuda")) {
-                            pago += Double.parseDouble(datos.getMonto()+"" );
+                            pago += Double.parseDouble(datos.getMonto() + "");
                         } else {
-                            pago -= Double.parseDouble(datos.getMonto()+"");
+                            pago -= Double.parseDouble(datos.getMonto() + "");
                         }
 
                         modeloClientes.addRow(rowData);
@@ -4988,14 +4987,14 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                 }
 
             }
-            
-         });
-        
+
+        });
+
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
         // TODO add your handling code here:
-        
+
         try {
 
             String identificacionCliente = mostrarIDProveedor.getText();
@@ -5065,7 +5064,15 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             //System.out.println(Arrays.toString(codigoFactura.toArray()));
             //System.out.println(Arrays.toString(totalDebe.toArray()));
             System.out.println(totalDebe);
-            
+            double debeTotal = 0d;
+            for (int i = 0; i < totalDebe.size(); i++) {
+                debeTotal += totalDebe.get(i);
+            }
+
+            if (debeTotal < abono) {
+                JOptionPane.showMessageDialog(this, "El monto a pagar no puede ser superior a lo que se debe", "Error del sistema", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
             for (int i = 0; i < totalDebe.size(); i++) {
                 //Tomar flujos
                 if (abono > 0.0) {
@@ -5104,7 +5111,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                             controladorFlujoFactura.registrarFlujoAbono(codigoFactura.get(i), String.valueOf(totalDebe.get(i)));
 
                             //controladorFactura.cambiarEstadoFactura(codigoFactura.get(i), "pagada");
-
                             //Ajustamos ahora el abono restando lo que debe la factura
                             informe += codigoFactura.get(i) + "\t" + String.valueOf(abono) + "\tSI\n";
                             abono -= totalDebe.get(i);
@@ -5130,24 +5136,24 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             double pago = 0.0;
 
             for (int i = 0; i < flujosProveedor.size(); i++) {
-                        Flujo_Compra datos = flujosProveedor.get(i);
-                        Object[] rowData = {datos.getID_CompraProveedor(), datos.getTipo_flujo() , datos.getFecha() , datos.getMonto() };
+                Flujo_Compra datos = flujosProveedor.get(i);
+                Object[] rowData = {datos.getID_CompraProveedor(), datos.getTipo_flujo(), datos.getFecha(), datos.getMonto()};
 
-                        if (datos.getTipo_flujo().equals("deuda")) {
-                            pago += Double.parseDouble(datos.getMonto()+"" );
-                        } else {
-                            pago -= Double.parseDouble(datos.getMonto()+"");
-                        }
+                if (datos.getTipo_flujo().equals("deuda")) {
+                    pago += Double.parseDouble(datos.getMonto() + "");
+                } else {
+                    pago -= Double.parseDouble(datos.getMonto() + "");
+                }
 
-                        modeloClientes.addRow(rowData);
-                    }
+                modeloClientes.addRow(rowData);
+            }
 
-                    TablaDeSaldoProveedor.setModel(modeloClientes);
-                    deudaActualProveedor.setText(String.valueOf(pago));                    
+            TablaDeSaldoProveedor.setModel(modeloClientes);
+            deudaActualProveedor.setText(String.valueOf(pago));
 
-                    //Mostrar en table de clientes los datos
-                    botonRegistrarAbono.setEnabled(true);
-                    
+            //Mostrar en table de clientes los datos
+            botonRegistrarAbono.setEnabled(true);
+
             area.setText(informe);
             JScrollPane panelInformePago = new JScrollPane(area);
             JOptionPane.showMessageDialog(this, panelInformePago);
@@ -5155,7 +5161,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Debe ingresar un valor numérico mayor que 0 en el abono ");
         }
-        
+
     }//GEN-LAST:event_jButton10ActionPerformed
     /*
      * Cambiar nombre de usuario
