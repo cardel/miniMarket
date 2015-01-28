@@ -8,6 +8,7 @@ package interfaces.dialogos;
 import controladores.ControladorProveedores;
 import entidades.Proveedores;
 import java.util.ArrayList;
+import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
@@ -23,6 +24,7 @@ public class DialogoBuscarProveedor extends javax.swing.JDialog {
     String busquedaNombreProveedor;
     String busquedaNITProveedor;
     JTextField campoSeleccionado;
+    JLabel nombreProveedor;
 
     public DialogoBuscarProveedor(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -154,6 +156,8 @@ public class DialogoBuscarProveedor extends javax.swing.JDialog {
         int filaSeleccionada = tablaProveedores.getSelectedRow();
         Object datosID = tablaProveedores.getValueAt(filaSeleccionada, 0);
         campoSeleccionado.setText(String.valueOf(datosID));
+        Object datoproveedor = tablaProveedores.getValueAt(filaSeleccionada, 2);
+        nombreProveedor.setText(String.valueOf(datoproveedor));
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -162,6 +166,9 @@ public class DialogoBuscarProveedor extends javax.swing.JDialog {
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    public void establecerNombreProveedor(JLabel etiqueta){
+        nombreProveedor = etiqueta;
+    }
     /**
      * @param args the command line arguments
      */

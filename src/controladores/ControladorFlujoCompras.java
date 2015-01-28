@@ -69,7 +69,7 @@ public class ControladorFlujoCompras {
 
         Calendar calendario = Calendar.getInstance();
         String dia = Integer.toString(calendario.get(Calendar.DATE));
-        String mes = Integer.toString(calendario.get(Calendar.MONTH));
+        String mes = Integer.toString(calendario.get(Calendar.MONTH)+1);
         String annio = Integer.toString(calendario.get(Calendar.YEAR));
 
         String fecha = annio + "-" + mes + "-" + dia;
@@ -87,7 +87,7 @@ public class ControladorFlujoCompras {
 
         Calendar calendario = Calendar.getInstance();
         String dia = Integer.toString(calendario.get(Calendar.DATE));
-        String mes = Integer.toString(calendario.get(Calendar.MONTH));
+        String mes = Integer.toString(calendario.get(Calendar.MONTH)+1);
         String annio = Integer.toString(calendario.get(Calendar.YEAR));
 
         String fecha = annio + "-" + mes + "-" + dia;

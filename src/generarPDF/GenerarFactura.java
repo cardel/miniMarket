@@ -14,6 +14,8 @@ import entidades.Cliente;
 import entidades.Factura;
 import entidades.Factura_Productos;
 import entidades.Productos;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -40,11 +42,11 @@ public class GenerarFactura {
 
         controladorConfiguraciones = new ControladorConfiguraciones();
         String[] datosConfiguracionesFactura = controladorConfiguraciones.obtenerInformacionFactura();
-                        System.out.println("llego aqui 1");
+        System.out.println("llego aqui 1");
 
         IVA = datosConfiguracionesFactura[0];
         informacionLegalFactura = datosConfiguracionesFactura[1];
-        
+
         String[] configuracionesGlobales = controladorConfiguraciones.obtenerInformacionLegal();
         nombreEmpresa = configuracionesGlobales[0];
         NITEmpresa = configuracionesGlobales[1];
@@ -73,9 +75,9 @@ public class GenerarFactura {
 
             ControladorCliente controladorCliente = new ControladorCliente();
             Cliente cliente = controladorCliente.obtenerClientePorID(facturaActual.getCliente_id());
-            
+
             System.out.println(cliente.getCliente_id());
-            
+
             PDDocument document = new PDDocument();
 
             PDPage pagina1 = new PDPage();
@@ -89,16 +91,16 @@ public class GenerarFactura {
             contenido.beginText();
             contenido.setFont(font, 16);
             contenido.moveTextPositionByAmount(30, 730);
-                                System.out.println("llego aqui -10");
+            System.out.println("llego aqui -10");
 
             contenido.drawString("Factura #" + facturaActual.getFactura_id());
             contenido.endText();
-                                System.out.println("llego aqui -11");
+            System.out.println("llego aqui -11");
 
             contenido.beginText();
             contenido.setFont(font, 12);
             contenido.moveTextPositionByAmount(30, 700);
-            contenido.drawString(nombreEmpresa+" NIT: "+NITEmpresa);
+            contenido.drawString(nombreEmpresa + " NIT: " + NITEmpresa);
             contenido.endText();
 
             contenido.beginText();
@@ -172,11 +174,9 @@ public class GenerarFactura {
             contenido.drawLine(500, 550, 500, 570);
 
             contenido.drawLine(30, 550, 500, 550);
-                                System.out.println("llego aqui 1");
 
             int altura = 550;
             ControladorProducto controladorProducto = new ControladorProducto();
-                                System.out.println("llego aqui 2");
 
             /*
              * Caben en la pagina
@@ -187,7 +187,6 @@ public class GenerarFactura {
             int indiceProductos = 0;
             double totalEspaciosNecesarios = listaProductosFactura.size() + 5 + 1;
             double totalPaginas = 1;
-                                System.out.println("llego aqui 3");
 
             if (Math.floor(totalEspaciosNecesarios / 17) == 0) {
                 totalPaginas = 1;
@@ -208,9 +207,12 @@ public class GenerarFactura {
                     nombreProducto = nombreProducto.substring(0, 26);
                 }
 
+                Double totalProducto = productoActual.getPrecio() * facturaProducto.getUnidades();
+                NumberFormat formatter = new DecimalFormat("#0");
+
                 String valorUnitario = String.valueOf(productoActual.getPrecio());
                 String unidades = String.valueOf(facturaProducto.getUnidades());
-                String valorTotal = String.valueOf(productoActual.getPrecio() * facturaProducto.getUnidades());
+                String valorTotal = String.valueOf(formatter.format(totalProducto));
 
                 contenido.beginText();
                 contenido.setFont(fontNormal, 12);
@@ -257,7 +259,11 @@ public class GenerarFactura {
             if (totalPaginas == 1) {
                 Double valor = facturaActual.getValor();
                 Double ivaCalculado = Math.ceil(valor * Double.parseDouble(IVA) / 100);
-                    Double subtotal = Math.floor(valor * (1 - Double.parseDouble(IVA)/100));
+                Double subtotal = Math.floor(valor * (1 - Double.parseDouble(IVA) / 100));
+
+                NumberFormat formatter = new DecimalFormat("#0");
+                String valorFormateado = formatter.format(valor);
+
                 contenido.beginText();
                 contenido.setFont(fontNormal, 12);
                 contenido.moveTextPositionByAmount(320, altura - 15);
@@ -305,7 +311,7 @@ public class GenerarFactura {
                 contenido.beginText();
                 contenido.setFont(font, 12);
                 contenido.moveTextPositionByAmount(400, altura - 15);
-                contenido.drawString(String.valueOf(valor));
+                contenido.drawString(valorFormateado);
                 contenido.endText();
                 contenido.drawLine(500, altura, 500, altura - 30);
                 //Linea inferior
@@ -341,10 +347,14 @@ public class GenerarFactura {
                         nombreProducto = nombreProducto.substring(0, 26);
                     }
 
+                    Double totalProducto = productoActual.getPrecio() * facturaProducto.getUnidades();
+                    NumberFormat formatter = new DecimalFormat("#0");
+
                     String valorUnitario = String.valueOf(productoActual.getPrecio());
                     String unidades = String.valueOf(facturaProducto.getUnidades());
-                    String valorTotal = String.valueOf(productoActual.getPrecio() * facturaProducto.getUnidades());
+                    String valorTotal = String.valueOf(formatter.format(totalProducto));
 
+                    
                     contenidoSiguiente.beginText();
                     contenidoSiguiente.setFont(fontNormal, 12);
                     contenidoSiguiente.moveTextPositionByAmount(40, altura - 15);
@@ -387,7 +397,9 @@ public class GenerarFactura {
                 if (j == totalPaginas - 1 && altura >= 40) {
                     Double valor = facturaActual.getValor();
                     Double ivaCalculado = Math.ceil(valor * Double.parseDouble(IVA) / 100);
-                    Double subtotal = Math.floor(valor * (1 - Double.parseDouble(IVA)/100));
+                    Double subtotal = Math.floor(valor * (1 - Double.parseDouble(IVA) / 100));
+                    NumberFormat formatter = new DecimalFormat("#0");
+                    String valorFormateado = formatter.format(valor);
                     
                     contenidoSiguiente.beginText();
                     contenidoSiguiente.setFont(fontNormal, 12);
@@ -436,7 +448,7 @@ public class GenerarFactura {
                     contenidoSiguiente.beginText();
                     contenidoSiguiente.setFont(fontNormal, 12);
                     contenidoSiguiente.moveTextPositionByAmount(400, altura - 15);
-                    contenidoSiguiente.drawString(String.valueOf(valor));
+                    contenidoSiguiente.drawString(valorFormateado);
                     contenidoSiguiente.endText();
                     contenidoSiguiente.drawLine(500, altura, 500, altura - 30);
                     //Linea inferior

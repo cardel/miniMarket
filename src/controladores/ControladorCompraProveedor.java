@@ -24,7 +24,7 @@ public class ControladorCompraProveedor {
     public int crearNuevaCompra(String IDproveedor, String monto) {
         Calendar calendario = Calendar.getInstance();
         String dia = Integer.toString(calendario.get(Calendar.DATE));
-        String mes = Integer.toString(calendario.get(Calendar.MONTH));
+        String mes = Integer.toString(calendario.get(Calendar.MONTH)+1);
         String annio = Integer.toString(calendario.get(Calendar.YEAR));
         //Date date = new Date();
         //DateFormat hourFormat = new SimpleDateFormat("HH:mm:ss");

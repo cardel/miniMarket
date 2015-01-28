@@ -38,6 +38,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -46,7 +48,6 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Vector;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
@@ -221,6 +222,8 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         campoNombreProveedor = new javax.swing.JTextField();
         campoProveedorSeleccionado = new javax.swing.JTextField();
         jButton11 = new javax.swing.JButton();
+        jLabel67 = new javax.swing.JLabel();
+        nombreProveedorAComprar = new javax.swing.JLabel();
         jPanel30 = new javax.swing.JPanel();
         jLabel72 = new javax.swing.JLabel();
         campoMontoCompra = new javax.swing.JTextField();
@@ -827,7 +830,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Identificación", "Nombre", "Monto prestado", "Editar"
+                "Número cliente", "Nombre", "Monto a prestar", "Editar"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -957,11 +960,11 @@ public class InterfazPrincipal extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Factura ID", "Fecha", "Tipo de Movimiento", "Valor"
+                "Número factura", "Tipo de Movimiento", "Fecha", "Valor"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, true, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -1329,6 +1332,10 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             }
         });
 
+        jLabel67.setText("Compra al proveedor:");
+
+        nombreProveedorAComprar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+
         javax.swing.GroupLayout jPanel29Layout = new javax.swing.GroupLayout(jPanel29);
         jPanel29.setLayout(jPanel29Layout);
         jPanel29Layout.setHorizontalGroup(
@@ -1336,7 +1343,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             .addGroup(jPanel29Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel29Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel69)
                     .addGroup(jPanel29Layout.createSequentialGroup()
                         .addGroup(jPanel29Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel70)
@@ -1351,24 +1357,34 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                                 .addComponent(campoProveedorSeleccionado, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel29Layout.createSequentialGroup()
                                 .addGap(68, 68, 68)
-                                .addComponent(jButton11)))))
-                .addContainerGap(139, Short.MAX_VALUE))
+                                .addComponent(jButton11))))
+                    .addComponent(jLabel69))
+                .addGap(37, 37, 37)
+                .addGroup(jPanel29Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(nombreProveedorAComprar, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel67))
+                .addContainerGap(105, Short.MAX_VALUE))
         );
         jPanel29Layout.setVerticalGroup(
             jPanel29Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel29Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel69)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel29Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel70)
-                    .addComponent(campoNITProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(campoProveedorSeleccionado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel69)
+                    .addComponent(jLabel67))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel29Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel71)
-                    .addComponent(campoNombreProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton11))
+                .addGroup(jPanel29Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel29Layout.createSequentialGroup()
+                        .addGroup(jPanel29Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel70)
+                            .addComponent(campoNITProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(campoProveedorSeleccionado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel29Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel71)
+                            .addComponent(campoNombreProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton11)))
+                    .addComponent(nombreProveedorAComprar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
@@ -1395,7 +1411,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                         .addComponent(campoMontoCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(62, 62, 62)
                         .addComponent(jButton12)))
-                .addContainerGap(125, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel30Layout.setVerticalGroup(
             jPanel30Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1418,7 +1434,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                 .addGroup(jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel29, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel30, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(339, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel28Layout.setVerticalGroup(
             jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1427,7 +1443,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                 .addComponent(jPanel29, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel30, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(318, Short.MAX_VALUE))
+                .addContainerGap(185, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel26Layout = new javax.swing.GroupLayout(jPanel26);
@@ -1615,7 +1631,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Identificación", "Nombre"
+                "NIT", "Nombre"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -1658,6 +1674,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
 
         jTabbedPane4.addTab("Crear Proveedores", jPanel23);
 
+        jLabel64.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel64.setText("SALDO DE PROVEEDORES");
 
         jLabel65.setText("Nombre");
@@ -1671,7 +1688,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             }
         });
 
-        jLabel66.setText("La tiende tiene un saldo de ");
+        jLabel66.setText("Se le debe al proveedor: ");
 
         deudaActualProveedor.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         deudaActualProveedor.setText("0.0");
@@ -1690,7 +1707,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Factura ID", "Tipo flujo", "Fecha", "Valor"
+                "Numero compra", "Tipo flujo", "Fecha", "Valor"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -1717,51 +1734,50 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         jPanel24Layout.setHorizontalGroup(
             jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel24Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
                 .addGroup(jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 748, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel24Layout.createSequentialGroup()
-                        .addGap(190, 190, 190)
-                        .addComponent(jLabel64))
-                    .addGroup(jPanel24Layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addGroup(jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 748, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel24Layout.createSequentialGroup()
-                                .addGroup(jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(jPanel24Layout.createSequentialGroup()
-                                        .addComponent(jLabel68)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jTextFieldAbonoProveedor))
-                                    .addGroup(jPanel24Layout.createSequentialGroup()
-                                        .addComponent(mostrarIDProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jButton9))
-                                    .addGroup(jPanel24Layout.createSequentialGroup()
-                                        .addComponent(jLabel65)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jTextFieldNombreSaldoProveedores)))
+                                .addComponent(jLabel68)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jTextFieldAbonoProveedor))
+                            .addGroup(jPanel24Layout.createSequentialGroup()
+                                .addComponent(mostrarIDProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jButton9))
+                            .addGroup(jPanel24Layout.createSequentialGroup()
+                                .addComponent(jLabel65)
+                                .addGap(18, 18, 18)
+                                .addComponent(jTextFieldNombreSaldoProveedores)))
+                        .addGroup(jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel24Layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton10))
+                            .addGroup(jPanel24Layout.createSequentialGroup()
+                                .addGap(93, 93, 93)
                                 .addGroup(jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel24Layout.createSequentialGroup()
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jButton10))
+                                        .addComponent(jLabel77)
+                                        .addGap(34, 34, 34)
+                                        .addComponent(textoNombreProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(jPanel24Layout.createSequentialGroup()
-                                        .addGap(93, 93, 93)
-                                        .addGroup(jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(jPanel24Layout.createSequentialGroup()
-                                                .addComponent(jLabel77)
-                                                .addGap(34, 34, 34)
-                                                .addComponent(textoNombreProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addGroup(jPanel24Layout.createSequentialGroup()
-                                                .addComponent(jLabel66)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(deudaActualProveedor)))))))))
-                .addContainerGap(18, Short.MAX_VALUE))
+                                        .addComponent(jLabel66)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(deudaActualProveedor)))))))
+                .addContainerGap(20, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel24Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel64)
+                .addGap(272, 272, 272))
         );
         jPanel24Layout.setVerticalGroup(
             jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel24Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
+                .addContainerGap()
                 .addComponent(jLabel64)
-                .addGap(18, 18, 18)
+                .addGap(32, 32, 32)
                 .addGroup(jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel65)
                     .addComponent(jTextFieldNombreSaldoProveedores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1778,7 +1794,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                     .addComponent(jLabel68)
                     .addComponent(jTextFieldAbonoProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton10))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                 .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -3237,8 +3253,10 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                 Object[] fila = new Object[4];
                 fila[0] = cliente.getCliente_id();
                 fila[1] = cliente.getNombre();
-                fila[2] = cliente.getMonto_prestamo();
-                //button.setText("<HTML>Click the <FONT color=\"#000099\"><U>link "+i+"</U></FONT>"+ " to go to the Java website.</HTML>");
+
+                Double montoAPrestar = cliente.getMonto_prestamo();
+                NumberFormat formatter = new DecimalFormat("#0");
+                fila[2] =formatter.format(montoAPrestar);
 
                 fila[3] = "Editar";
                 modelo.addRow(fila);
@@ -3623,7 +3641,12 @@ public class InterfazPrincipal extends javax.swing.JFrame {
 
                     for (int i = 0; i < flujosCliente.size(); i++) {
                         String[] datos = flujosCliente.get(i);
-                        Object[] rowData = {datos[1], datos[2], datos[3], datos[4]};
+
+                        TablaDeSaldoClientes.setModel(modeloClientes);
+                        NumberFormat formatter = new DecimalFormat("#0");
+
+                        String valorMovimiento = String.valueOf(formatter.format(Double.parseDouble(datos[4])));
+                        Object[] rowData = {datos[1], datos[2], datos[3], valorMovimiento};
 
                         if (datos[2].equals("deuda")) {
                             pago += Double.parseDouble(datos[4]);
@@ -3635,7 +3658,8 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                     }
 
                     TablaDeSaldoClientes.setModel(modeloClientes);
-                    textoTotalDebe.setText(String.valueOf(pago));
+                    NumberFormat formatter = new DecimalFormat("#0");
+                    textoTotalDebe.setText(String.valueOf(formatter.format(pago)));
                     dialogoEditar.dispose();
 
                     //Mostrar en table de clientes los datos
@@ -3890,15 +3914,22 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             modelo.removeRow(i);
         }
         modelo.setRowCount(0);
+        ControladorCliente controladorCliente = new ControladorCliente();
         for (int i = 0; i < listaFactura.size(); i++) {
             Factura factura = listaFactura.get(i);
             Object[] fila = new Object[6];
             fila[0] = (i + 1);
             fila[1] = factura.getFactura_id();
             fila[2] = factura.getFecha();
-            fila[3] = factura.getCliente_id();
+
+            Cliente cliente = controladorCliente.obtenerClientePorID(factura.getCliente_id());
+            fila[3] = cliente.getNombre();
             fila[4] = factura.getEstado();
-            fila[5] = factura.getValor();
+
+            Double valorFactura = factura.getValor();
+            NumberFormat formatter = new DecimalFormat("#0");
+
+            fila[5] = formatter.format(valorFactura);
             //button.setText("<HTML>Click the <FONT color=\"#000099\"><U>link "+i+"</U></FONT>"+ " to go to the Java website.</HTML>");
             modelo.addRow(fila);
 
@@ -4649,6 +4680,8 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         String nombre = jTextFieldNombreProveedores.getText();
 
         try {
+            if(identificacion.equals("")) Double.parseDouble("genere excepcion");
+            if(nombre.equals("")) Double.parseDouble("genere excepcion");
             ControladorProveedores controladorProveedores = new ControladorProveedores();
             controladorProveedores.agregarProveedores(identificacion, nombre);
 
@@ -4759,7 +4792,9 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         DialogoBuscarProveedor dialogoBuscarProveedor = new DialogoBuscarProveedor(this, false);
         dialogoBuscarProveedor.establecerPatronesBusqueda(nombreProveedor, nitProveedor);
         dialogoBuscarProveedor.establecerSalida(campoProveedorSeleccionado);
+        dialogoBuscarProveedor.establecerNombreProveedor(nombreProveedorAComprar);
         dialogoBuscarProveedor.llenarTabla();
+        
         dialogoBuscarProveedor.setVisible(true);
 
     }//GEN-LAST:event_jButton11ActionPerformed
@@ -5000,7 +5035,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             String identificacionCliente = mostrarIDProveedor.getText();
             Double abono = Double.parseDouble(jTextFieldAbonoProveedor.getText());
 
-            if (abono <= 0.0) {
+            if (abono <= 0.0 || identificacionCliente.equals("")) {
                 throw new Exception();
             }
 
@@ -5328,6 +5363,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel64;
     private javax.swing.JLabel jLabel65;
     private javax.swing.JLabel jLabel66;
+    private javax.swing.JLabel jLabel67;
     private javax.swing.JLabel jLabel68;
     private javax.swing.JLabel jLabel69;
     private javax.swing.JLabel jLabel7;
@@ -5422,6 +5458,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JTextField nombreClienteReporteCliente;
     private javax.swing.JTextField nombreNuevoCliente;
     private javax.swing.JTextField nombreNuevoUsuario;
+    private javax.swing.JLabel nombreProveedorAComprar;
     private javax.swing.JTextField passwordNuevoUsuario;
     private javax.swing.JSlider sliderNumeroUnidades;
     private javax.swing.JTable tablaMostrarCompras;
